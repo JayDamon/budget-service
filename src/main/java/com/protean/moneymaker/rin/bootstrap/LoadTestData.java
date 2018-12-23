@@ -26,22 +26,38 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadInitialStartData();
+        loadTestBudgetData();
+        loadTestAccountData();
+        loadTestRecurringTransactionData();
+        loadTestTransactionData();
     }
-
-//    public void loadInitialBills() {
-//        Resource resource = new ClassPathResource("initialbilldata.sql");
-//        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
-//        databasePopulator.execute(dataSource);
-//    }
-//
-//    public void loadInitialSessions() {
-//        Resource resource = new ClassPathResource("initialsessiondata.sql");
-//        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
-//        databasePopulator.execute(dataSource);
-//    }
 
     public void loadInitialStartData() {
         Resource resource = new ClassPathResource("sql/initial_data.sql");
+        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
+        databasePopulator.execute(dataSource);
+    }
+
+    public void loadTestBudgetData() {
+        Resource resource = new ClassPathResource("sql/test_budgets.sql");
+        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
+        databasePopulator.execute(dataSource);
+    }
+
+    public void loadTestAccountData() {
+        Resource resource = new ClassPathResource("sql/test_accounts.sql");
+        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
+        databasePopulator.execute(dataSource);
+    }
+
+    public void loadTestTransactionData() {
+        Resource resource = new ClassPathResource("sql/test_transactions.sql");
+        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
+        databasePopulator.execute(dataSource);
+    }
+
+    public void loadTestRecurringTransactionData() {
+        Resource resource = new ClassPathResource("sql/test_recurring_transactions.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.execute(dataSource);
     }

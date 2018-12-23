@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * i.e. checking, savins, money market
+ * i.e. checking, savings, money market
  */
 @Entity
 @Table(name = "account_type")

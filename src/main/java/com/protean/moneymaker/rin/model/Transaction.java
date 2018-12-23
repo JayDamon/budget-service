@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -29,19 +28,20 @@ public class Transaction extends UserAuditable implements Serializable {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToOne
-    @JoinColumn(name = "budget_id")
-    private Budget budget;
+//    @OneToOne
+//    @JoinColumn(name = "budget_id")
+//    private Budget budget;
 
     @OneToOne
-    @JoinColumns({
-            @JoinColumn(name = "transaction_category_id"),
-            @JoinColumn(name = "transaction_type_id")
-    })
+    @JoinColumn(name = "budget_category_id")
+    private BudgetCategory budgetCategory;
+
+    @OneToOne
+    @JoinColumn(name = "transaction_category_id")
     private TransactionCategory transactionCategory;
 
     @OneToOne
-    @JoinColumn(name = "transaction_type_id", insertable = false, updatable = false)
+    @JoinColumn(name = "transaction_type_id")
     private TransactionType transactionType;
 
     @OneToOne

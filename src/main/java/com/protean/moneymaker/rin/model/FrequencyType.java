@@ -23,7 +23,4 @@ public class FrequencyType implements Serializable {
     @Column(name = "frequency_type")
     private String frequency;
 
-    @Column(name = "days")
-    private Integer days;
-
 }

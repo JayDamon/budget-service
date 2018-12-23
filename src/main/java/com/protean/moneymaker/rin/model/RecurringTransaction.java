@@ -29,19 +29,25 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
     @Column(name = "name")
     private String name;
 
-    // TODO do i need this?
-//    @OneToOne
-//    @JoinColumn(name = "account_id")
-//    private Account account;
+    @OneToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
-    // TODO do i need this?
-//    @OneToOne
-//    @JoinColumn(name = "budget_id")
-//    private Budget budget;
+    @OneToOne
+    @JoinColumn(name = "budget_category_id")
+    private BudgetCategory budgetCategory;
+
+    @OneToOne
+    @JoinColumn(name = "transaction_category_id")
+    private TransactionCategory transactionCategory;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "frequency_id")
+    @JoinColumn(name = "frequency_type_id")
     private FrequencyType frequencyType;
+
+    // This is the number of days, months or years between occurrences based on the FrequencyType
+    @Column(name = "frequency")
+    private Integer frequency;
 
     @OneToOne
     @JoinColumn(name = "occurrence_id")

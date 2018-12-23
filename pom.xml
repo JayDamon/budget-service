@@ -9,7 +9,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>rin</name>
+    <budgetCategory>rin</budgetCategory>
     <description>Rin is an Al Bhed merchant and entrepreneur who runs the various Rins Travel
         Agency chapters across Spira in Final Fantasy X and Final Fantasy X-2. He also persuades
         Tidus to learn the Al Bhed language.

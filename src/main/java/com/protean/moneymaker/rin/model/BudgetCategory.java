@@ -2,7 +2,6 @@ package com.protean.moneymaker.rin.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,25 +14,25 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * i.e. Primary transaction category // TODO should this have a one to many with sub category?
+ * i.e. Primary transaction category
  */
 @Entity
-@Table(name = "transaction_category")
-public class TransactionCategory implements Serializable {
+@Table(name = "budget_category")
+public class BudgetCategory implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transaction_category_id")
-    private Long transactionCategoryId;
+    @Column(name = "budget_category_id")
+    private Long budgetCategoryId;
 
-    @Column(name = "category")
+    @Column(name = "category_name")
     private String category;
 
     @OneToOne
     @JoinColumn(name = "transaction_type_id")
     private TransactionType transactionType;
 
-    @OneToMany(mappedBy = "transactionCategory", cascade = CascadeType.ALL)
-    private Set<TransactionSubCategory> subCategories;
+    @OneToMany(mappedBy = "budgetCategory", cascade = CascadeType.ALL)
+    private Set<TransactionCategory> transactionCategories;
 
 }

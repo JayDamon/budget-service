@@ -21,7 +21,7 @@ public class Goal extends UserAuditable implements Serializable {
 
     @Id
     @Column(name = "goal_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")

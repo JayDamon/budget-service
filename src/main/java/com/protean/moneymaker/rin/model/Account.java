@@ -23,6 +23,9 @@ public class Account extends UserAuditable implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @OneToOne
     @JoinColumn(name = "account_type_id", nullable = false)
     private AccountType account;

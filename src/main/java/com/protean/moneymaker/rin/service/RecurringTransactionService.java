@@ -8,8 +8,16 @@ public interface RecurringTransactionService {
 
     // TODO all need basic crud functions, create, read, update, delete
 
-    List<RecurringTransaction> getRecurringTransactions();
+    List<RecurringTransaction> getAllRecurringTransactions();
 
-    List<RecurringTransaction> saveRecurringTransactions();
+    List<RecurringTransaction> saveRecurringTransactions(List<RecurringTransaction> recurringTransactions);
+
+    List<String> getAllRecurringTransactionNames();
+
+    RecurringTransaction saveRecurringTransaction(RecurringTransaction recurringTransaction);
+
+    void deleteRecurringTransaction(RecurringTransaction id);
+
+    void deleteRecurringTransactions(List<RecurringTransaction> ids);
 
 }
