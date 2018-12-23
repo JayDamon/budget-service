@@ -50,14 +50,14 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
         databasePopulator.execute(dataSource);
     }
 
-    public static void loadTestTransactionData(DataSource dataSource) {
-        Resource resource = new ClassPathResource("sql/test_transactions.sql");
+    public static void loadTestRecurringTransactionData(DataSource dataSource) {
+        Resource resource = new ClassPathResource("sql/test_recurring_transactions.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.execute(dataSource);
     }
 
-    public static void loadTestRecurringTransactionData(DataSource dataSource) {
-        Resource resource = new ClassPathResource("sql/test_recurring_transactions.sql");
+    public static void loadTestTransactionData(DataSource dataSource) {
+        Resource resource = new ClassPathResource("sql/test_transactions.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.execute(dataSource);
     }
