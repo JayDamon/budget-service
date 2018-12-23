@@ -52,6 +52,7 @@ INSERT INTO budget_category (budget_category_id, category_name) VALUES (14, 'Bus
 INSERT INTO budget_category (budget_category_id, category_name) VALUES (15, 'Taxes');
 INSERT INTO budget_category (budget_category_id, category_name) VALUES (16, 'Miscellaneous');
 INSERT INTO budget_category (budget_category_id, category_name) VALUES (17, 'Savings');
+INSERT INTO budget_category (budget_category_id, category_name) VALUES (18, 'Generic');
 
 INSERT INTO transaction_category (transaction_category_id, category_name, budget_category_id) VALUES (1, 'Paycheck', 1);
 INSERT INTO transaction_category (transaction_category_id, category_name, budget_category_id) VALUES (2, 'Other Income', 1);

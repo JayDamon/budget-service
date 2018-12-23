@@ -25,38 +25,38 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        loadInitialStartData();
-        loadTestBudgetData();
-        loadTestAccountData();
-        loadTestRecurringTransactionData();
-        loadTestTransactionData();
+        loadInitialStartData(dataSource);
+        loadTestBudgetData(dataSource);
+        loadTestAccountData(dataSource);
+        loadTestRecurringTransactionData(dataSource);
+        loadTestTransactionData(dataSource);
     }
 
-    public void loadInitialStartData() {
+    public static void loadInitialStartData(DataSource dataSource) {
         Resource resource = new ClassPathResource("sql/initial_data.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.execute(dataSource);
     }
 
-    public void loadTestBudgetData() {
+    public static void loadTestBudgetData(DataSource dataSource) {
         Resource resource = new ClassPathResource("sql/test_budgets.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.execute(dataSource);
     }
 
-    public void loadTestAccountData() {
+    public static void loadTestAccountData(DataSource dataSource) {
         Resource resource = new ClassPathResource("sql/test_accounts.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.execute(dataSource);
     }
 
-    public void loadTestTransactionData() {
+    public static void loadTestTransactionData(DataSource dataSource) {
         Resource resource = new ClassPathResource("sql/test_transactions.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.execute(dataSource);
     }
 
-    public void loadTestRecurringTransactionData() {
+    public static void loadTestRecurringTransactionData(DataSource dataSource) {
         Resource resource = new ClassPathResource("sql/test_recurring_transactions.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.execute(dataSource);

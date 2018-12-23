@@ -43,23 +43,23 @@ public class Budget extends UserAuditable implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
 
-    @Column(name = "is_generic")
-    private Boolean isGeneric;
+    @Column(name = "generic")
+    private Boolean generic;
 
-    @Column(name = "is_in_use")
-    private Boolean isInUse;
+    @Column(name = "in_use")
+    private Boolean inUse;
 
     public Budget() {
     }
 
-    public Budget(BudgetCategory budgetCategory, Date startDate, Date endDate, FrequencyType budgetFrequency, BigDecimal amount, Boolean isGeneric, Boolean isInUse) {
+    public Budget(BudgetCategory budgetCategory, Date startDate, Date endDate, FrequencyType budgetFrequency, BigDecimal amount, Boolean generic, Boolean inUse) {
         this.budgetCategory = budgetCategory;
         this.startDate = startDate;
         this.endDate = endDate;
         this.budgetFrequency = budgetFrequency;
         this.amount = amount;
-        this.isGeneric = isGeneric;
-        this.isInUse = isInUse;
+        this.generic = generic;
+        this.inUse = inUse;
     }
 
     public Long getId() {
@@ -110,20 +110,20 @@ public class Budget extends UserAuditable implements Serializable {
         this.amount = amount;
     }
 
-    public Boolean getGeneric() {
-        return isGeneric;
+    public Boolean isGeneric() {
+        return generic;
     }
 
     public void setGeneric(Boolean generic) {
-        isGeneric = generic;
+        this.generic = generic;
     }
 
-    public Boolean getInUse() {
-        return isInUse;
+    public Boolean isInUse() {
+        return inUse;
     }
 
     public void setInUse(Boolean inUse) {
-        isInUse = inUse;
+        this.inUse = inUse;
     }
 
     @Override
@@ -137,13 +137,13 @@ public class Budget extends UserAuditable implements Serializable {
                 Objects.equals(endDate, budget.endDate) &&
                 Objects.equals(budgetFrequency, budget.budgetFrequency) &&
                 Objects.equals(amount, budget.amount) &&
-                Objects.equals(isGeneric, budget.isGeneric) &&
-                Objects.equals(isInUse, budget.isInUse);
+                Objects.equals(generic, budget.generic) &&
+                Objects.equals(inUse, budget.inUse);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, budgetCategory, startDate, endDate, budgetFrequency, amount, isGeneric, isInUse);
+        return Objects.hash(id, budgetCategory, startDate, endDate, budgetFrequency, amount, generic, inUse);
     }
 
     @Override
@@ -155,8 +155,8 @@ public class Budget extends UserAuditable implements Serializable {
                 ", endDate=" + endDate +
                 ", budgetFrequency=" + budgetFrequency +
                 ", amount=" + amount +
-                ", isGeneric=" + isGeneric +
-                ", isInUse=" + isInUse +
+                ", generic=" + generic +
+                ", inUse=" + inUse +
                 '}';
     }
 }

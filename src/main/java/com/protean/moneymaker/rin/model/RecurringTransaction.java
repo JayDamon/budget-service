@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Recurring transactions that are applied on a defined time period that are not bills
@@ -66,4 +67,158 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
     @Column(name = "amount")
     private BigDecimal amount;
 
+    public RecurringTransaction() {
+    }
+
+    public RecurringTransaction(String name, Account account, BudgetCategory budgetCategory, TransactionCategory transactionCategory, FrequencyType frequencyType, Integer frequency, Occurrence occurrence, TransactionType transactionType, Date startDate, Date endDate, BigDecimal amount) {
+        this.name = name;
+        this.account = account;
+        this.budgetCategory = budgetCategory;
+        this.transactionCategory = transactionCategory;
+        this.frequencyType = frequencyType;
+        this.frequency = frequency;
+        this.occurrence = occurrence;
+        this.transactionType = transactionType;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.amount = amount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public BudgetCategory getBudgetCategory() {
+        return budgetCategory;
+    }
+
+    public void setBudgetCategory(BudgetCategory budgetCategory) {
+        this.budgetCategory = budgetCategory;
+    }
+
+    public TransactionCategory getTransactionCategory() {
+        return transactionCategory;
+    }
+
+    public void setTransactionCategory(TransactionCategory transactionCategory) {
+        this.transactionCategory = transactionCategory;
+    }
+
+    public FrequencyType getFrequencyType() {
+        return frequencyType;
+    }
+
+    public void setFrequencyType(FrequencyType frequencyType) {
+        this.frequencyType = frequencyType;
+    }
+
+    public Integer getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
+    }
+
+    public Occurrence getOccurrence() {
+        return occurrence;
+    }
+
+    public void setOccurrence(Occurrence occurrence) {
+        this.occurrence = occurrence;
+    }
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecurringTransaction that = (RecurringTransaction) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(account, that.account) &&
+                Objects.equals(budgetCategory, that.budgetCategory) &&
+                Objects.equals(transactionCategory, that.transactionCategory) &&
+                Objects.equals(frequencyType, that.frequencyType) &&
+                Objects.equals(frequency, that.frequency) &&
+                Objects.equals(occurrence, that.occurrence) &&
+                Objects.equals(transactionType, that.transactionType) &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate) &&
+                Objects.equals(amount, that.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, account, budgetCategory, transactionCategory, frequencyType, frequency, occurrence, transactionType, startDate, endDate, amount);
+    }
+
+    @Override
+    public String toString() {
+        return "RecurringTransaction{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", account=" + account +
+                ", budgetCategory=" + budgetCategory +
+                ", transactionCategory=" + transactionCategory +
+                ", frequencyType=" + frequencyType +
+                ", frequency=" + frequency +
+                ", occurrence=" + occurrence +
+                ", transactionType=" + transactionType +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", amount=" + amount +
+                '}';
+    }
 }

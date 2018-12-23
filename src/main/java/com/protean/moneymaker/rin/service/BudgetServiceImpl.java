@@ -1,6 +1,8 @@
 package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.model.Budget;
+import com.protean.moneymaker.rin.model.BudgetCategory;
+import com.protean.moneymaker.rin.repository.BudgetCategoryRepository;
 import com.protean.moneymaker.rin.repository.BudgetRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import java.util.List;
 public class BudgetServiceImpl implements BudgetService {
 
     private BudgetRepository budgetRepository;
+    private BudgetCategoryRepository budgetCategoryRepository;
 
     public BudgetServiceImpl(BudgetRepository budgetRepository) {
         this.budgetRepository = budgetRepository;
@@ -18,7 +21,7 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     public List<Budget> getAllActiveBudgets() {
-        return new ArrayList<>(budgetRepository.findBudgetsByIsInUseTrue());
+        return new ArrayList<>(budgetRepository.findBudgetsByInUseTrue());
     }
 
     @Override
@@ -32,22 +35,26 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     public List<Budget> getAllInactiveBudgets() {
-        return new ArrayList<>(budgetRepository.findBudgetsByIsInUseFalse());
+        return new ArrayList<>(budgetRepository.findBudgetsByInUseFalse());
     }
 
     @Override
     public List<Budget> getAllGenericBudgets() {
-        return new ArrayList<>(budgetRepository.findBudgetsByIsGenericTrue());
+        return new ArrayList<>(budgetRepository.findBudgetsByGenericTrue());
     }
 
     @Override
     public List<Budget> getAllUserDefinedBudgets() {
-        return new ArrayList<>(budgetRepository.findBudgetsByIsGenericFalse());
+        return new ArrayList<>(budgetRepository.findBudgetsByGenericFalse());
     }
 
     @Override
-    public List<String> getBudgetNames() {
-        return new ArrayList<>(budgetRepository.findBudgetNames());
+    public List<BudgetCategory> getBudgetNames() {
+
+        List<BudgetCategory> budgetCategories = new ArrayList<>();
+        budgetCategoryRepository.findAll().forEach(budgetCategories::add);
+
+        return budgetCategories;
     }
 
     @Override

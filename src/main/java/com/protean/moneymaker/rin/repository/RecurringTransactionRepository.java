@@ -10,8 +10,4 @@ import java.util.Set;
 
 @Transactional
 public interface RecurringTransactionRepository extends CrudRepository<RecurringTransaction, Long> {
-
-    @Query(value = "SELECT DISTINCT name FROM recurring_transaction", nativeQuery = true)
-    Set<String> findAllDistinctNames();
-
 }

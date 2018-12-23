@@ -6,13 +6,9 @@ import java.util.List;
 
 public interface RecurringTransactionService {
 
-    // TODO all need basic crud functions, create, read, update, delete
-
     List<RecurringTransaction> getAllRecurringTransactions();
 
     List<RecurringTransaction> saveRecurringTransactions(List<RecurringTransaction> recurringTransactions);
-
-    List<String> getAllRecurringTransactionNames();
 
     RecurringTransaction saveRecurringTransaction(RecurringTransaction recurringTransaction);
 

@@ -1,37 +1,65 @@
 package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.model.Account;
+import com.protean.moneymaker.rin.model.AccountType;
+import com.protean.moneymaker.rin.repository.AccountRepository;
+import com.protean.moneymaker.rin.repository.AccountTypeRepository;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class AccountServiceImpl implements AccountService {
+
+    private AccountRepository accountRepository;
+    private AccountTypeRepository accountTypeRepository;
+
+    public AccountServiceImpl(AccountRepository accountRepository,
+                              AccountTypeRepository accountTypeRepository) {
+        this.accountRepository = accountRepository;
+        this.accountTypeRepository = accountTypeRepository;
+    }
+
     @Override
-    public List<String> getAccountTypes() {
-        return null;
+    public List<AccountType> getAccountTypes() {
+
+        List<AccountType> accountTypes = new ArrayList<>();
+        accountTypeRepository.findAll().forEach(accountTypes::add);
+
+        return accountTypes;
     }
 
     @Override
     public List<Account> getAllAccounts() {
-        return null;
+
+        List<Account> accounts = new ArrayList<>();
+        accountRepository.findAll().forEach(accounts::add);
+
+        return accounts;
     }
 
     @Override
     public Account saveAccount(Account account) {
-        return null;
+        return accountRepository.save(account);
     }
 
     @Override
     public List<Account> saveAccounts(List<Account> accounts) {
-        return null;
+
+        List<Account> savedAccounts = new ArrayList<>();
+        accountRepository.saveAll(accounts).forEach(savedAccounts::add);
+
+        return savedAccounts;
     }
 
     @Override
-    public void removeAccountById(Long id) {
-
+    public void deleteAccount(Account account) {
+        accountRepository.delete(account);
     }
 
     @Override
-    public void removeAccountsById(List<Long> ids) {
-
+    public void deleteAccounts(List<Account> accounts) {
+        accountRepository.deleteAll(accounts);
     }
 }

@@ -34,11 +34,6 @@ public class RecurringTransactionServiceImpl implements RecurringTransactionServ
     }
 
     @Override
-    public List<String> getAllRecurringTransactionNames() {
-        return new ArrayList<>(recurringTransactionRepository.findAllDistinctNames());
-    }
-
-    @Override
     public RecurringTransaction saveRecurringTransaction(RecurringTransaction recurringTransaction) {
         return recurringTransactionRepository.save(recurringTransaction);
     }
