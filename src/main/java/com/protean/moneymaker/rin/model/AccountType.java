@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * i.e. checking, savings, money market
@@ -26,4 +27,59 @@ public class AccountType implements Serializable {
     @Column(name = "short_account_type")
     private String shortType;
 
+    public AccountType() {
+    }
+
+    public AccountType(String fullType, String shortType) {
+        this.fullType = fullType;
+        this.shortType = shortType;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getFullType() {
+        return fullType;
+    }
+
+    public void setFullType(String fullType) {
+        this.fullType = fullType;
+    }
+
+    public String getShortType() {
+        return shortType;
+    }
+
+    public void setShortType(String shortType) {
+        this.shortType = shortType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AccountType that = (AccountType) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(fullType, that.fullType) &&
+                Objects.equals(shortType, that.shortType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fullType, shortType);
+    }
+
+    @Override
+    public String toString() {
+        return "AccountType{" +
+                "id=" + id +
+                ", fullType='" + fullType + '\'' +
+                ", shortType='" + shortType + '\'' +
+                '}';
+    }
 }

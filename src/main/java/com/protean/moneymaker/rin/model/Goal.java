@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * user defi;ned goals
@@ -47,4 +48,50 @@ public class Goal extends UserAuditable implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
 
+    public Goal() {
+    }
+
+    public Goal(String name, Integer priority, GoalType goalType, Account account, Date startDate, Date endDate, BigDecimal amount) {
+        this.name = name;
+        this.priority = priority;
+        this.goalType = goalType;
+        this.account = account;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Goal goal = (Goal) o;
+        return Objects.equals(id, goal.id) &&
+                Objects.equals(name, goal.name) &&
+                Objects.equals(priority, goal.priority) &&
+                Objects.equals(goalType, goal.goalType) &&
+                Objects.equals(account, goal.account) &&
+                Objects.equals(startDate, goal.startDate) &&
+                Objects.equals(endDate, goal.endDate) &&
+                Objects.equals(amount, goal.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, priority, goalType, account, startDate, endDate, amount);
+    }
+
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", priority=" + priority +
+                ", goalType=" + goalType +
+                ", account=" + account +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", amount=" + amount +
+                '}';
+    }
 }

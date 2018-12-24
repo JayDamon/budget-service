@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Financial transactions
@@ -28,9 +29,9 @@ public class Transaction extends UserAuditable implements Serializable {
     @JoinColumn(name = "account_id")
     private Account account;
 
-//    @OneToOne
-//    @JoinColumn(name = "budget_id")
-//    private Budget budget;
+    @OneToOne
+    @JoinColumn(name = "budget_id")
+    private Budget budget;
 
     @OneToOne
     @JoinColumn(name = "budget_category_id")
@@ -57,4 +58,136 @@ public class Transaction extends UserAuditable implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
 
+    public Transaction() {
+    }
+
+    public Transaction(Account account, Budget budget, BudgetCategory budgetCategory, TransactionCategory transactionCategory, TransactionType transactionType, RecurringTransaction recurringTransaction, Date date, String description, BigDecimal amount) {
+        this.account = account;
+        this.budget = budget;
+        this.budgetCategory = budgetCategory;
+        this.transactionCategory = transactionCategory;
+        this.transactionType = transactionType;
+        this.recurringTransaction = recurringTransaction;
+        this.date = date;
+        this.description = description;
+        this.amount = amount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Budget getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Budget budget) {
+        this.budget = budget;
+    }
+
+    public BudgetCategory getBudgetCategory() {
+        return budgetCategory;
+    }
+
+    public void setBudgetCategory(BudgetCategory budgetCategory) {
+        this.budgetCategory = budgetCategory;
+    }
+
+    public TransactionCategory getTransactionCategory() {
+        return transactionCategory;
+    }
+
+    public void setTransactionCategory(TransactionCategory transactionCategory) {
+        this.transactionCategory = transactionCategory;
+    }
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public RecurringTransaction getRecurringTransaction() {
+        return recurringTransaction;
+    }
+
+    public void setRecurringTransaction(RecurringTransaction recurringTransaction) {
+        this.recurringTransaction = recurringTransaction;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(account, that.account) &&
+                Objects.equals(budget, that.budget) &&
+                Objects.equals(budgetCategory, that.budgetCategory) &&
+                Objects.equals(transactionCategory, that.transactionCategory) &&
+                Objects.equals(transactionType, that.transactionType) &&
+                Objects.equals(recurringTransaction, that.recurringTransaction) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(amount, that.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, account, budget, budgetCategory, transactionCategory, transactionType, recurringTransaction, date, description, amount);
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", account=" + account +
+                ", budget=" + budget +
+                ", budgetCategory=" + budgetCategory +
+                ", transactionCategory=" + transactionCategory +
+                ", transactionType=" + transactionType +
+                ", recurringTransaction=" + recurringTransaction +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

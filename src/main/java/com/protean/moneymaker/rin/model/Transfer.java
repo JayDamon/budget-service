@@ -47,4 +47,84 @@ public class Transfer extends UserAuditable implements Serializable {
     @JoinColumn(name = "to_transaction_id")
     private Transaction toTransaction;
 
+    public Transfer() {
+    }
+
+    public Transfer(Date date, Account fromAccount, Account toAccount, BigDecimal amount, Transaction fromTransaction, Transaction toTransaction) {
+        this.date = date;
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
+        this.amount = amount;
+        this.fromTransaction = fromTransaction;
+        this.toTransaction = toTransaction;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Account getFromAccount() {
+        return fromAccount;
+    }
+
+    public void setFromAccount(Account fromAccount) {
+        this.fromAccount = fromAccount;
+    }
+
+    public Account getToAccount() {
+        return toAccount;
+    }
+
+    public void setToAccount(Account toAccount) {
+        this.toAccount = toAccount;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public Transaction getFromTransaction() {
+        return fromTransaction;
+    }
+
+    public void setFromTransaction(Transaction fromTransaction) {
+        this.fromTransaction = fromTransaction;
+    }
+
+    public Transaction getToTransaction() {
+        return toTransaction;
+    }
+
+    public void setToTransaction(Transaction toTransaction) {
+        this.toTransaction = toTransaction;
+    }
+
+    @Override
+    public String toString() {
+        return "Transfer{" +
+                "id=" + id +
+                ", date=" + date +
+                ", fromAccount=" + fromAccount +
+                ", toAccount=" + toAccount +
+                ", amount=" + amount +
+                ", fromTransaction=" + fromTransaction +
+                ", toTransaction=" + toTransaction +
+                '}';
+    }
 }
