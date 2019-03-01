@@ -24,7 +24,7 @@ public class Budget extends UserAuditable implements Serializable {
     @Id
     @Column(name = "budget_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long budgetId;
 
     @OneToOne
     @JoinColumn(name = "budget_category_id")
@@ -62,12 +62,12 @@ public class Budget extends UserAuditable implements Serializable {
         this.inUse = inUse;
     }
 
-    public Long getId() {
-        return id;
+    public Long getBudgetId() {
+        return budgetId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBudgetId(Long budgetId) {
+        this.budgetId = budgetId;
     }
 
     public BudgetCategory getBudgetCategory() {
@@ -131,7 +131,7 @@ public class Budget extends UserAuditable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Budget budget = (Budget) o;
-        return Objects.equals(id, budget.id) &&
+        return Objects.equals(budgetId, budget.budgetId) &&
                 Objects.equals(budgetCategory, budget.budgetCategory) &&
                 Objects.equals(startDate, budget.startDate) &&
                 Objects.equals(endDate, budget.endDate) &&
@@ -143,13 +143,13 @@ public class Budget extends UserAuditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, budgetCategory, startDate, endDate, budgetFrequency, amount, generic, inUse);
+        return Objects.hash(budgetId, budgetCategory, startDate, endDate, budgetFrequency, amount, generic, inUse);
     }
 
     @Override
     public String toString() {
         return "Budget{" +
-                "id=" + id +
+                "budgetId=" + budgetId +
                 ", budgetCategory=" + budgetCategory +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +

@@ -14,7 +14,7 @@ public class TransactionDto {
     private Long budgetCategoryId;
     private String transactionCategory;
     private Long transactionCategoryId; // TODO ?
-    private String transactionType;
+    private String transactionTypeName;
     private String transactionTypeId;
     private String recurringTransactionName;
     private String recurringTransactionId;
@@ -25,14 +25,14 @@ public class TransactionDto {
     public TransactionDto() {
     }
 
-    public TransactionDto(String accountName, Long accountId, String budgetCategory, Long budgetCategoryId, String transactionCategory, Long transactionCategoryId, String transactionType, String transactionTypeId, String recurringTransactionName, String recurringTransactionId, BigDecimal amount, String description, Date date) {
+    public TransactionDto(String accountName, Long accountId, String budgetCategory, Long budgetCategoryId, String transactionCategory, Long transactionCategoryId, String transactionTypeName, String transactionTypeId, String recurringTransactionName, String recurringTransactionId, BigDecimal amount, String description, Date date) {
         this.accountName = accountName;
         this.accountId = accountId;
         this.budgetCategory = budgetCategory;
         this.budgetCategoryId = budgetCategoryId;
         this.transactionCategory = transactionCategory;
         this.transactionCategoryId = transactionCategoryId;
-        this.transactionType = transactionType;
+        this.transactionTypeName = transactionTypeName;
         this.transactionTypeId = transactionTypeId;
         this.recurringTransactionName = recurringTransactionName;
         this.recurringTransactionId = recurringTransactionId;
@@ -89,12 +89,12 @@ public class TransactionDto {
         this.transactionCategoryId = transactionCategoryId;
     }
 
-    public String getTransactionType() {
-        return transactionType;
+    public String getTransactionTypeName() {
+        return transactionTypeName;
     }
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
+    public void setTransactionTypeName(String transactionTypeName) {
+        this.transactionTypeName = transactionTypeName;
     }
 
     public String getTransactionTypeId() {

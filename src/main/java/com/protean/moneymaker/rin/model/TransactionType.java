@@ -19,16 +19,32 @@ public class TransactionType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_type_id")
-    private Integer id;
+    private Integer transactionTypeId;
 
     @Column(name = "transaction_type")
-    private String type;
+    private String name;
 
     public TransactionType() {
     }
 
-    public TransactionType(String type) {
-        this.type = type;
+    public TransactionType(String name) {
+        this.name = name;
+    }
+
+    public Integer getTransactionTypeId() {
+        return transactionTypeId;
+    }
+
+    public void setTransactionTypeId(Integer transactionTypeId) {
+        this.transactionTypeId = transactionTypeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -36,20 +52,20 @@ public class TransactionType implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TransactionType that = (TransactionType) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(type, that.type);
+        return Objects.equals(transactionTypeId, that.transactionTypeId) &&
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type);
+        return Objects.hash(transactionTypeId, name);
     }
 
     @Override
     public String toString() {
         return "TransactionType{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
+                "transactionTypeId=" + transactionTypeId +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

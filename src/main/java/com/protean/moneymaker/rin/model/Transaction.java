@@ -23,7 +23,7 @@ public class Transaction extends UserAuditable implements Serializable {
     @Id
     @Column(name = "transaction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long transactionId;
 
     @OneToOne
     @JoinColumn(name = "account_id")
@@ -73,12 +73,12 @@ public class Transaction extends UserAuditable implements Serializable {
         this.amount = amount;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTransactionId() {
+        return transactionId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
     }
 
     public Account getAccount() {
@@ -158,7 +158,7 @@ public class Transaction extends UserAuditable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(transactionId, that.transactionId) &&
                 Objects.equals(account, that.account) &&
                 Objects.equals(budget, that.budget) &&
                 Objects.equals(budgetCategory, that.budgetCategory) &&
@@ -172,13 +172,13 @@ public class Transaction extends UserAuditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, account, budget, budgetCategory, transactionCategory, transactionType, recurringTransaction, date, description, amount);
+        return Objects.hash(transactionId, account, budget, budgetCategory, transactionCategory, transactionType, recurringTransaction, date, description, amount);
     }
 
     @Override
     public String toString() {
         return "Transaction{" +
-                "id=" + id +
+                "transactionId=" + transactionId +
                 ", account=" + account +
                 ", budget=" + budget +
                 ", budgetCategory=" + budgetCategory +

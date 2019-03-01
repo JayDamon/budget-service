@@ -21,7 +21,7 @@ public class TransactionCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_category_id")
-    private Long subCategoryId;
+    private Long transactionCategoryId;
 
     @Column(name = "category_name")
     private String transactionCategory;
@@ -38,12 +38,12 @@ public class TransactionCategory implements Serializable {
         this.budgetCategory = budgetCategory;
     }
 
-    public Long getSubCategoryId() {
-        return subCategoryId;
+    public Long getTransactionCategoryId() {
+        return transactionCategoryId;
     }
 
-    public void setSubCategoryId(Long subCategoryId) {
-        this.subCategoryId = subCategoryId;
+    public void setTransactionCategoryId(Long transactionCategoryId) {
+        this.transactionCategoryId = transactionCategoryId;
     }
 
     public String getTransactionCategory() {
@@ -67,20 +67,20 @@ public class TransactionCategory implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TransactionCategory that = (TransactionCategory) o;
-        return Objects.equals(subCategoryId, that.subCategoryId) &&
+        return Objects.equals(transactionCategoryId, that.transactionCategoryId) &&
                 Objects.equals(transactionCategory, that.transactionCategory) &&
                 Objects.equals(budgetCategory, that.budgetCategory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(subCategoryId, transactionCategory, budgetCategory);
+        return Objects.hash(transactionCategoryId, transactionCategory, budgetCategory);
     }
 
     @Override
     public String toString() {
         return "TransactionCategory{" +
-                "subCategoryId=" + subCategoryId +
+                "transactionCategoryId=" + transactionCategoryId +
                 ", transactionCategory='" + transactionCategory + '\'' +
                 ", budgetCategory=" + budgetCategory +
                 '}';

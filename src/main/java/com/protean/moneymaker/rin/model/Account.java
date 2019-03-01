@@ -22,7 +22,7 @@ public class Account extends UserAuditable implements Serializable {
     @Id
     @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long accountId;
 
     @Column(name = "name")
     private String name;
@@ -60,12 +60,12 @@ public class Account extends UserAuditable implements Serializable {
         this.isInCashFlow = isInCashFlow;
     }
 
-    public Long getId() {
-        return id;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     public String getName() {
@@ -129,7 +129,7 @@ public class Account extends UserAuditable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account1 = (Account) o;
-        return Objects.equals(id, account1.id) &&
+        return Objects.equals(accountId, account1.accountId) &&
                 Objects.equals(name, account1.name) &&
                 Objects.equals(account, account1.account) &&
                 Objects.equals(startingBalance, account1.startingBalance) &&
@@ -141,13 +141,13 @@ public class Account extends UserAuditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, account, startingBalance, currentBalance, accountClassification, isPrimaryAccount, isInCashFlow);
+        return Objects.hash(accountId, name, account, startingBalance, currentBalance, accountClassification, isPrimaryAccount, isInCashFlow);
     }
 
     @Override
     public String toString() {
         return "Account{" +
-                "id=" + id +
+                "accountId=" + accountId +
                 ", name='" + name + '\'' +
                 ", account=" + account +
                 ", startingBalance=" + startingBalance +

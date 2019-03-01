@@ -23,7 +23,7 @@ public class Transfer extends UserAuditable implements Serializable {
     @Id
     @Column(name = "transfer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long transferId;
 
     @Column(name = "transfer_date")
     private Date date;
@@ -59,12 +59,12 @@ public class Transfer extends UserAuditable implements Serializable {
         this.toTransaction = toTransaction;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTransferId() {
+        return transferId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTransferId(Long transferId) {
+        this.transferId = transferId;
     }
 
     public Date getDate() {
@@ -118,7 +118,7 @@ public class Transfer extends UserAuditable implements Serializable {
     @Override
     public String toString() {
         return "Transfer{" +
-                "id=" + id +
+                "transferId=" + transferId +
                 ", date=" + date +
                 ", fromAccount=" + fromAccount +
                 ", toAccount=" + toAccount +

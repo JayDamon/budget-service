@@ -25,7 +25,7 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
     @Id
     @Column(name = "recurring_transaction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long recurringTransactionId;
 
     @Column(name = "name")
     private String name;
@@ -84,12 +84,12 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
         this.amount = amount;
     }
 
-    public Long getId() {
-        return id;
+    public Long getRecurringTransactionId() {
+        return recurringTransactionId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRecurringTransactionId(Long recurringTransactionId) {
+        this.recurringTransactionId = recurringTransactionId;
     }
 
     public String getName() {
@@ -185,7 +185,7 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RecurringTransaction that = (RecurringTransaction) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(recurringTransactionId, that.recurringTransactionId) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(account, that.account) &&
                 Objects.equals(budgetCategory, that.budgetCategory) &&
@@ -201,13 +201,13 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, account, budgetCategory, transactionCategory, frequencyType, frequency, occurrence, transactionType, startDate, endDate, amount);
+        return Objects.hash(recurringTransactionId, name, account, budgetCategory, transactionCategory, frequencyType, frequency, occurrence, transactionType, startDate, endDate, amount);
     }
 
     @Override
     public String toString() {
         return "RecurringTransaction{" +
-                "id=" + id +
+                "recurringTransactionId=" + recurringTransactionId +
                 ", name='" + name + '\'' +
                 ", account=" + account +
                 ", budgetCategory=" + budgetCategory +

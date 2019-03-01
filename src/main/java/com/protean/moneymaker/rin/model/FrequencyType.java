@@ -19,7 +19,7 @@ public class FrequencyType implements Serializable {
     @Id
     @Column(name = "frequency_type_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer frequencyTypeId;
 
     @Column(name = "frequency_type")
     private String frequency;
@@ -31,12 +31,12 @@ public class FrequencyType implements Serializable {
         this.frequency = frequency;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getFrequencyTypeId() {
+        return frequencyTypeId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setFrequencyTypeId(Integer frequencyTypeId) {
+        this.frequencyTypeId = frequencyTypeId;
     }
 
     public String getFrequency() {
@@ -52,19 +52,19 @@ public class FrequencyType implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FrequencyType that = (FrequencyType) o;
-        return Objects.equals(id, that.id) &&
+        return Objects.equals(frequencyTypeId, that.frequencyTypeId) &&
                 Objects.equals(frequency, that.frequency);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, frequency);
+        return Objects.hash(frequencyTypeId, frequency);
     }
 
     @Override
     public String toString() {
         return "FrequencyType{" +
-                "id=" + id +
+                "frequencyTypeId=" + frequencyTypeId +
                 ", frequency='" + frequency + '\'' +
                 '}';
     }
