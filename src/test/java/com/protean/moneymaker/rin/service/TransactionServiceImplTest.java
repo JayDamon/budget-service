@@ -23,11 +23,6 @@ public class TransactionServiceImplTest {
     @Autowired
     TransactionService transactionService;
 
-    @Before
-    public void setUp() {
-//        LoadTestData.loadInitialStartData();
-    }
-
     @Test
     public void getAllTransactionDtos() {
         List<TransactionDto> dtos = transactionService.getAllTransactionDtos();

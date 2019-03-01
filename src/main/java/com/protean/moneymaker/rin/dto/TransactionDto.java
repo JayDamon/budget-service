@@ -13,11 +13,11 @@ public class TransactionDto {
     private String budgetCategory;
     private Long budgetCategoryId;
     private String transactionCategory;
-    private Long transactionCategoryId; // TODO ?
+    private Long transactionCategoryId;
     private String transactionTypeName;
     private Integer transactionTypeId;
     private String recurringTransactionName;
-    private String recurringTransactionId;
+    private Long recurringTransactionId;
     private BigDecimal amount;
     private String description;
     private Date date;
@@ -26,7 +26,7 @@ public class TransactionDto {
     public TransactionDto() {
     }
 
-    public TransactionDto(String accountName, Long accountId, String budgetCategory, Long budgetCategoryId, String transactionCategory, Long transactionCategoryId, String transactionTypeName, Integer transactionTypeId, String recurringTransactionName, String recurringTransactionId, BigDecimal amount, String description, Date date, String formattedDate) {
+    public TransactionDto(String accountName, Long accountId, String budgetCategory, Long budgetCategoryId, String transactionCategory, Long transactionCategoryId, String transactionTypeName, Integer transactionTypeId, String recurringTransactionName, Long recurringTransactionId, BigDecimal amount, String description, Date date, String formattedDate) {
         this.accountName = accountName;
         this.accountId = accountId;
         this.budgetCategory = budgetCategory;
@@ -115,11 +115,11 @@ public class TransactionDto {
         this.recurringTransactionName = recurringTransactionName;
     }
 
-    public String getRecurringTransactionId() {
+    public Long getRecurringTransactionId() {
         return recurringTransactionId;
     }
 
-    public void setRecurringTransactionId(String recurringTransactionId) {
+    public void setRecurringTransactionId(Long recurringTransactionId) {
         this.recurringTransactionId = recurringTransactionId;
     }
 
