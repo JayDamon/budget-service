@@ -30,6 +30,6 @@ public class TransactionServiceImplTest {
         assertTrue(dtos.size() > 0);
         assertEquals(847, dtos.size());
         TransactionDto dto = dtos.get(0);
-        assertEquals("02-19-2017", dto.getFormattedDate());
+        assertEquals("01-01-2017", dto.getFormattedDate());
     }
 }

@@ -53,9 +53,14 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public List<Transaction> getAllTransactionsOrdered() {
+        return transactionRepository.findAllByOrderByDate();
+    }
+
+    @Override
     public List<TransactionDto> getAllTransactionDtos() {
 
-        List<Transaction> transactions = getAllTransactions();
+        List<Transaction> transactions = getAllTransactionsOrdered();
         ModelMapper mapper = new ModelMapper();
 
         SimpleDateFormat dtf = new SimpleDateFormat("MM-dd-yyyy");

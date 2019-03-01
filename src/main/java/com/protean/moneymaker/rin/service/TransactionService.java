@@ -15,6 +15,8 @@ public interface TransactionService {
 
     List<Transaction> getAllTransactions();
 
+    List<Transaction> getAllTransactionsOrdered();
+
     List<TransactionDto> getAllTransactionDtos();
 
     List<BudgetCategory> getAllTransactionCategories(); // TODO use transaction category controller
