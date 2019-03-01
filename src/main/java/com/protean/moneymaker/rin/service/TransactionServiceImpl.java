@@ -10,6 +10,7 @@ import com.protean.moneymaker.rin.repository.TransactionSubCategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,9 +58,13 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> transactions = getAllTransactions();
         ModelMapper mapper = new ModelMapper();
 
+        SimpleDateFormat dtf = new SimpleDateFormat("MM-dd-yyyy");
         List<TransactionDto> dtos = new ArrayList<>();
         for (Transaction t : transactions) {
-            dtos.add(mapper.map(t, TransactionDto.class));
+            TransactionDto dto = mapper.map(t, TransactionDto.class);
+            String formattedDate = dto.getDate() != null ? dtf.format(dto.getDate()) : null;
+            dto.setFormattedDate(formattedDate);
+            dtos.add(dto);
         }
         return dtos;
     }

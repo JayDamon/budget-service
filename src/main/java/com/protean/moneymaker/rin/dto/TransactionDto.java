@@ -21,11 +21,12 @@ public class TransactionDto {
     private BigDecimal amount;
     private String description;
     private Date date;
+    private String formattedDate;
 
     public TransactionDto() {
     }
 
-    public TransactionDto(String accountName, Long accountId, String budgetCategory, Long budgetCategoryId, String transactionCategory, Long transactionCategoryId, String transactionTypeName, Integer transactionTypeId, String recurringTransactionName, String recurringTransactionId, BigDecimal amount, String description, Date date) {
+    public TransactionDto(String accountName, Long accountId, String budgetCategory, Long budgetCategoryId, String transactionCategory, Long transactionCategoryId, String transactionTypeName, Integer transactionTypeId, String recurringTransactionName, String recurringTransactionId, BigDecimal amount, String description, Date date, String formattedDate) {
         this.accountName = accountName;
         this.accountId = accountId;
         this.budgetCategory = budgetCategory;
@@ -39,6 +40,7 @@ public class TransactionDto {
         this.amount = amount;
         this.description = description;
         this.date = date;
+        this.formattedDate = formattedDate;
     }
 
     public String getAccountName() {
@@ -143,5 +145,13 @@ public class TransactionDto {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getFormattedDate() {
+        return formattedDate;
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
     }
 }
