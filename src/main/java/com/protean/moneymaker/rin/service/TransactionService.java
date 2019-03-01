@@ -1,5 +1,6 @@
 package com.protean.moneymaker.rin.service;
 
+import com.protean.moneymaker.rin.dto.TransactionDto;
 import com.protean.moneymaker.rin.model.Transaction;
 import com.protean.moneymaker.rin.model.BudgetCategory;
 import com.protean.moneymaker.rin.model.TransactionCategory;
@@ -13,6 +14,8 @@ public interface TransactionService {
     Transaction saveTransaction(Transaction transaction);
 
     List<Transaction> getAllTransactions();
+
+    List<TransactionDto> getAllTransactionDtos();
 
     List<BudgetCategory> getAllTransactionCategories(); // TODO use transaction category controller
 

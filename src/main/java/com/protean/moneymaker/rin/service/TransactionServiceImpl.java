@@ -1,11 +1,13 @@
 package com.protean.moneymaker.rin.service;
 
-import com.protean.moneymaker.rin.model.Transaction;
+import com.protean.moneymaker.rin.dto.TransactionDto;
 import com.protean.moneymaker.rin.model.BudgetCategory;
+import com.protean.moneymaker.rin.model.Transaction;
 import com.protean.moneymaker.rin.model.TransactionCategory;
 import com.protean.moneymaker.rin.repository.TransactionCategoryRepository;
 import com.protean.moneymaker.rin.repository.TransactionRepository;
 import com.protean.moneymaker.rin.repository.TransactionSubCategoryRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -47,6 +49,19 @@ public class TransactionServiceImpl implements TransactionService {
         transactionRepository.findAll().forEach(transactions::add);
 
         return transactions;
+    }
+
+    @Override
+    public List<TransactionDto> getAllTransactionDtos() {
+
+        List<Transaction> transactions = getAllTransactions();
+        ModelMapper mapper = new ModelMapper();
+
+        List<TransactionDto> dtos = new ArrayList<>();
+        for (Transaction t : transactions) {
+            dtos.add(mapper.map(t, TransactionDto.class));
+        }
+        return dtos;
     }
 
     @Override
