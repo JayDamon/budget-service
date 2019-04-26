@@ -54,7 +54,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> getAllTransactionsOrdered() {
-        return transactionRepository.findAllByOrderByDate();
+        return transactionRepository.findAllByOrderByDateDesc();
     }
 
     @Override

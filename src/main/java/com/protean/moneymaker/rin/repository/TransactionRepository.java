@@ -10,6 +10,6 @@ import java.util.List;
 @Transactional
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 
-    List<Transaction> findAllByOrderByDate();
+    List<Transaction> findAllByOrderByDateDesc();
 
 }

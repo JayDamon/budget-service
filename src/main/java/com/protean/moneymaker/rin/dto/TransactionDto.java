@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TransactionDto {
@@ -153,5 +154,51 @@ public class TransactionDto {
 
     public void setFormattedDate(String formattedDate) {
         this.formattedDate = formattedDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TransactionDto that = (TransactionDto) o;
+        return Objects.equals(accountName, that.accountName) &&
+                Objects.equals(accountId, that.accountId) &&
+                Objects.equals(budgetCategory, that.budgetCategory) &&
+                Objects.equals(budgetCategoryId, that.budgetCategoryId) &&
+                Objects.equals(transactionCategory, that.transactionCategory) &&
+                Objects.equals(transactionCategoryId, that.transactionCategoryId) &&
+                Objects.equals(transactionTypeName, that.transactionTypeName) &&
+                Objects.equals(transactionTypeId, that.transactionTypeId) &&
+                Objects.equals(recurringTransactionName, that.recurringTransactionName) &&
+                Objects.equals(recurringTransactionId, that.recurringTransactionId) &&
+                Objects.equals(amount, that.amount) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(formattedDate, that.formattedDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountName, accountId, budgetCategory, budgetCategoryId, transactionCategory, transactionCategoryId, transactionTypeName, transactionTypeId, recurringTransactionName, recurringTransactionId, amount, description, date, formattedDate);
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionDto{" +
+                "accountName='" + accountName + '\'' +
+                ", accountId=" + accountId +
+                ", budgetCategory='" + budgetCategory + '\'' +
+                ", budgetCategoryId=" + budgetCategoryId +
+                ", transactionCategory='" + transactionCategory + '\'' +
+                ", transactionCategoryId=" + transactionCategoryId +
+                ", transactionTypeName='" + transactionTypeName + '\'' +
+                ", transactionTypeId=" + transactionTypeId +
+                ", recurringTransactionName='" + recurringTransactionName + '\'' +
+                ", recurringTransactionId=" + recurringTransactionId +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", formattedDate='" + formattedDate + '\'' +
+                '}';
     }
 }
