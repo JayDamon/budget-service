@@ -1,7 +1,7 @@
 package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.model.Budget;
-import com.protean.moneymaker.rin.model.BudgetCategory;
+import com.protean.moneymaker.rin.model.BudgetSubCategory;
 import com.protean.moneymaker.rin.repository.BudgetCategoryRepository;
 import com.protean.moneymaker.rin.repository.BudgetRepository;
 import org.springframework.stereotype.Service;
@@ -49,9 +49,9 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public List<BudgetCategory> getBudgetNames() {
+    public List<BudgetSubCategory> getBudgetNames() {
 
-        List<BudgetCategory> budgetCategories = new ArrayList<>();
+        List<BudgetSubCategory> budgetCategories = new ArrayList<>();
         budgetCategoryRepository.findAll().forEach(budgetCategories::add);
 
         return budgetCategories;

@@ -28,7 +28,7 @@ public class Budget extends UserAuditable implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "budget_category_id")
-    private BudgetCategory budgetCategory;
+    private BudgetSubCategory budgetSubCategory;
 
     @Column(name = "start_date")
     private Date startDate;
@@ -52,8 +52,8 @@ public class Budget extends UserAuditable implements Serializable {
     public Budget() {
     }
 
-    public Budget(BudgetCategory budgetCategory, Date startDate, Date endDate, FrequencyType budgetFrequency, BigDecimal amount, Boolean generic, Boolean inUse) {
-        this.budgetCategory = budgetCategory;
+    public Budget(BudgetSubCategory budgetSubCategory, Date startDate, Date endDate, FrequencyType budgetFrequency, BigDecimal amount, Boolean generic, Boolean inUse) {
+        this.budgetSubCategory = budgetSubCategory;
         this.startDate = startDate;
         this.endDate = endDate;
         this.budgetFrequency = budgetFrequency;
@@ -70,12 +70,12 @@ public class Budget extends UserAuditable implements Serializable {
         this.budgetId = budgetId;
     }
 
-    public BudgetCategory getBudgetCategory() {
-        return budgetCategory;
+    public BudgetSubCategory getBudgetSubCategory() {
+        return budgetSubCategory;
     }
 
-    public void setBudgetCategory(BudgetCategory budgetCategory) {
-        this.budgetCategory = budgetCategory;
+    public void setBudgetSubCategory(BudgetSubCategory budgetSubCategory) {
+        this.budgetSubCategory = budgetSubCategory;
     }
 
     public Date getStartDate() {
@@ -132,7 +132,7 @@ public class Budget extends UserAuditable implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Budget budget = (Budget) o;
         return Objects.equals(budgetId, budget.budgetId) &&
-                Objects.equals(budgetCategory, budget.budgetCategory) &&
+                Objects.equals(budgetSubCategory, budget.budgetSubCategory) &&
                 Objects.equals(startDate, budget.startDate) &&
                 Objects.equals(endDate, budget.endDate) &&
                 Objects.equals(budgetFrequency, budget.budgetFrequency) &&
@@ -143,14 +143,14 @@ public class Budget extends UserAuditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(budgetId, budgetCategory, startDate, endDate, budgetFrequency, amount, generic, inUse);
+        return Objects.hash(budgetId, budgetSubCategory, startDate, endDate, budgetFrequency, amount, generic, inUse);
     }
 
     @Override
     public String toString() {
         return "Budget{" +
                 "budgetId=" + budgetId +
-                ", budgetCategory=" + budgetCategory +
+                ", budgetSubCategory=" + budgetSubCategory +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", budgetFrequency=" + budgetFrequency +

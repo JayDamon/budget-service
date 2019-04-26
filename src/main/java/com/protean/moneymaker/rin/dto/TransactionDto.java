@@ -1,6 +1,7 @@
 package com.protean.moneymaker.rin.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -9,31 +10,51 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TransactionDto {
 
+    @JsonProperty("accountName")
     private String accountName;
+    @JsonProperty("accountId")
     private Long accountId;
-    private String budgetCategory;
-    private Long budgetCategoryId;
+    @JsonProperty("budgetSubCategory")
+    private String budgetSubCategory;
+    @JsonProperty("budgetSubCategoryId")
+    private Long budgetSubCategoryId;
+    @JsonProperty("transactionCategory")
     private String transactionCategory;
+    @JsonProperty("transactionCategoryId")
     private Long transactionCategoryId;
+    @JsonProperty("budgetCategory")
+    private String transactionCategoryBudgetCategory;
+    @JsonProperty("budgetCategoryId")
+    private String transactionCategoryBudgetCategoryId;
+    @JsonProperty("transactionTypeName")
     private String transactionTypeName;
+    @JsonProperty("transactionTypeId")
     private Integer transactionTypeId;
+    @JsonProperty("recurringTransactionName")
     private String recurringTransactionName;
+    @JsonProperty("recurringTransactionId")
     private Long recurringTransactionId;
+    @JsonProperty("amount")
     private BigDecimal amount;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("date")
     private Date date;
+    @JsonProperty("formattedDate")
     private String formattedDate;
 
     public TransactionDto() {
     }
 
-    public TransactionDto(String accountName, Long accountId, String budgetCategory, Long budgetCategoryId, String transactionCategory, Long transactionCategoryId, String transactionTypeName, Integer transactionTypeId, String recurringTransactionName, Long recurringTransactionId, BigDecimal amount, String description, Date date, String formattedDate) {
+    public TransactionDto(String accountName, Long accountId, String budgetSubCategory, Long budgetSubCategoryId, String transactionCategory, Long transactionCategoryId, String transactionCategoryBudgetCategory, String transactionCategoryBudgetCategoryId, String transactionTypeName, Integer transactionTypeId, String recurringTransactionName, Long recurringTransactionId, BigDecimal amount, String description, Date date, String formattedDate) {
         this.accountName = accountName;
         this.accountId = accountId;
-        this.budgetCategory = budgetCategory;
-        this.budgetCategoryId = budgetCategoryId;
+        this.budgetSubCategory = budgetSubCategory;
+        this.budgetSubCategoryId = budgetSubCategoryId;
         this.transactionCategory = transactionCategory;
         this.transactionCategoryId = transactionCategoryId;
+        this.transactionCategoryBudgetCategory = transactionCategoryBudgetCategory;
+        this.transactionCategoryBudgetCategoryId = transactionCategoryBudgetCategoryId;
         this.transactionTypeName = transactionTypeName;
         this.transactionTypeId = transactionTypeId;
         this.recurringTransactionName = recurringTransactionName;
@@ -60,20 +81,20 @@ public class TransactionDto {
         this.accountId = accountId;
     }
 
-    public String getBudgetCategory() {
-        return budgetCategory;
+    public String getBudgetSubCategory() {
+        return budgetSubCategory;
     }
 
-    public void setBudgetCategory(String budgetCategory) {
-        this.budgetCategory = budgetCategory;
+    public void setBudgetSubCategory(String budgetSubCategory) {
+        this.budgetSubCategory = budgetSubCategory;
     }
 
-    public Long getBudgetCategoryId() {
-        return budgetCategoryId;
+    public Long getBudgetSubCategoryId() {
+        return budgetSubCategoryId;
     }
 
-    public void setBudgetCategoryId(Long budgetCategoryId) {
-        this.budgetCategoryId = budgetCategoryId;
+    public void setBudgetSubCategoryId(Long budgetSubCategoryId) {
+        this.budgetSubCategoryId = budgetSubCategoryId;
     }
 
     public String getTransactionCategory() {
@@ -90,6 +111,22 @@ public class TransactionDto {
 
     public void setTransactionCategoryId(Long transactionCategoryId) {
         this.transactionCategoryId = transactionCategoryId;
+    }
+
+    public String getTransactionCategoryBudgetCategory() {
+        return transactionCategoryBudgetCategory;
+    }
+
+    public void setTransactionCategoryBudgetCategory(String transactionCategoryBudgetCategory) {
+        this.transactionCategoryBudgetCategory = transactionCategoryBudgetCategory;
+    }
+
+    public String getTransactionCategoryBudgetCategoryId() {
+        return transactionCategoryBudgetCategoryId;
+    }
+
+    public void setTransactionCategoryBudgetCategoryId(String transactionCategoryBudgetCategoryId) {
+        this.transactionCategoryBudgetCategoryId = transactionCategoryBudgetCategoryId;
     }
 
     public String getTransactionTypeName() {
@@ -163,10 +200,12 @@ public class TransactionDto {
         TransactionDto that = (TransactionDto) o;
         return Objects.equals(accountName, that.accountName) &&
                 Objects.equals(accountId, that.accountId) &&
-                Objects.equals(budgetCategory, that.budgetCategory) &&
-                Objects.equals(budgetCategoryId, that.budgetCategoryId) &&
+                Objects.equals(budgetSubCategory, that.budgetSubCategory) &&
+                Objects.equals(budgetSubCategoryId, that.budgetSubCategoryId) &&
                 Objects.equals(transactionCategory, that.transactionCategory) &&
                 Objects.equals(transactionCategoryId, that.transactionCategoryId) &&
+                Objects.equals(transactionCategoryBudgetCategory, that.transactionCategoryBudgetCategory) &&
+                Objects.equals(transactionCategoryBudgetCategoryId, that.transactionCategoryBudgetCategoryId) &&
                 Objects.equals(transactionTypeName, that.transactionTypeName) &&
                 Objects.equals(transactionTypeId, that.transactionTypeId) &&
                 Objects.equals(recurringTransactionName, that.recurringTransactionName) &&
@@ -179,7 +218,7 @@ public class TransactionDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountName, accountId, budgetCategory, budgetCategoryId, transactionCategory, transactionCategoryId, transactionTypeName, transactionTypeId, recurringTransactionName, recurringTransactionId, amount, description, date, formattedDate);
+        return Objects.hash(accountName, accountId, budgetSubCategory, budgetSubCategoryId, transactionCategory, transactionCategoryId, transactionCategoryBudgetCategory, transactionCategoryBudgetCategoryId, transactionTypeName, transactionTypeId, recurringTransactionName, recurringTransactionId, amount, description, date, formattedDate);
     }
 
     @Override
@@ -187,10 +226,12 @@ public class TransactionDto {
         return "TransactionDto{" +
                 "accountName='" + accountName + '\'' +
                 ", accountId=" + accountId +
-                ", budgetCategory='" + budgetCategory + '\'' +
-                ", budgetCategoryId=" + budgetCategoryId +
+                ", budgetSubCategory='" + budgetSubCategory + '\'' +
+                ", budgetSubCategoryId=" + budgetSubCategoryId +
                 ", transactionCategory='" + transactionCategory + '\'' +
                 ", transactionCategoryId=" + transactionCategoryId +
+                ", transactionCategoryBudgetCategory='" + transactionCategoryBudgetCategory + '\'' +
+                ", transactionCategoryBudgetCategoryId='" + transactionCategoryBudgetCategoryId + '\'' +
                 ", transactionTypeName='" + transactionTypeName + '\'' +
                 ", transactionTypeId=" + transactionTypeId +
                 ", recurringTransactionName='" + recurringTransactionName + '\'' +

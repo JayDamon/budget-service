@@ -1,7 +1,7 @@
 package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.model.Budget;
-import com.protean.moneymaker.rin.model.BudgetCategory;
+import com.protean.moneymaker.rin.model.BudgetSubCategory;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface BudgetService {
 
     List<Budget> getAllUserDefinedBudgets();
 
-    List<BudgetCategory> getBudgetNames();
+    List<BudgetSubCategory> getBudgetNames();
 
     Budget saveBudget(Budget budget);
 

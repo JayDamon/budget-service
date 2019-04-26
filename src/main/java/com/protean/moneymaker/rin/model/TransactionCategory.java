@@ -27,14 +27,19 @@ public class TransactionCategory implements Serializable {
     private String transactionCategory;
 
     @ManyToOne
+    @JoinColumn(name = "budget_sub_category_id", nullable = false)
+    private BudgetSubCategory budgetSubCategory;
+
+    @ManyToOne
     @JoinColumn(name = "budget_category_id", nullable = false)
     private BudgetCategory budgetCategory;
 
     public TransactionCategory() {
     }
 
-    public TransactionCategory(String transactionCategory, BudgetCategory budgetCategory) {
+    public TransactionCategory(String transactionCategory, BudgetSubCategory budgetSubCategory, BudgetCategory budgetCategory) {
         this.transactionCategory = transactionCategory;
+        this.budgetSubCategory = budgetSubCategory;
         this.budgetCategory = budgetCategory;
     }
 
@@ -54,6 +59,14 @@ public class TransactionCategory implements Serializable {
         this.transactionCategory = transactionCategory;
     }
 
+    public BudgetSubCategory getBudgetSubCategory() {
+        return budgetSubCategory;
+    }
+
+    public void setBudgetSubCategory(BudgetSubCategory budgetSubCategory) {
+        this.budgetSubCategory = budgetSubCategory;
+    }
+
     public BudgetCategory getBudgetCategory() {
         return budgetCategory;
     }
@@ -69,12 +82,13 @@ public class TransactionCategory implements Serializable {
         TransactionCategory that = (TransactionCategory) o;
         return Objects.equals(transactionCategoryId, that.transactionCategoryId) &&
                 Objects.equals(transactionCategory, that.transactionCategory) &&
+                Objects.equals(budgetSubCategory, that.budgetSubCategory) &&
                 Objects.equals(budgetCategory, that.budgetCategory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionCategoryId, transactionCategory, budgetCategory);
+        return Objects.hash(transactionCategoryId, transactionCategory, budgetSubCategory, budgetCategory);
     }
 
     @Override
@@ -82,6 +96,7 @@ public class TransactionCategory implements Serializable {
         return "TransactionCategory{" +
                 "transactionCategoryId=" + transactionCategoryId +
                 ", transactionCategory='" + transactionCategory + '\'' +
+                ", budgetSubCategory=" + budgetSubCategory +
                 ", budgetCategory=" + budgetCategory +
                 '}';
     }

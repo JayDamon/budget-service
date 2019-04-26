@@ -1,9 +1,9 @@
 package com.protean.moneymaker.rin.repository;
 
-import com.protean.moneymaker.rin.model.BudgetCategory;
+import com.protean.moneymaker.rin.model.BudgetSubCategory;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-public interface TransactionCategoryRepository extends CrudRepository<BudgetCategory, Long> {
+public interface TransactionCategoryRepository extends CrudRepository<BudgetSubCategory, Long> {
 }

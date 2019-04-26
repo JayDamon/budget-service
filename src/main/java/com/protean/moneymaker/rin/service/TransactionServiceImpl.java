@@ -1,7 +1,7 @@
 package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.dto.TransactionDto;
-import com.protean.moneymaker.rin.model.BudgetCategory;
+import com.protean.moneymaker.rin.model.BudgetSubCategory;
 import com.protean.moneymaker.rin.model.Transaction;
 import com.protean.moneymaker.rin.model.TransactionCategory;
 import com.protean.moneymaker.rin.repository.TransactionCategoryRepository;
@@ -75,9 +75,9 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<BudgetCategory> getAllTransactionCategories() {
+    public List<BudgetSubCategory> getAllTransactionCategories() {
 
-        List<BudgetCategory> categories = new ArrayList<>();
+        List<BudgetSubCategory> categories = new ArrayList<>();
         transactionCategoryRepository.findAll().forEach(categories::add);
 
         return categories;

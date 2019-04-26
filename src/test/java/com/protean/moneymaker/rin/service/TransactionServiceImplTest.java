@@ -30,5 +30,6 @@ public class TransactionServiceImplTest {
         assertEquals(847, dtos.size());
         TransactionDto dto = dtos.get(0);
         assertEquals("12-31-2018", dto.getFormattedDate());
+        dtos.forEach(System.out::println);
     }
 }
