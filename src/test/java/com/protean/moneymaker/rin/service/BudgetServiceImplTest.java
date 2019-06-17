@@ -59,34 +59,4 @@ public class BudgetServiceImplTest {
         assertEquals(2, found);
     }
 
-    @Test
-    @DirtiesContext
-    public void getAllGenericBudgets() {
-        List<Budget> activeBudgets = budgetService.getAllGenericBudgets();
-        assertNotNull(activeBudgets);
-        assertEquals(5, activeBudgets.size());
-        int found = 0;
-        for (Budget budget : activeBudgets) {
-            if (budget.isGeneric()) {
-                found++;
-            }
-        }
-        assertEquals(5, found);
-    }
-
-    @Test
-    @DirtiesContext
-    public void getAllUserDefinedBudgets() {
-        List<Budget> activeBudgets = budgetService.getAllUserDefinedBudgets();
-        assertNotNull(activeBudgets);
-        assertEquals(1, activeBudgets.size());
-        int found = 0;
-        for (Budget budget : activeBudgets) {
-            if (!budget.isGeneric()) {
-                found++;
-            }
-        }
-        assertEquals(1, found);
-    }
-
 }

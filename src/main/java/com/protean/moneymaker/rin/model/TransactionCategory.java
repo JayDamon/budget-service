@@ -30,17 +30,19 @@ public class TransactionCategory implements Serializable {
     @JoinColumn(name = "budget_sub_category_id", nullable = false)
     private BudgetSubCategory budgetSubCategory;
 
-    @ManyToOne
-    @JoinColumn(name = "budget_category_id", nullable = false)
-    private BudgetCategory budgetCategory;
+//    @ManyToOne
+//    @JoinColumn(name = "budget_category_id", nullable = false)
+//    private BudgetCategory budgetCategory;
 
     public TransactionCategory() {
     }
 
-    public TransactionCategory(String transactionCategory, BudgetSubCategory budgetSubCategory, BudgetCategory budgetCategory) {
+    public TransactionCategory(String transactionCategory, BudgetSubCategory budgetSubCategory
+//            , BudgetCategory budgetCategory
+    ) {
         this.transactionCategory = transactionCategory;
         this.budgetSubCategory = budgetSubCategory;
-        this.budgetCategory = budgetCategory;
+//        this.budgetCategory = budgetCategory;
     }
 
     public Long getTransactionCategoryId() {
@@ -67,13 +69,13 @@ public class TransactionCategory implements Serializable {
         this.budgetSubCategory = budgetSubCategory;
     }
 
-    public BudgetCategory getBudgetCategory() {
-        return budgetCategory;
-    }
-
-    public void setBudgetCategory(BudgetCategory budgetCategory) {
-        this.budgetCategory = budgetCategory;
-    }
+//    public BudgetCategory getBudgetCategory() {
+//        return budgetCategory;
+//    }
+//
+//    public void setBudgetCategory(BudgetCategory budgetCategory) {
+//        this.budgetCategory = budgetCategory;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -82,13 +84,17 @@ public class TransactionCategory implements Serializable {
         TransactionCategory that = (TransactionCategory) o;
         return Objects.equals(transactionCategoryId, that.transactionCategoryId) &&
                 Objects.equals(transactionCategory, that.transactionCategory) &&
-                Objects.equals(budgetSubCategory, that.budgetSubCategory) &&
-                Objects.equals(budgetCategory, that.budgetCategory);
+                Objects.equals(budgetSubCategory, that.budgetSubCategory)
+//                &&
+//                Objects.equals(budgetCategory, that.budgetCategory)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionCategoryId, transactionCategory, budgetSubCategory, budgetCategory);
+        return Objects.hash(transactionCategoryId, transactionCategory, budgetSubCategory
+//                , budgetCategory
+        );
     }
 
     @Override
@@ -97,7 +103,7 @@ public class TransactionCategory implements Serializable {
                 "transactionCategoryId=" + transactionCategoryId +
                 ", transactionCategory='" + transactionCategory + '\'' +
                 ", budgetSubCategory=" + budgetSubCategory +
-                ", budgetCategory=" + budgetCategory +
+//                ", budgetCategory=" + budgetCategory +
                 '}';
     }
 }

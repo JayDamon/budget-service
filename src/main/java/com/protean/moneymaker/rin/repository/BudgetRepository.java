@@ -14,8 +14,4 @@ public interface BudgetRepository extends CrudRepository<Budget, Long> {
 
     Set<Budget> findBudgetsByInUseFalse();
 
-    Set<Budget> findBudgetsByGenericTrue();
-
-    Set<Budget> findBudgetsByGenericFalse();
-
 }

@@ -34,10 +34,6 @@ public class Transaction extends UserAuditable implements Serializable {
     private Budget budget;
 
     @OneToOne
-    @JoinColumn(name = "budget_category_id")
-    private BudgetSubCategory budgetSubCategory;
-
-    @OneToOne
     @JoinColumn(name = "transaction_category_id")
     private TransactionCategory transactionCategory;
 
@@ -61,10 +57,9 @@ public class Transaction extends UserAuditable implements Serializable {
     public Transaction() {
     }
 
-    public Transaction(Account account, Budget budget, BudgetSubCategory budgetSubCategory, TransactionCategory transactionCategory, TransactionType transactionType, RecurringTransaction recurringTransaction, Date date, String description, BigDecimal amount) {
+    public Transaction(Account account, Budget budget, TransactionCategory transactionCategory, TransactionType transactionType, RecurringTransaction recurringTransaction, Date date, String description, BigDecimal amount) {
         this.account = account;
         this.budget = budget;
-        this.budgetSubCategory = budgetSubCategory;
         this.transactionCategory = transactionCategory;
         this.transactionType = transactionType;
         this.recurringTransaction = recurringTransaction;
@@ -95,14 +90,6 @@ public class Transaction extends UserAuditable implements Serializable {
 
     public void setBudget(Budget budget) {
         this.budget = budget;
-    }
-
-    public BudgetSubCategory getBudgetSubCategory() {
-        return budgetSubCategory;
-    }
-
-    public void setBudgetSubCategory(BudgetSubCategory budgetSubCategory) {
-        this.budgetSubCategory = budgetSubCategory;
     }
 
     public TransactionCategory getTransactionCategory() {
@@ -161,7 +148,6 @@ public class Transaction extends UserAuditable implements Serializable {
         return Objects.equals(transactionId, that.transactionId) &&
                 Objects.equals(account, that.account) &&
                 Objects.equals(budget, that.budget) &&
-                Objects.equals(budgetSubCategory, that.budgetSubCategory) &&
                 Objects.equals(transactionCategory, that.transactionCategory) &&
                 Objects.equals(transactionType, that.transactionType) &&
                 Objects.equals(recurringTransaction, that.recurringTransaction) &&
@@ -172,7 +158,7 @@ public class Transaction extends UserAuditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, account, budget, budgetSubCategory, transactionCategory, transactionType, recurringTransaction, date, description, amount);
+        return Objects.hash(transactionId, account, budget, transactionCategory, transactionType, recurringTransaction, date, description, amount);
     }
 
     @Override
@@ -181,7 +167,6 @@ public class Transaction extends UserAuditable implements Serializable {
                 "transactionId=" + transactionId +
                 ", account=" + account +
                 ", budget=" + budget +
-                ", budgetSubCategory=" + budgetSubCategory +
                 ", transactionCategory=" + transactionCategory +
                 ", transactionType=" + transactionType +
                 ", recurringTransaction=" + recurringTransaction +

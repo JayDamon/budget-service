@@ -1,5 +1,6 @@
 package com.protean.moneymaker.rin.service;
 
+import com.protean.moneymaker.rin.dto.BudgetSummary;
 import com.protean.moneymaker.rin.model.Budget;
 import com.protean.moneymaker.rin.model.BudgetSubCategory;
 
@@ -15,10 +16,6 @@ public interface BudgetService {
 
     List<Budget> getAllInactiveBudgets();
 
-    List<Budget> getAllGenericBudgets();
-
-    List<Budget> getAllUserDefinedBudgets();
-
     List<BudgetSubCategory> getBudgetNames();
 
     Budget saveBudget(Budget budget);
@@ -30,6 +27,8 @@ public interface BudgetService {
     void deleteUserDefinedBudgets(List<Budget> budgets);
 
     void deleteUserDefinedBudget(Budget budgets);
+
+    List<BudgetSummary> getBudgetSummary(int[] years, int[] months);
 
     // TODO reset generic budget?
 

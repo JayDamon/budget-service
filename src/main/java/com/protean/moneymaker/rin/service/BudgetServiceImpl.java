@@ -1,5 +1,6 @@
 package com.protean.moneymaker.rin.service;
 
+import com.protean.moneymaker.rin.dto.BudgetSummary;
 import com.protean.moneymaker.rin.model.Budget;
 import com.protean.moneymaker.rin.model.BudgetSubCategory;
 import com.protean.moneymaker.rin.repository.BudgetCategoryRepository;
@@ -39,16 +40,6 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public List<Budget> getAllGenericBudgets() {
-        return new ArrayList<>(budgetRepository.findBudgetsByGenericTrue());
-    }
-
-    @Override
-    public List<Budget> getAllUserDefinedBudgets() {
-        return new ArrayList<>(budgetRepository.findBudgetsByGenericFalse());
-    }
-
-    @Override
     public List<BudgetSubCategory> getBudgetNames() {
 
         List<BudgetSubCategory> budgetCategories = new ArrayList<>();
@@ -76,7 +67,7 @@ public class BudgetServiceImpl implements BudgetService {
 
         List<Budget> deactivatedBudgets = new ArrayList<>();
 
-        budgets.forEach(budget -> budget.setInUse(false));
+        budgets.forEach(budget -> budget.isInUse(false));
         budgetRepository.saveAll(budgets).forEach(deactivatedBudgets::add);
 
         return deactivatedBudgets;
@@ -90,5 +81,10 @@ public class BudgetServiceImpl implements BudgetService {
     @Override
     public void deleteUserDefinedBudget(Budget budget) {
         budgetRepository.delete(budget);
+    }
+
+    @Override
+    public List<BudgetSummary> getBudgetSummary(int[] years, int[] months) {
+        return null;
     }
 }

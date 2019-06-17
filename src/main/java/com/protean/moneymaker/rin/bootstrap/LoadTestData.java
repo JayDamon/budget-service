@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 
 @Component
-@Profile("test")
+@Profile({"test", "local"})
 public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> {
 
     private DataSource dataSource;
@@ -25,11 +25,11 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        loadInitialStartData(dataSource);
-        loadTestBudgetData(dataSource);
-        loadTestAccountData(dataSource);
-        loadTestRecurringTransactionData(dataSource);
-        loadTestTransactionData(dataSource);
+//        loadInitialStartData(dataSource);
+//        loadTestBudgetData(dataSource);
+//        loadTestAccountData(dataSource);
+//        loadTestRecurringTransactionData(dataSource);
+//        loadTestTransactionData(dataSource);
     }
 
     public static void loadInitialStartData(DataSource dataSource) {

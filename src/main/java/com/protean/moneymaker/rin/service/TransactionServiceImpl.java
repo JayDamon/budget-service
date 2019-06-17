@@ -77,10 +77,10 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<BudgetSubCategory> getAllTransactionCategories() {
 
-        List<BudgetSubCategory> categories = new ArrayList<>();
-        transactionCategoryRepository.findAll().forEach(categories::add);
+//        List<BudgetSubCategory> categories = new ArrayList<>();
+//        transactionCategoryRepository.findAll().forEach(categories::add);
 
-        return categories;
+        return null;
     }
 
     @Override

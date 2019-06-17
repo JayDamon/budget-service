@@ -6,8 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,18 +25,29 @@ public class BudgetCategory {
     @Column(name = "budget_category_id")
     private Integer budgetCategoryId;
 
-    @Column(name = "category_name")
-    private String category;
+    @OneToOne
+    @JoinColumn(name = "budget_category_type_id")
+    private BudgetCategory budgetCategory;
 
-    @OneToMany(mappedBy = "budgetCategory", cascade = CascadeType.ALL)
-    private Set<TransactionCategory> transactionCategories;
+    @OneToOne
+    @JoinColumn(name = "budget_category_name_id")
+    private BudgetCategoryName budgetCategoryName;
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "budget_category_budget_sub_category",
+            joinColumns = { @JoinColumn(name = "budget_category_id") },
+            inverseJoinColumns = { @JoinColumn(name = "budget_sub_category_id") }
+    )
+    private Set<BudgetSubCategory> budgetSubCategories = new HashSet<>();
 
     public BudgetCategory() {
     }
 
-    public BudgetCategory(String category, Set<TransactionCategory> transactionCategories) {
-        this.category = category;
-        this.transactionCategories = transactionCategories;
+    public BudgetCategory(BudgetCategory budgetCategory, BudgetCategoryName budgetCategoryName, Set<BudgetSubCategory> budgetSubCategories) {
+        this.budgetCategory = budgetCategory;
+        this.budgetCategoryName = budgetCategoryName;
+        this.budgetSubCategories = budgetSubCategories;
     }
 
     public Integer getBudgetCategoryId() {
@@ -42,20 +58,28 @@ public class BudgetCategory {
         this.budgetCategoryId = budgetCategoryId;
     }
 
-    public String getCategory() {
-        return category;
+    public BudgetCategory getBudgetCategory() {
+        return budgetCategory;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setBudgetCategory(BudgetCategory budgetCategory) {
+        this.budgetCategory = budgetCategory;
     }
 
-    public Set<TransactionCategory> getTransactionCategories() {
-        return transactionCategories;
+    public BudgetCategoryName getBudgetCategoryName() {
+        return budgetCategoryName;
     }
 
-    public void setTransactionCategories(Set<TransactionCategory> transactionCategories) {
-        this.transactionCategories = transactionCategories;
+    public void setBudgetCategoryName(BudgetCategoryName budgetCategoryName) {
+        this.budgetCategoryName = budgetCategoryName;
+    }
+
+    public Set<BudgetSubCategory> getBudgetSubCategories() {
+        return budgetSubCategories;
+    }
+
+    public void setBudgetSubCategories(Set<BudgetSubCategory> budgetSubCategories) {
+        this.budgetSubCategories = budgetSubCategories;
     }
 
     @Override
@@ -64,21 +88,23 @@ public class BudgetCategory {
         if (o == null || getClass() != o.getClass()) return false;
         BudgetCategory that = (BudgetCategory) o;
         return Objects.equals(budgetCategoryId, that.budgetCategoryId) &&
-                Objects.equals(category, that.category) &&
-                Objects.equals(transactionCategories, that.transactionCategories);
+                Objects.equals(budgetCategory, that.budgetCategory) &&
+                Objects.equals(budgetCategoryName, that.budgetCategoryName) &&
+                Objects.equals(budgetSubCategories, that.budgetSubCategories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(budgetCategoryId, category, transactionCategories);
+        return Objects.hash(budgetCategoryId, budgetCategory, budgetCategoryName, budgetSubCategories);
     }
 
     @Override
     public String toString() {
         return "BudgetCategory{" +
                 "budgetCategoryId=" + budgetCategoryId +
-                ", category='" + category + '\'' +
-                ", transactionCategories=" + transactionCategories +
+                ", budgetCategory=" + budgetCategory +
+                ", budgetCategoryName=" + budgetCategoryName +
+                ", budgetSubCategories=" + budgetSubCategories +
                 '}';
     }
 }

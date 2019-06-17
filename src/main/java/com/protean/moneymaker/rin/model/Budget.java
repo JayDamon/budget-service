@@ -28,7 +28,10 @@ public class Budget extends UserAuditable implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "budget_category_id")
-    private BudgetSubCategory budgetSubCategory;
+    private BudgetCategory budgetCategory;
+
+    @Column(name = "budget_item_name")
+    private String budgetItemName;
 
     @Column(name = "start_date")
     private Date startDate;
@@ -43,22 +46,19 @@ public class Budget extends UserAuditable implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
 
-    @Column(name = "generic")
-    private Boolean generic;
-
     @Column(name = "in_use")
     private Boolean inUse;
 
     public Budget() {
     }
 
-    public Budget(BudgetSubCategory budgetSubCategory, Date startDate, Date endDate, FrequencyType budgetFrequency, BigDecimal amount, Boolean generic, Boolean inUse) {
-        this.budgetSubCategory = budgetSubCategory;
+    public Budget(BudgetCategory budgetCategory, String budgetItemName, Date startDate, Date endDate, FrequencyType budgetFrequency, BigDecimal amount, Boolean inUse) {
+        this.budgetCategory = budgetCategory;
+        this.budgetItemName = budgetItemName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.budgetFrequency = budgetFrequency;
         this.amount = amount;
-        this.generic = generic;
         this.inUse = inUse;
     }
 
@@ -70,12 +70,20 @@ public class Budget extends UserAuditable implements Serializable {
         this.budgetId = budgetId;
     }
 
-    public BudgetSubCategory getBudgetSubCategory() {
-        return budgetSubCategory;
+    public BudgetCategory getBudgetCategory() {
+        return budgetCategory;
     }
 
-    public void setBudgetSubCategory(BudgetSubCategory budgetSubCategory) {
-        this.budgetSubCategory = budgetSubCategory;
+    public void setBudgetCategory(BudgetCategory budgetCategory) {
+        this.budgetCategory = budgetCategory;
+    }
+
+    public String getBudgetItemName() {
+        return budgetItemName;
+    }
+
+    public void setBudgetItemName(String budgetItemName) {
+        this.budgetItemName = budgetItemName;
     }
 
     public Date getStartDate() {
@@ -110,19 +118,11 @@ public class Budget extends UserAuditable implements Serializable {
         this.amount = amount;
     }
 
-    public Boolean isGeneric() {
-        return generic;
-    }
-
-    public void setGeneric(Boolean generic) {
-        this.generic = generic;
-    }
-
     public Boolean isInUse() {
         return inUse;
     }
 
-    public void setInUse(Boolean inUse) {
+    public void isInUse(Boolean inUse) {
         this.inUse = inUse;
     }
 
@@ -132,31 +132,32 @@ public class Budget extends UserAuditable implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Budget budget = (Budget) o;
         return Objects.equals(budgetId, budget.budgetId) &&
-                Objects.equals(budgetSubCategory, budget.budgetSubCategory) &&
+                Objects.equals(budgetCategory, budget.budgetCategory) &&
+                Objects.equals(budgetItemName, budget.budgetItemName) &&
                 Objects.equals(startDate, budget.startDate) &&
                 Objects.equals(endDate, budget.endDate) &&
                 Objects.equals(budgetFrequency, budget.budgetFrequency) &&
                 Objects.equals(amount, budget.amount) &&
-                Objects.equals(generic, budget.generic) &&
                 Objects.equals(inUse, budget.inUse);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(budgetId, budgetSubCategory, startDate, endDate, budgetFrequency, amount, generic, inUse);
+        return Objects.hash(budgetId, budgetCategory, budgetItemName, startDate, endDate, budgetFrequency, amount, inUse);
     }
 
     @Override
     public String toString() {
         return "Budget{" +
                 "budgetId=" + budgetId +
-                ", budgetSubCategory=" + budgetSubCategory +
+                ", budgetCategory=" + budgetCategory +
+                ", budgetItemName='" + budgetItemName + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", budgetFrequency=" + budgetFrequency +
                 ", amount=" + amount +
-                ", generic=" + generic +
                 ", inUse=" + inUse +
                 '}';
     }
+
 }
