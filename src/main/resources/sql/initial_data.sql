@@ -35,9 +35,9 @@ INSERT INTO occurrence(occurrence_id, occurrence) VALUES (8, 'Friday');
 INSERT INTO occurrence(occurrence_id, occurrence) VALUES (9, 'Saturday');
 INSERT INTO occurrence(occurrence_id, occurrence) VALUES (10, 'Sunday');
 
-INSERT INTO budget_category_type (budget_category_type_id, category_type_name) VALUES (1, 'fixed');
-INSERT INTO budget_category_type (budget_category_type_id, category_type_name) VALUES (2, 'flexible');
-INSERT INTO budget_category_type (budget_category_type_id, category_type_name) VALUES (3, 'discretionary');
+INSERT INTO budget_category_type (budget_category_type_id, budget_category_type) VALUES (1, 'fixed');
+INSERT INTO budget_category_type (budget_category_type_id, budget_category_type) VALUES (2, 'flexible');
+INSERT INTO budget_category_type (budget_category_type_id, budget_category_type) VALUES (3, 'discretionary');
 -- INSERT INTO budget_category (budget_category_id, category_name) VALUES (1, 'Income');
 -- INSERT INTO budget_category (budget_category_id, category_name) VALUES (2, 'Discressionary');
 -- INSERT INTO budget_category (budget_category_id, category_name) VALUES (3, 'Non-Discressionary');

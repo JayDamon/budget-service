@@ -14,18 +14,24 @@ public class TransactionDto {
     private String accountName;
     @JsonProperty("accountId")
     private Long accountId;
-    @JsonProperty("budgetSubCategory")
-    private String budgetSubCategory;
-    @JsonProperty("budgetSubCategoryId")
-    private Long budgetSubCategoryId;
+    @JsonProperty("budgetName")
+    private String budgetItemName;
+    @JsonProperty("budgetId")
+    private Long budgetId;
+    @JsonProperty("budgetCategoryId")
+    private Integer budgetCategoryId;
+    @JsonProperty("budgetCategoryType")
+    private String budgetCategoryType;
+    @JsonProperty("budgetCategoryTypeId")
+    private Integer budgetCategoryTypeId;
+    @JsonProperty("budgetCategoryName")
+    private String budgetCategoryName;
+    @JsonProperty("budgetCategoryNameId")
+    private Integer budgetCategoryNameId;
     @JsonProperty("transactionCategory")
     private String transactionCategory;
     @JsonProperty("transactionCategoryId")
     private Long transactionCategoryId;
-    @JsonProperty("budgetCategory")
-    private String transactionCategoryBudgetCategory;
-    @JsonProperty("budgetCategoryId")
-    private String transactionCategoryBudgetCategoryId;
     @JsonProperty("transactionTypeName")
     private String transactionTypeName;
     @JsonProperty("transactionTypeId")
@@ -46,15 +52,18 @@ public class TransactionDto {
     public TransactionDto() {
     }
 
-    public TransactionDto(String accountName, Long accountId, String budgetSubCategory, Long budgetSubCategoryId, String transactionCategory, Long transactionCategoryId, String transactionCategoryBudgetCategory, String transactionCategoryBudgetCategoryId, String transactionTypeName, Integer transactionTypeId, String recurringTransactionName, Long recurringTransactionId, BigDecimal amount, String description, Date date, String formattedDate) {
+    public TransactionDto(String accountName, Long accountId, String budgetItemName, Long budgetId, Integer budgetCategoryId, String budgetCategoryType, Integer budgetCategoryTypeId, String budgetCategoryName, Integer budgetCategoryNameId, String transactionCategory, Long transactionCategoryId, String transactionTypeName, Integer transactionTypeId, String recurringTransactionName, Long recurringTransactionId, BigDecimal amount, String description, Date date, String formattedDate) {
         this.accountName = accountName;
         this.accountId = accountId;
-        this.budgetSubCategory = budgetSubCategory;
-        this.budgetSubCategoryId = budgetSubCategoryId;
+        this.budgetItemName = budgetItemName;
+        this.budgetId = budgetId;
+        this.budgetCategoryId = budgetCategoryId;
+        this.budgetCategoryType = budgetCategoryType;
+        this.budgetCategoryTypeId = budgetCategoryTypeId;
+        this.budgetCategoryName = budgetCategoryName;
+        this.budgetCategoryNameId = budgetCategoryNameId;
         this.transactionCategory = transactionCategory;
         this.transactionCategoryId = transactionCategoryId;
-        this.transactionCategoryBudgetCategory = transactionCategoryBudgetCategory;
-        this.transactionCategoryBudgetCategoryId = transactionCategoryBudgetCategoryId;
         this.transactionTypeName = transactionTypeName;
         this.transactionTypeId = transactionTypeId;
         this.recurringTransactionName = recurringTransactionName;
@@ -81,20 +90,60 @@ public class TransactionDto {
         this.accountId = accountId;
     }
 
-    public String getBudgetSubCategory() {
-        return budgetSubCategory;
+    public String getBudgetItemName() {
+        return budgetItemName;
     }
 
-    public void setBudgetSubCategory(String budgetSubCategory) {
-        this.budgetSubCategory = budgetSubCategory;
+    public void setBudgetItemName(String budgetItemName) {
+        this.budgetItemName = budgetItemName;
     }
 
-    public Long getBudgetSubCategoryId() {
-        return budgetSubCategoryId;
+    public Long getBudgetId() {
+        return budgetId;
     }
 
-    public void setBudgetSubCategoryId(Long budgetSubCategoryId) {
-        this.budgetSubCategoryId = budgetSubCategoryId;
+    public void setBudgetId(Long budgetId) {
+        this.budgetId = budgetId;
+    }
+
+    public Integer getBudgetCategoryId() {
+        return budgetCategoryId;
+    }
+
+    public void setBudgetCategoryId(Integer budgetCategoryId) {
+        this.budgetCategoryId = budgetCategoryId;
+    }
+
+    public String getBudgetCategoryType() {
+        return budgetCategoryType;
+    }
+
+    public void setBudgetCategoryType(String budgetCategoryType) {
+        this.budgetCategoryType = budgetCategoryType;
+    }
+
+    public Integer getBudgetCategoryTypeId() {
+        return budgetCategoryTypeId;
+    }
+
+    public void setBudgetCategoryTypeId(Integer budgetCategoryTypeId) {
+        this.budgetCategoryTypeId = budgetCategoryTypeId;
+    }
+
+    public String getBudgetCategoryName() {
+        return budgetCategoryName;
+    }
+
+    public void setBudgetCategoryName(String budgetCategoryName) {
+        this.budgetCategoryName = budgetCategoryName;
+    }
+
+    public Integer getBudgetCategoryNameId() {
+        return budgetCategoryNameId;
+    }
+
+    public void setBudgetCategoryNameId(Integer budgetCategoryNameId) {
+        this.budgetCategoryNameId = budgetCategoryNameId;
     }
 
     public String getTransactionCategory() {
@@ -111,22 +160,6 @@ public class TransactionDto {
 
     public void setTransactionCategoryId(Long transactionCategoryId) {
         this.transactionCategoryId = transactionCategoryId;
-    }
-
-    public String getTransactionCategoryBudgetCategory() {
-        return transactionCategoryBudgetCategory;
-    }
-
-    public void setTransactionCategoryBudgetCategory(String transactionCategoryBudgetCategory) {
-        this.transactionCategoryBudgetCategory = transactionCategoryBudgetCategory;
-    }
-
-    public String getTransactionCategoryBudgetCategoryId() {
-        return transactionCategoryBudgetCategoryId;
-    }
-
-    public void setTransactionCategoryBudgetCategoryId(String transactionCategoryBudgetCategoryId) {
-        this.transactionCategoryBudgetCategoryId = transactionCategoryBudgetCategoryId;
     }
 
     public String getTransactionTypeName() {
@@ -200,12 +233,15 @@ public class TransactionDto {
         TransactionDto that = (TransactionDto) o;
         return Objects.equals(accountName, that.accountName) &&
                 Objects.equals(accountId, that.accountId) &&
-                Objects.equals(budgetSubCategory, that.budgetSubCategory) &&
-                Objects.equals(budgetSubCategoryId, that.budgetSubCategoryId) &&
+                Objects.equals(budgetItemName, that.budgetItemName) &&
+                Objects.equals(budgetId, that.budgetId) &&
+                Objects.equals(budgetCategoryId, that.budgetCategoryId) &&
+                Objects.equals(budgetCategoryType, that.budgetCategoryType) &&
+                Objects.equals(budgetCategoryTypeId, that.budgetCategoryTypeId) &&
+                Objects.equals(budgetCategoryName, that.budgetCategoryName) &&
+                Objects.equals(budgetCategoryNameId, that.budgetCategoryNameId) &&
                 Objects.equals(transactionCategory, that.transactionCategory) &&
                 Objects.equals(transactionCategoryId, that.transactionCategoryId) &&
-                Objects.equals(transactionCategoryBudgetCategory, that.transactionCategoryBudgetCategory) &&
-                Objects.equals(transactionCategoryBudgetCategoryId, that.transactionCategoryBudgetCategoryId) &&
                 Objects.equals(transactionTypeName, that.transactionTypeName) &&
                 Objects.equals(transactionTypeId, that.transactionTypeId) &&
                 Objects.equals(recurringTransactionName, that.recurringTransactionName) &&
@@ -218,7 +254,7 @@ public class TransactionDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountName, accountId, budgetSubCategory, budgetSubCategoryId, transactionCategory, transactionCategoryId, transactionCategoryBudgetCategory, transactionCategoryBudgetCategoryId, transactionTypeName, transactionTypeId, recurringTransactionName, recurringTransactionId, amount, description, date, formattedDate);
+        return Objects.hash(accountName, accountId, budgetItemName, budgetId, budgetCategoryId, budgetCategoryType, budgetCategoryTypeId, budgetCategoryName, budgetCategoryNameId, transactionCategory, transactionCategoryId, transactionTypeName, transactionTypeId, recurringTransactionName, recurringTransactionId, amount, description, date, formattedDate);
     }
 
     @Override
@@ -226,12 +262,15 @@ public class TransactionDto {
         return "TransactionDto{" +
                 "accountName='" + accountName + '\'' +
                 ", accountId=" + accountId +
-                ", budgetSubCategory='" + budgetSubCategory + '\'' +
-                ", budgetSubCategoryId=" + budgetSubCategoryId +
+                ", budgetItemName='" + budgetItemName + '\'' +
+                ", budgetId=" + budgetId +
+                ", budgetCategoryId=" + budgetCategoryId +
+                ", budgetCategoryType='" + budgetCategoryType + '\'' +
+                ", budgetCategoryTypeId=" + budgetCategoryTypeId +
+                ", budgetCategoryName='" + budgetCategoryName + '\'' +
+                ", budgetCategoryNameId=" + budgetCategoryNameId +
                 ", transactionCategory='" + transactionCategory + '\'' +
                 ", transactionCategoryId=" + transactionCategoryId +
-                ", transactionCategoryBudgetCategory='" + transactionCategoryBudgetCategory + '\'' +
-                ", transactionCategoryBudgetCategoryId='" + transactionCategoryBudgetCategoryId + '\'' +
                 ", transactionTypeName='" + transactionTypeName + '\'' +
                 ", transactionTypeId=" + transactionTypeId +
                 ", recurringTransactionName='" + recurringTransactionName + '\'' +

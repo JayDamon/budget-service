@@ -1,6 +1,7 @@
 package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.model.TransactionCategory;
+import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.*;
 import static org.junit.Assert.*;
@@ -26,8 +30,7 @@ public class TransactionCategoryServiceImplTest {
     @Test
     public void findAllTransactionCategories_GivenDatabaseLoadedWithValidTestData_ThenReturnListOfTransactionCategories() {
         List<TransactionCategory> transactionCategories = transactionCategoryService.findAllTransactionCategories();
-        assertThat(transactionCategories, is(not(null)));
-        assertThat(transactionCategories, is(not(empty())));
+        assertThat(transactionCategories, is(allOf(notNullValue(), not(IsEmptyCollection.empty()))));
         assertThat(transactionCategories.size(), is(greaterThan(0)));
         transactionCategories.forEach(System.out::println);
     }

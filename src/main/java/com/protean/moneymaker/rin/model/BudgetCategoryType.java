@@ -17,7 +17,7 @@ public class BudgetCategoryType {
     @Column(name = "budget_category_type_id")
     private Integer id;
 
-    @Column(name = "category_type_name")
+    @Column(name = "budget_category_type")
     private String categoryType;
 
     public BudgetCategoryType() {
@@ -61,7 +61,7 @@ public class BudgetCategoryType {
     public String toString() {
         return "BudgetCategoryType{" +
                 "id=" + id +
-                ", categoryType='" + categoryType + '\'' +
+                ", name='" + categoryType + '\'' +
                 '}';
     }
 }

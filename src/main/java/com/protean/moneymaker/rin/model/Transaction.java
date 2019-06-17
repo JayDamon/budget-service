@@ -30,7 +30,7 @@ public class Transaction extends UserAuditable implements Serializable {
     private Account account;
 
     @OneToOne
-    @JoinColumn(name = "budget_id")
+    @JoinColumn(name = "budget_id", nullable = true)
     private Budget budget;
 
     @OneToOne

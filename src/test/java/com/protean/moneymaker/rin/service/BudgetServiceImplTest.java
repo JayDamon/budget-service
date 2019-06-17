@@ -34,14 +34,14 @@ public class BudgetServiceImplTest {
     public void getAllActiveBudgets() {
         List<Budget> activeBudgets = budgetService.getAllActiveBudgets();
         assertNotNull(activeBudgets);
-        assertEquals(4, activeBudgets.size());
+        assertEquals(30, activeBudgets.size());
         int found = 0;
         for (Budget budget : activeBudgets) {
             if (budget.isInUse()) {
                 found++;
             }
         }
-        assertEquals(4, found);
+        assertEquals(30, found);
     }
 
     @Test

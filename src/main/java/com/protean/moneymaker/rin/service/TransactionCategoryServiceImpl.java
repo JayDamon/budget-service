@@ -22,7 +22,6 @@ public class TransactionCategoryServiceImpl implements TransactionCategoryServic
 
     @Override
     public List<TransactionCategory> findAllTransactionCategories() {
-
         List<TransactionCategory> transactionCategories = new ArrayList<>();
         transactionCategoryRepository.findAll().forEach(transactionCategories::add);
 

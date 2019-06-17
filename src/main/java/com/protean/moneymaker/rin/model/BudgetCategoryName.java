@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -19,13 +18,13 @@ public class BudgetCategoryName {
     private Integer id;
 
     @Column(name = "category_name")
-    private String name;
+    private String categoryName;
 
     public BudgetCategoryName() {
     }
 
-    public BudgetCategoryName(String name) {
-        this.name = name;
+    public BudgetCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public Integer getId() {
@@ -36,12 +35,12 @@ public class BudgetCategoryName {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     @Override
@@ -50,19 +49,19 @@ public class BudgetCategoryName {
         if (o == null || getClass() != o.getClass()) return false;
         BudgetCategoryName that = (BudgetCategoryName) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name);
+                Objects.equals(categoryName, that.categoryName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, categoryName);
     }
 
     @Override
     public String toString() {
         return "BudgetCategoryName{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", category_name='" + categoryName + '\'' +
                 '}';
     }
 }

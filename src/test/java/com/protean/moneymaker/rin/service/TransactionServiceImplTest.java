@@ -27,7 +27,8 @@ public class TransactionServiceImplTest {
         List<TransactionDto> dtos = transactionService.getAllTransactionDtos();
         assertNotNull(dtos);
         assertTrue(dtos.size() > 0);
-        assertEquals(847, dtos.size());
+        assertEquals(837, dtos.size());
+//        assertEquals(847, dtos.size());
         TransactionDto dto = dtos.get(0);
         assertEquals("12-31-2018", dto.getFormattedDate());
         dtos.forEach(System.out::println);
