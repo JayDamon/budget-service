@@ -11,7 +11,7 @@ INSERT INTO budget (budget_id, budget_category_id, budget_item_name, start_date,
 INSERT INTO budget (budget_id, budget_category_id, budget_item_name, start_date, end_date, frequency_type_id, amount, in_use) VALUES (9, 7, 'Plex', '2018-01-01', NULL, 2, 3.99, 1);
 INSERT INTO budget (budget_id, budget_category_id, budget_item_name, start_date, end_date, frequency_type_id, amount, in_use) VALUES (10, 7, 'Netflix', '2018-01-01', NULL, 2, 10.99, 1);
 INSERT INTO budget (budget_id, budget_category_id, budget_item_name, start_date, end_date, frequency_type_id, amount, in_use) VALUES (27, 7, 'spotify', '2018-01-01', NULL, 2, 10.99, 1);
-INSERT INTO budget (budget_id, budget_category_id, budget_item_name, start_date, end_date, frequency_type_id, amount, in_use) VALUES (30, 7, 'Adobe', '2018-01-01', NULL, 2, 20.39, 1);
+INSERT INTO budget (budget_id, budget_category_id, budget_item_name, start_date, end_date, frequency_type_id, amount, in_use) VALUES (30, 7, 'Adobe', '2018-01-01', '2018-12-31', 2, 20.39, 1);
 INSERT INTO budget (budget_id, budget_category_id, budget_item_name, start_date, end_date, frequency_type_id, amount, in_use) VALUES (26, 7, 'Audible', '2018-01-01', NULL, 2, 20.39, 1);
 INSERT INTO budget (budget_id, budget_category_id, budget_item_name, start_date, end_date, frequency_type_id, amount, in_use) VALUES (11, 8, 'Rainy Day Fund', '2018-01-01', NULL, 2, 100, 1);
 INSERT INTO budget (budget_id, budget_category_id, budget_item_name, start_date, end_date, frequency_type_id, amount, in_use) VALUES (12, 8, 'Home Downpayment', '2018-01-01', NULL, 2, 1000, 1);

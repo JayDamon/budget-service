@@ -12,16 +12,12 @@ public class BudgetSubCategoryDto {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("transactionType")
-    private String transactionTypeName;
-
     public BudgetSubCategoryDto() {
     }
 
     public BudgetSubCategoryDto(Long id, String name, String transactionTypeName) {
         this.id = id;
         this.name = name;
-        this.transactionTypeName = transactionTypeName;
     }
 
     public Long getId() {
@@ -40,11 +36,4 @@ public class BudgetSubCategoryDto {
         this.name = name;
     }
 
-    public String getTransactionTypeName() {
-        return transactionTypeName;
-    }
-
-    public void setTransactionTypeName(String transactionTypeName) {
-        this.transactionTypeName = transactionTypeName;
-    }
 }

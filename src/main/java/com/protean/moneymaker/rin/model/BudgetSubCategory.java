@@ -6,9 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -30,10 +28,6 @@ public class BudgetSubCategory implements Serializable {
     @Column(name = "sub_category_name")
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "transaction_type_id")
-    private TransactionType transactionType;
-
     @OneToMany(mappedBy = "budgetSubCategory", cascade = CascadeType.ALL)
     private Set<TransactionCategory> transactionCategories = new HashSet<>();
 
@@ -45,7 +39,6 @@ public class BudgetSubCategory implements Serializable {
             Set<TransactionCategory> transactionCategories) {
 
         this.name = name;
-        this.transactionType = transactionType;
         this.transactionCategories = transactionCategories;
     }
 
@@ -65,14 +58,6 @@ public class BudgetSubCategory implements Serializable {
         this.name = name;
     }
 
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
-
     public Set<TransactionCategory> getTransactionCategories() {
         return transactionCategories;
     }
@@ -88,13 +73,12 @@ public class BudgetSubCategory implements Serializable {
         BudgetSubCategory that = (BudgetSubCategory) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(transactionType, that.transactionType) &&
                 Objects.equals(transactionCategories, that.transactionCategories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, transactionType, transactionCategories);
+        return Objects.hash(id, name, transactionCategories);
     }
 
     @Override
@@ -102,7 +86,6 @@ public class BudgetSubCategory implements Serializable {
         return "BudgetSubCategory{" +
                 "budgetCategoryId=" + id +
                 ", category='" + name + '\'' +
-                ", transactionType=" + transactionType +
                 ", transactionCategories=" + transactionCategories +
                 '}';
     }

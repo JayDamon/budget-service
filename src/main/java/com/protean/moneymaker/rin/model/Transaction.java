@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -27,23 +27,23 @@ public class Transaction extends UserAuditable implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "budget_id", nullable = true)
     private Budget budget;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "transaction_category_id")
     private TransactionCategory transactionCategory;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "transaction_type_id")
     private TransactionType transactionType;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "recurring_transaction_id")
     private RecurringTransaction recurringTransaction;
 

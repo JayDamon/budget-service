@@ -66,9 +66,17 @@ public class TransactionServiceImpl implements TransactionService {
         Set<Transaction> transactions = getAllTransactionsOrdered();
         ModelMapper modelMapper = new ModelMapper();
 
+//        PropertyMap<Transaction, TransactionDto> propertyMap = new PropertyMap<Transaction, TransactionDto>() {
+//            @Override
+//            protected void configure() {
+//                map().getTransactionCategory().setId(source.getRecurringTransaction().getName());
+//            }
+//        };
+//
+//        modelMapper.addMappings(propertyMap);
+
         Set<TransactionDto> dtos = new LinkedHashSet<>();
         for (Transaction t : transactions) {
-
             TransactionDto dto = modelMapper.map(t, TransactionDto.class);
             dtos.add(dto);
         }

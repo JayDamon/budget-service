@@ -7,44 +7,44 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TransactionCategoryDto {
 
     @JsonProperty("id")
-    private Long transactionCategoryId;
+    private Long id;
 
     @JsonProperty("name")
-    private String transactionCategoryName;
+    private String name;
 
     @JsonProperty("subCategory")
-    private BudgetSubCategoryDto subCategory;
+    private BudgetSubCategoryDto budgetSubCategory;
 
     public TransactionCategoryDto() {
     }
 
-    public TransactionCategoryDto(Long transactionCategoryId, String transactionCategoryName, BudgetSubCategoryDto subCategory) {
-        this.transactionCategoryId = transactionCategoryId;
-        this.transactionCategoryName = transactionCategoryName;
-        this.subCategory = subCategory;
+    public TransactionCategoryDto(Long id, String name, BudgetSubCategoryDto budgetSubCategory) {
+        this.id = id;
+        this.name = name;
+        this.budgetSubCategory = budgetSubCategory;
     }
 
-    public Long getTransactionCategoryId() {
-        return transactionCategoryId;
+    public Long getId() {
+        return id;
     }
 
-    public void setTransactionCategoryId(Long transactionCategoryId) {
-        this.transactionCategoryId = transactionCategoryId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getTransactionCategoryName() {
-        return transactionCategoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setTransactionCategoryName(String transactionCategoryName) {
-        this.transactionCategoryName = transactionCategoryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public BudgetSubCategoryDto getSubCategory() {
-        return subCategory;
+    public BudgetSubCategoryDto getBudgetSubCategory() {
+        return budgetSubCategory;
     }
 
-    public void setSubCategory(BudgetSubCategoryDto subCategory) {
-        this.subCategory = subCategory;
+    public void setBudgetSubCategory(BudgetSubCategoryDto budgetSubCategory) {
+        this.budgetSubCategory = budgetSubCategory;
     }
 }
