@@ -1,5 +1,8 @@
 package com.protean.moneymaker.rin.model;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +13,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -23,7 +25,7 @@ public class Transaction extends UserAuditable implements Serializable {
     @Id
     @Column(name = "transaction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long transactionId;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "account_id")
@@ -46,7 +48,8 @@ public class Transaction extends UserAuditable implements Serializable {
     private RecurringTransaction recurringTransaction;
 
     @Column(name = "transaction_date")
-    private Date date;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime date;
 
     @Column(name = "description")
     private String description;
@@ -57,7 +60,11 @@ public class Transaction extends UserAuditable implements Serializable {
     public Transaction() {
     }
 
-    public Transaction(Account account, Budget budget, TransactionCategory transactionCategory, TransactionType transactionType, RecurringTransaction recurringTransaction, Date date, String description, BigDecimal amount) {
+    public Transaction(
+            Account account, Budget budget, TransactionCategory transactionCategory,
+            TransactionType transactionType, RecurringTransaction recurringTransaction,
+            DateTime date, String description, BigDecimal amount) {
+
         this.account = account;
         this.budget = budget;
         this.transactionCategory = transactionCategory;
@@ -68,12 +75,12 @@ public class Transaction extends UserAuditable implements Serializable {
         this.amount = amount;
     }
 
-    public Long getTransactionId() {
-        return transactionId;
+    public Long getId() {
+        return id;
     }
 
-    public void setTransactionId(Long transactionId) {
-        this.transactionId = transactionId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Account getAccount() {
@@ -116,11 +123,11 @@ public class Transaction extends UserAuditable implements Serializable {
         this.recurringTransaction = recurringTransaction;
     }
 
-    public Date getDate() {
+    public DateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(DateTime date) {
         this.date = date;
     }
 
@@ -145,7 +152,7 @@ public class Transaction extends UserAuditable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return Objects.equals(transactionId, that.transactionId) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(account, that.account) &&
                 Objects.equals(budget, that.budget) &&
                 Objects.equals(transactionCategory, that.transactionCategory) &&
@@ -158,13 +165,13 @@ public class Transaction extends UserAuditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, account, budget, transactionCategory, transactionType, recurringTransaction, date, description, amount);
+        return Objects.hash(id, account, budget, transactionCategory, transactionType, recurringTransaction, date, description, amount);
     }
 
     @Override
     public String toString() {
         return "Transaction{" +
-                "transactionId=" + transactionId +
+                "transactionId=" + id +
                 ", account=" + account +
                 ", budget=" + budget +
                 ", transactionCategory=" + transactionCategory +

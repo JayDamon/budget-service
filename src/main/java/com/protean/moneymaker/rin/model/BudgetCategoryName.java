@@ -18,13 +18,13 @@ public class BudgetCategoryName {
     private Integer id;
 
     @Column(name = "category_name")
-    private String categoryName;
+    private String name;
 
     public BudgetCategoryName() {
     }
 
-    public BudgetCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public BudgetCategoryName(String name) {
+        this.name = name;
     }
 
     public Integer getId() {
@@ -35,12 +35,12 @@ public class BudgetCategoryName {
         this.id = id;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -49,19 +49,19 @@ public class BudgetCategoryName {
         if (o == null || getClass() != o.getClass()) return false;
         BudgetCategoryName that = (BudgetCategoryName) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(categoryName, that.categoryName);
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, categoryName);
+        return Objects.hash(id, name);
     }
 
     @Override
     public String toString() {
         return "BudgetCategoryName{" +
                 "id=" + id +
-                ", category_name='" + categoryName + '\'' +
+                ", category_name='" + name + '\'' +
                 '}';
     }
 }

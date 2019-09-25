@@ -19,32 +19,32 @@ public class Occurrence implements Serializable {
     @Id
     @Column(name = "occurrence_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer occurrenceId;
+    private Integer id;
 
     @Column(name = "occurrence")
-    private String occurrence;
+    private String name;
 
     public Occurrence() {
     }
 
-    public Occurrence(String occurrence) {
-        this.occurrence = occurrence;
+    public Occurrence(String name) {
+        this.name = name;
     }
 
-    public Integer getOccurrenceId() {
-        return occurrenceId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setOccurrenceId(Integer occurrenceId) {
-        this.occurrenceId = occurrenceId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getOccurrence() {
-        return occurrence;
+    public String getName() {
+        return name;
     }
 
-    public void setOccurrence(String occurrence) {
-        this.occurrence = occurrence;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -52,20 +52,20 @@ public class Occurrence implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Occurrence that = (Occurrence) o;
-        return Objects.equals(occurrenceId, that.occurrenceId) &&
-                Objects.equals(occurrence, that.occurrence);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(occurrenceId, occurrence);
+        return Objects.hash(id, name);
     }
 
     @Override
     public String toString() {
         return "Occurrence{" +
-                "occurrenceId=" + occurrenceId +
-                ", occurrence='" + occurrence + '\'' +
+                "occurrenceId=" + id +
+                ", occurrence='" + name + '\'' +
                 '}';
     }
 }

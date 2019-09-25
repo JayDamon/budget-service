@@ -1,5 +1,8 @@
 package com.protean.moneymaker.rin.model;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +13,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 // TODO going to need to delete transfers if associated accounts and transactions are deleted, perhaps by prompt?
 /**
@@ -23,10 +25,11 @@ public class Transfer extends UserAuditable implements Serializable {
     @Id
     @Column(name = "transfer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long transferId;
+    private Long id;
 
     @Column(name = "transfer_date")
-    private Date date;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime date;
 
     @OneToOne
     @JoinColumn(name = "from_account_id")
@@ -50,7 +53,7 @@ public class Transfer extends UserAuditable implements Serializable {
     public Transfer() {
     }
 
-    public Transfer(Date date, Account fromAccount, Account toAccount, BigDecimal amount, Transaction fromTransaction, Transaction toTransaction) {
+    public Transfer(DateTime date, Account fromAccount, Account toAccount, BigDecimal amount, Transaction fromTransaction, Transaction toTransaction) {
         this.date = date;
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
@@ -59,19 +62,19 @@ public class Transfer extends UserAuditable implements Serializable {
         this.toTransaction = toTransaction;
     }
 
-    public Long getTransferId() {
-        return transferId;
+    public Long getId() {
+        return id;
     }
 
-    public void setTransferId(Long transferId) {
-        this.transferId = transferId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Date getDate() {
+    public DateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(DateTime date) {
         this.date = date;
     }
 
@@ -118,7 +121,7 @@ public class Transfer extends UserAuditable implements Serializable {
     @Override
     public String toString() {
         return "Transfer{" +
-                "transferId=" + transferId +
+                "transferId=" + id +
                 ", date=" + date +
                 ", fromAccount=" + fromAccount +
                 ", toAccount=" + toAccount +

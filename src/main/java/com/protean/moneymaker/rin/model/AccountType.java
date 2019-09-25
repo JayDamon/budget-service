@@ -19,7 +19,7 @@ public class AccountType implements Serializable {
     @Id
     @Column(name = "account_type_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer accountTypeid;
+    private Integer id;
 
     @Column(name = "full_account_type")
     private String fullType;
@@ -35,12 +35,12 @@ public class AccountType implements Serializable {
         this.shortType = shortType;
     }
 
-    public Integer getAccountTypeid() {
-        return accountTypeid;
+    public Integer getId() {
+        return id;
     }
 
-    public void setAccountTypeid(Integer accountTypeid) {
-        this.accountTypeid = accountTypeid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFullType() {
@@ -64,20 +64,20 @@ public class AccountType implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AccountType that = (AccountType) o;
-        return Objects.equals(accountTypeid, that.accountTypeid) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(fullType, that.fullType) &&
                 Objects.equals(shortType, that.shortType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountTypeid, fullType, shortType);
+        return Objects.hash(id, fullType, shortType);
     }
 
     @Override
     public String toString() {
         return "AccountType{" +
-                "accountTypeid=" + accountTypeid +
+                "accountTypeid=" + id +
                 ", fullType='" + fullType + '\'' +
                 ", shortType='" + shortType + '\'' +
                 '}';

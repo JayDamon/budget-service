@@ -1,5 +1,8 @@
 package com.protean.moneymaker.rin.model;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -25,7 +27,7 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
     @Id
     @Column(name = "recurring_transaction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long recurringTransactionId;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -59,10 +61,12 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
     private TransactionType transactionType;
 
     @Column(name = "start_date")
-    private Date startDate;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime endDate;
 
     @Column(name = "amount")
     private BigDecimal amount;
@@ -70,7 +74,12 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
     public RecurringTransaction() {
     }
 
-    public RecurringTransaction(String name, Account account, BudgetSubCategory budgetSubCategory, TransactionCategory transactionCategory, FrequencyType frequencyType, Integer frequency, Occurrence occurrence, TransactionType transactionType, Date startDate, Date endDate, BigDecimal amount) {
+    public RecurringTransaction(
+            String name, Account account, BudgetSubCategory budgetSubCategory,
+            TransactionCategory transactionCategory, FrequencyType frequencyType,
+            Integer frequency, Occurrence occurrence, TransactionType transactionType,
+            DateTime startDate, DateTime endDate, BigDecimal amount) {
+
         this.name = name;
         this.account = account;
         this.budgetSubCategory = budgetSubCategory;
@@ -84,12 +93,12 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
         this.amount = amount;
     }
 
-    public Long getRecurringTransactionId() {
-        return recurringTransactionId;
+    public Long getId() {
+        return id;
     }
 
-    public void setRecurringTransactionId(Long recurringTransactionId) {
-        this.recurringTransactionId = recurringTransactionId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -156,19 +165,19 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
         this.transactionType = transactionType;
     }
 
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(DateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -185,7 +194,7 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RecurringTransaction that = (RecurringTransaction) o;
-        return Objects.equals(recurringTransactionId, that.recurringTransactionId) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(account, that.account) &&
                 Objects.equals(budgetSubCategory, that.budgetSubCategory) &&
@@ -201,13 +210,13 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
 
     @Override
     public int hashCode() {
-        return Objects.hash(recurringTransactionId, name, account, budgetSubCategory, transactionCategory, frequencyType, frequency, occurrence, transactionType, startDate, endDate, amount);
+        return Objects.hash(id, name, account, budgetSubCategory, transactionCategory, frequencyType, frequency, occurrence, transactionType, startDate, endDate, amount);
     }
 
     @Override
     public String toString() {
         return "RecurringTransaction{" +
-                "recurringTransactionId=" + recurringTransactionId +
+                "recurringTransactionId=" + id +
                 ", name='" + name + '\'' +
                 ", account=" + account +
                 ", budgetSubCategory=" + budgetSubCategory +

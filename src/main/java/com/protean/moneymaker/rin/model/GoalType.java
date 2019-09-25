@@ -19,7 +19,7 @@ public class GoalType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "goal_type_id")
-    private Integer goalTypeId;
+    private Integer id;
 
     @Column(name = "goal_type")
     private String type;
@@ -31,12 +31,12 @@ public class GoalType implements Serializable {
         this.type = type;
     }
 
-    public Integer getGoalTypeId() {
-        return goalTypeId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setGoalTypeId(Integer goalTypeId) {
-        this.goalTypeId = goalTypeId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getType() {
@@ -52,19 +52,19 @@ public class GoalType implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GoalType goalType = (GoalType) o;
-        return Objects.equals(goalTypeId, goalType.goalTypeId) &&
+        return Objects.equals(id, goalType.id) &&
                 Objects.equals(type, goalType.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(goalTypeId, type);
+        return Objects.hash(id, type);
     }
 
     @Override
     public String toString() {
         return "GoalType{" +
-                "goalTypeId=" + goalTypeId +
+                "goalTypeId=" + id +
                 ", type='" + type + '\'' +
                 '}';
     }

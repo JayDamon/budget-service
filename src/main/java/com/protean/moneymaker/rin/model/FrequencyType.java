@@ -19,32 +19,32 @@ public class FrequencyType implements Serializable {
     @Id
     @Column(name = "frequency_type_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer frequencyTypeId;
+    private Integer id;
 
     @Column(name = "frequency_type")
-    private String frequency;
+    private String name;
 
     public FrequencyType() {
     }
 
-    public FrequencyType(String frequency) {
-        this.frequency = frequency;
+    public FrequencyType(String name) {
+        this.name = name;
     }
 
-    public Integer getFrequencyTypeId() {
-        return frequencyTypeId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setFrequencyTypeId(Integer frequencyTypeId) {
-        this.frequencyTypeId = frequencyTypeId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getFrequency() {
-        return frequency;
+    public String getName() {
+        return name;
     }
 
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -52,20 +52,20 @@ public class FrequencyType implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FrequencyType that = (FrequencyType) o;
-        return Objects.equals(frequencyTypeId, that.frequencyTypeId) &&
-                Objects.equals(frequency, that.frequency);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frequencyTypeId, frequency);
+        return Objects.hash(id, name);
     }
 
     @Override
     public String toString() {
         return "FrequencyType{" +
-                "frequencyTypeId=" + frequencyTypeId +
-                ", frequency='" + frequency + '\'' +
+                "frequencyTypeId=" + id +
+                ", frequency='" + name + '\'' +
                 '}';
     }
 }

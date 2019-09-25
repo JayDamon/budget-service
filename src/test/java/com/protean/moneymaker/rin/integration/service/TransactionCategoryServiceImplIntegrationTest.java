@@ -1,31 +1,28 @@
-package com.protean.moneymaker.rin.service;
+package com.protean.moneymaker.rin.integration.service;
 
 import com.protean.moneymaker.rin.model.TransactionCategory;
+import com.protean.moneymaker.rin.service.TransactionCategoryService;
 import org.hamcrest.collection.IsEmptyCollection;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.core.IsNot.not;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class TransactionCategoryServiceImplTest {
+public class TransactionCategoryServiceImplIntegrationTest {
 
-    @Autowired TransactionCategoryService transactionCategoryService;
+    @Autowired
+    TransactionCategoryService transactionCategoryService;
 
     @Test
     public void findAllTransactionCategories_GivenDatabaseLoadedWithValidTestData_ThenReturnListOfTransactionCategories() {

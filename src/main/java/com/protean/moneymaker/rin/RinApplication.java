@@ -1,6 +1,5 @@
 package com.protean.moneymaker.rin;
 
-import com.protean.moneymaker.rin.bootstrap.LoadTestData;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

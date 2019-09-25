@@ -22,7 +22,7 @@ public class Account extends UserAuditable implements Serializable {
     @Id
     @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountId;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -50,7 +50,11 @@ public class Account extends UserAuditable implements Serializable {
     public Account() {
     }
 
-    public Account(String name, AccountType account, BigDecimal startingBalance, BigDecimal currentBalance, AccountClassification accountClassification, Boolean isPrimaryAccount, Boolean isInCashFlow) {
+    public Account(
+            String name, AccountType account, BigDecimal startingBalance,
+            BigDecimal currentBalance, AccountClassification accountClassification,
+            Boolean isPrimaryAccount, Boolean isInCashFlow) {
+
         this.name = name;
         this.account = account;
         this.startingBalance = startingBalance;
@@ -60,12 +64,12 @@ public class Account extends UserAuditable implements Serializable {
         this.isInCashFlow = isInCashFlow;
     }
 
-    public Long getAccountId() {
-        return accountId;
+    public Long getId() {
+        return id;
     }
 
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -129,7 +133,7 @@ public class Account extends UserAuditable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account1 = (Account) o;
-        return Objects.equals(accountId, account1.accountId) &&
+        return Objects.equals(id, account1.id) &&
                 Objects.equals(name, account1.name) &&
                 Objects.equals(account, account1.account) &&
                 Objects.equals(startingBalance, account1.startingBalance) &&
@@ -141,13 +145,13 @@ public class Account extends UserAuditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId, name, account, startingBalance, currentBalance, accountClassification, isPrimaryAccount, isInCashFlow);
+        return Objects.hash(id, name, account, startingBalance, currentBalance, accountClassification, isPrimaryAccount, isInCashFlow);
     }
 
     @Override
     public String toString() {
         return "Account{" +
-                "accountId=" + accountId +
+                "accountId=" + id +
                 ", name='" + name + '\'' +
                 ", account=" + account +
                 ", startingBalance=" + startingBalance +

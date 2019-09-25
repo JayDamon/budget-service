@@ -23,7 +23,7 @@ public class Goal extends UserAuditable implements Serializable {
     @Id
     @Column(name = "goal_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long goalId;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -66,7 +66,7 @@ public class Goal extends UserAuditable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Goal goal = (Goal) o;
-        return Objects.equals(goalId, goal.goalId) &&
+        return Objects.equals(id, goal.id) &&
                 Objects.equals(name, goal.name) &&
                 Objects.equals(priority, goal.priority) &&
                 Objects.equals(goalType, goal.goalType) &&
@@ -78,13 +78,13 @@ public class Goal extends UserAuditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(goalId, name, priority, goalType, account, startDate, endDate, amount);
+        return Objects.hash(id, name, priority, goalType, account, startDate, endDate, amount);
     }
 
     @Override
     public String toString() {
         return "Goal{" +
-                "goalId=" + goalId +
+                "goalId=" + id +
                 ", name='" + name + '\'' +
                 ", priority=" + priority +
                 ", goalType=" + goalType +

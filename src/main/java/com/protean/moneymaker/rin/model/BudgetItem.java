@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Objects;
 
-@Entity
+@Entity // TODO maybe remove?
 @Table(name = "budget_item")
 public class BudgetItem {
 

@@ -1,5 +1,8 @@
 package com.protean.moneymaker.rin.model;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -24,7 +26,7 @@ public class Budget extends UserAuditable implements Serializable {
     @Id
     @Column(name = "budget_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long budgetId;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "budget_category_id")
@@ -34,14 +36,16 @@ public class Budget extends UserAuditable implements Serializable {
     private String budgetItemName;
 
     @Column(name = "start_date")
-    private Date startDate;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime endDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "frequency_type_id")
-    private FrequencyType budgetFrequency;
+    private FrequencyType frequencyType;
 
     @Column(name = "amount")
     private BigDecimal amount;
@@ -52,22 +56,25 @@ public class Budget extends UserAuditable implements Serializable {
     public Budget() {
     }
 
-    public Budget(BudgetCategory budgetCategory, String budgetItemName, Date startDate, Date endDate, FrequencyType budgetFrequency, BigDecimal amount, Boolean inUse) {
+    public Budget(
+            BudgetCategory budgetCategory, String budgetItemName, DateTime startDate, DateTime endDate,
+            FrequencyType frequencyType, BigDecimal amount, Boolean inUse) {
+
         this.budgetCategory = budgetCategory;
         this.budgetItemName = budgetItemName;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.budgetFrequency = budgetFrequency;
+        this.frequencyType = frequencyType;
         this.amount = amount;
         this.inUse = inUse;
     }
 
-    public Long getBudgetId() {
-        return budgetId;
+    public Long getId() {
+        return id;
     }
 
-    public void setBudgetId(Long budgetId) {
-        this.budgetId = budgetId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public BudgetCategory getBudgetCategory() {
@@ -86,28 +93,28 @@ public class Budget extends UserAuditable implements Serializable {
         this.budgetItemName = budgetItemName;
     }
 
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(DateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(DateTime endDate) {
         this.endDate = endDate;
     }
 
-    public FrequencyType getBudgetFrequency() {
-        return budgetFrequency;
+    public FrequencyType getFrequencyType() {
+        return frequencyType;
     }
 
-    public void setBudgetFrequency(FrequencyType budgetFrequency) {
-        this.budgetFrequency = budgetFrequency;
+    public void setFrequencyType(FrequencyType frequencyType) {
+        this.frequencyType = frequencyType;
     }
 
     public BigDecimal getAmount() {
@@ -131,30 +138,30 @@ public class Budget extends UserAuditable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Budget budget = (Budget) o;
-        return Objects.equals(budgetId, budget.budgetId) &&
+        return Objects.equals(id, budget.id) &&
                 Objects.equals(budgetCategory, budget.budgetCategory) &&
                 Objects.equals(budgetItemName, budget.budgetItemName) &&
                 Objects.equals(startDate, budget.startDate) &&
                 Objects.equals(endDate, budget.endDate) &&
-                Objects.equals(budgetFrequency, budget.budgetFrequency) &&
+                Objects.equals(frequencyType, budget.frequencyType) &&
                 Objects.equals(amount, budget.amount) &&
                 Objects.equals(inUse, budget.inUse);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(budgetId, budgetCategory, budgetItemName, startDate, endDate, budgetFrequency, amount, inUse);
+        return Objects.hash(id, budgetCategory, budgetItemName, startDate, endDate, frequencyType, amount, inUse);
     }
 
     @Override
     public String toString() {
         return "Budget{" +
-                "budgetId=" + budgetId +
+                "budgetId=" + id +
                 ", budgetCategory=" + budgetCategory +
                 ", budgetItemName='" + budgetItemName + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", budgetFrequency=" + budgetFrequency +
+                ", budgetFrequency=" + frequencyType +
                 ", amount=" + amount +
                 ", inUse=" + inUse +
                 '}';

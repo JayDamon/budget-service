@@ -9,10 +9,12 @@ import com.protean.moneymaker.rin.repository.TransactionRepository;
 import com.protean.moneymaker.rin.repository.TransactionSubCategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -53,22 +55,21 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> getAllTransactionsOrdered() {
+    public Set<Transaction> getAllTransactionsOrdered() {
         return transactionRepository.findAllByOrderByDateDesc();
     }
 
     @Override
-    public List<TransactionDto> getAllTransactionDtos() {
+    @Transactional
+    public Set<TransactionDto> getAllTransactionDtos() {
 
-        List<Transaction> transactions = getAllTransactionsOrdered();
-        ModelMapper mapper = new ModelMapper();
+        Set<Transaction> transactions = getAllTransactionsOrdered();
+        ModelMapper modelMapper = new ModelMapper();
 
-        SimpleDateFormat dtf = new SimpleDateFormat("MM-dd-yyyy");
-        List<TransactionDto> dtos = new ArrayList<>();
+        Set<TransactionDto> dtos = new LinkedHashSet<>();
         for (Transaction t : transactions) {
-            TransactionDto dto = mapper.map(t, TransactionDto.class);
-            String formattedDate = dto.getDate() != null ? dtf.format(dto.getDate()) : null;
-            dto.setFormattedDate(formattedDate);
+
+            TransactionDto dto = modelMapper.map(t, TransactionDto.class);
             dtos.add(dto);
         }
         return dtos;

@@ -19,7 +19,7 @@ public class AccountClassification implements Serializable {
     @Id
     @Column(name = "account_classification_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer accountClassificationId;
+    private Integer id;
 
     @Column(name = "classification")
     private String classification;
@@ -31,12 +31,12 @@ public class AccountClassification implements Serializable {
         this.classification = classification;
     }
 
-    public Integer getAccountClassificationId() {
-        return accountClassificationId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setAccountClassificationId(Integer accountClassificationId) {
-        this.accountClassificationId = accountClassificationId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getClassification() {
@@ -52,19 +52,19 @@ public class AccountClassification implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AccountClassification that = (AccountClassification) o;
-        return Objects.equals(accountClassificationId, that.accountClassificationId) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(classification, that.classification);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountClassificationId, classification);
+        return Objects.hash(id, classification);
     }
 
     @Override
     public String toString() {
         return "AccountClassification{" +
-                "accountClassificationId=" + accountClassificationId +
+                "accountClassificationId=" + id +
                 ", classification='" + classification + '\'' +
                 '}';
     }
