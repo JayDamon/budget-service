@@ -3,11 +3,13 @@ package com.protean.moneymaker.rin.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Set;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BudgetCategoryDto {
 
     @JsonProperty("id")
-    private Long id;
+    private Integer id;
 
     @JsonProperty("type")
     private String typeName;
@@ -15,20 +17,23 @@ public class BudgetCategoryDto {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("budgetItems")
+    private Set<BudgetItemDto> budgetItems;
+
     public BudgetCategoryDto() {
     }
 
-    public BudgetCategoryDto(Long id, String typeName, String name) {
+    public BudgetCategoryDto(Integer id, String typeName, String name) {
         this.id = id;
         this.typeName = typeName;
         this.name = name;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,5 +51,13 @@ public class BudgetCategoryDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<BudgetItemDto> getBudgetItems() {
+        return budgetItems;
+    }
+
+    public void setBudgetItems(Set<BudgetItemDto> budgetItems) {
+        this.budgetItems = budgetItems;
     }
 }

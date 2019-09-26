@@ -115,7 +115,7 @@ class TransactionServiceImplUnitTest {
             assertThat(dto.getAccount().getName(), is(equalTo("Account 1")));
             assertThat(dto.getBudget().getId(), is(equalTo(8L)));
             assertThat(dto.getBudget().getName(), is(equalTo("BudgetItemNameOne")));
-            assertThat(dto.getBudget().getBudgetCategory().getId(), is(equalTo(6L)));
+            assertThat(dto.getBudget().getBudgetCategory().getId(), is(equalTo(6)));
             assertThat(dto.getBudget().getBudgetCategory().getTypeName(), is(equalTo("BudgetCategoryType")));
             assertThat(dto.getBudget().getBudgetCategory().getName(), is(equalTo("BudgetCategoryName")));
             assertThat(dto.getBudget().getStartDate().monthOfYear(), is(equalTo(DateTime.now().monthOfYear())));
