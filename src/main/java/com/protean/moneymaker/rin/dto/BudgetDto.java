@@ -2,9 +2,9 @@ package com.protean.moneymaker.rin.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BudgetDto {
@@ -19,10 +19,13 @@ public class BudgetDto {
     private BudgetCategoryDto budgetCategory;
 
     @JsonProperty("startDate")
-    private DateTime startDate;
+    private ZonedDateTime startDate;
 
     @JsonProperty("endDate")
-    private DateTime endDate;
+    private ZonedDateTime endDate;
+
+    @JsonProperty("frequencyTypeId")
+    private Integer frequencyTypeId;
 
     @JsonProperty("frequencyType")
     private String frequencyTypeName;
@@ -37,14 +40,16 @@ public class BudgetDto {
     }
 
     public BudgetDto(
-            Long id, String name, BudgetCategoryDto budgetCategory, DateTime startDate,
-            DateTime endDate, String frequencyTypeName, BigDecimal amount, Boolean inUse) {
+            Long id, String name, BudgetCategoryDto budgetCategory, ZonedDateTime startDate,
+            ZonedDateTime endDate, Integer frequencyTypeId, String frequencyTypeName,
+            BigDecimal amount, Boolean inUse) {
 
         this.id = id;
         this.name = name;
         this.budgetCategory = budgetCategory;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.frequencyTypeId = frequencyTypeId;
         this.frequencyTypeName = frequencyTypeName;
         this.amount = amount;
         this.inUse = inUse;
@@ -74,20 +79,28 @@ public class BudgetDto {
         this.budgetCategory = budgetCategory;
     }
 
-    public DateTime getStartDate() {
+    public ZonedDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer getFrequencyTypeId() {
+        return frequencyTypeId;
+    }
+
+    public void setFrequencyTypeId(Integer frequencyTypeId) {
+        this.frequencyTypeId = frequencyTypeId;
     }
 
     public String getFrequencyTypeName() {

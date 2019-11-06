@@ -25,10 +25,10 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadInitialStartData(dataSource);
-        loadTestBudgetData(dataSource);
-        loadTestAccountData(dataSource);
-        loadTestRecurringTransactionData(dataSource);
-        loadTestTransactionData(dataSource);
+//        loadTestBudgetData(dataSource);
+//        loadTestAccountData(dataSource);
+//        loadTestRecurringTransactionData(dataSource);
+//        loadTestTransactionData(dataSource);
     }
 
     public static void loadInitialStartData(DataSource dataSource) {

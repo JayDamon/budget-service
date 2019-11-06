@@ -1,8 +1,5 @@
 package com.protean.moneymaker.rin.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
 // TODO going to need to delete transfers if associated accounts and transactions are deleted, perhaps by prompt?
 /**
@@ -28,8 +26,7 @@ public class Transfer extends UserAuditable implements Serializable {
     private Long id;
 
     @Column(name = "transfer_date")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime date;
+    private ZonedDateTime date;
 
     @OneToOne
     @JoinColumn(name = "from_account_id")
@@ -53,7 +50,7 @@ public class Transfer extends UserAuditable implements Serializable {
     public Transfer() {
     }
 
-    public Transfer(DateTime date, Account fromAccount, Account toAccount, BigDecimal amount, Transaction fromTransaction, Transaction toTransaction) {
+    public Transfer(ZonedDateTime date, Account fromAccount, Account toAccount, BigDecimal amount, Transaction fromTransaction, Transaction toTransaction) {
         this.date = date;
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
@@ -70,11 +67,11 @@ public class Transfer extends UserAuditable implements Serializable {
         this.id = id;
     }
 
-    public DateTime getDate() {
+    public ZonedDateTime getDate() {
         return date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(ZonedDateTime date) {
         this.date = date;
     }
 

@@ -1,8 +1,5 @@
 package com.protean.moneymaker.rin.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -48,8 +46,7 @@ public class Transaction extends UserAuditable implements Serializable {
     private RecurringTransaction recurringTransaction;
 
     @Column(name = "transaction_date")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime date;
+    private ZonedDateTime date;
 
     @Column(name = "description")
     private String description;
@@ -63,7 +60,7 @@ public class Transaction extends UserAuditable implements Serializable {
     public Transaction(
             Account account, Budget budget, TransactionCategory transactionCategory,
             TransactionType transactionType, RecurringTransaction recurringTransaction,
-            DateTime date, String description, BigDecimal amount) {
+            ZonedDateTime date, String description, BigDecimal amount) {
 
         this.account = account;
         this.budget = budget;
@@ -123,11 +120,11 @@ public class Transaction extends UserAuditable implements Serializable {
         this.recurringTransaction = recurringTransaction;
     }
 
-    public DateTime getDate() {
+    public ZonedDateTime getDate() {
         return date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(ZonedDateTime date) {
         this.date = date;
     }
 

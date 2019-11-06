@@ -13,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,9 +20,9 @@ import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.is;
 
 @Transactional
 @SpringBootTest
@@ -40,7 +39,7 @@ class BudgetServiceImplIntegrationTest {
         assertThat(activeBudgets, hasSize(30));
         int found = 0;
         for (Budget budget : activeBudgets) {
-            if (budget.isInUse()) {
+            if (budget.getInUse()) {
                 found++;
             }
         }
@@ -54,7 +53,7 @@ class BudgetServiceImplIntegrationTest {
         assertThat(inactiveBudgets, hasSize(2));
         int found = 0;
         for (Budget budget : inactiveBudgets) {
-            if (!budget.isInUse()) {
+            if (!budget.getInUse()) {
                 found++;
             }
         }

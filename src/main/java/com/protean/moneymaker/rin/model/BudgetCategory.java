@@ -26,7 +26,7 @@ public class BudgetCategory {
 
     @OneToOne
     @JoinColumn(name = "budget_category_type_id")
-    private BudgetCategoryType type;
+    private BudgetCategoryType type; // TODO not having this is invalid
 
     @OneToOne
     @JoinColumn(name = "budget_category_name_id")

@@ -1,22 +1,32 @@
 package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.dto.BudgetCategoryDto;
+import com.protean.moneymaker.rin.dto.BudgetDto;
 import com.protean.moneymaker.rin.dto.BudgetSummary;
+import com.protean.moneymaker.rin.dto.BudgetTypeDto;
 import com.protean.moneymaker.rin.model.Budget;
 import com.protean.moneymaker.rin.model.BudgetCategory;
+import com.protean.moneymaker.rin.model.BudgetCategoryType;
 import com.protean.moneymaker.rin.model.BudgetSubCategory;
 import com.protean.moneymaker.rin.repository.BudgetCategoryRepository;
-import com.protean.moneymaker.rin.repository.BudgetSubCategoryRepository;
 import com.protean.moneymaker.rin.repository.BudgetRepository;
+import com.protean.moneymaker.rin.repository.BudgetSubCategoryRepository;
+import com.protean.moneymaker.rin.util.BudgetUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
 public class BudgetServiceImpl implements BudgetService {
+
+    private ModelMapper modelMapper = new ModelMapper();
 
     private BudgetRepository budgetRepository;
     private BudgetSubCategoryRepository budgetSubCategoryRepository;
@@ -40,10 +50,7 @@ public class BudgetServiceImpl implements BudgetService {
     @Override
     public Set<Budget> getAllBudgets() {
 
-        Set<Budget> budgets = new HashSet<>();
-        budgetRepository.findAll().forEach(budgets::add);
-
-        return budgets;
+        return new HashSet<>(budgetRepository.findAll());
     }
 
     @Override
@@ -54,10 +61,7 @@ public class BudgetServiceImpl implements BudgetService {
     @Override
     public Set<BudgetSubCategory> getBudgetNames() {
 
-        Set<BudgetSubCategory> budgetCategories = new HashSet<>();
-        budgetSubCategoryRepository.findAll().forEach(budgetCategories::add);
-
-        return budgetCategories;
+        return new HashSet<>(budgetSubCategoryRepository.findAll());
     }
 
     @Override
@@ -68,21 +72,16 @@ public class BudgetServiceImpl implements BudgetService {
     @Override
     public Set<Budget> saveBudgets(Set<Budget> budgets) {
 
-        Set<Budget> savedBudgets = new HashSet<>();
-        budgetRepository.saveAll(budgets).forEach(savedBudgets::add);
-
-        return savedBudgets;
+        return new HashSet<>(budgetRepository.saveAll(budgets));
     }
 
     @Override
     public Set<Budget> deactivateBudgets(Set<Budget> budgets) {
 
-        Set<Budget> deactivatedBudgets = new HashSet<>();
 
-        budgets.forEach(budget -> budget.isInUse(false));
-        budgetRepository.saveAll(budgets).forEach(deactivatedBudgets::add);
+        budgets.forEach(budget -> budget.setInUse(false));
 
-        return deactivatedBudgets;
+        return new HashSet<>(budgetRepository.saveAll(budgets));
     }
 
     @Override
@@ -107,12 +106,53 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     public Set<BudgetCategoryDto> getAllBudgetCategoryDtos() {
-        ModelMapper modelMapper = new ModelMapper();
 
         Set<BudgetCategoryDto> budgetCategoryDtos = new HashSet<>();
         for (BudgetCategory budgetCategory : getAllBudgetCategories()) {
             budgetCategoryDtos.add(modelMapper.map(budgetCategory, BudgetCategoryDto.class));
         }
         return budgetCategoryDtos;
+    }
+
+    @Override
+    public Set<BudgetTypeDto> getAllBudgetCategoriesByType() {
+
+        Map<Integer, BudgetTypeDto> budgetTypeMap = new HashMap<>();
+        for (BudgetCategory budgetCategory : getAllBudgetCategories()) {
+
+            BudgetTypeDto budgetTypeDto;
+
+            BudgetCategoryType type = budgetCategory.getType();
+            if (budgetTypeMap.containsKey(type.getId())) {
+                budgetTypeDto = budgetTypeMap.get(type.getId());
+            } else {
+                budgetTypeDto = new BudgetTypeDto();
+                budgetTypeDto.setId(type.getId());
+                budgetTypeDto.setType(type.getName());
+            }
+
+            BudgetCategoryDto cat = modelMapper.map(budgetCategory, BudgetCategoryDto.class);
+            cat.setTypeName(null);
+            budgetTypeDto.getBudgetCategories().add(cat);
+
+
+            budgetTypeMap.put(type.getId(), budgetTypeDto);
+        }
+
+        return new HashSet<>(budgetTypeMap.values());
+    }
+
+    @Override
+    public Set<BudgetDto> createNewBudgets(Set<BudgetDto> newBudgets) {
+
+        if (newBudgets == null) {
+            throw new IllegalArgumentException("Budget Dtos must not be null");
+        }
+
+        List<Budget> budgetList = new ArrayList<>(BudgetUtil.convertBudgetDtosToBudgetIncludeOnlyIdForChildEntity(newBudgets));
+
+        List<Budget> savedBudgets = budgetRepository.saveAll(budgetList);
+
+        return BudgetUtil.convertBudgetsToDto(savedBudgets);
     }
 }

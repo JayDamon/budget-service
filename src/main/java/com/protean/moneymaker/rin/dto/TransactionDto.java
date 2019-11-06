@@ -2,9 +2,9 @@ package com.protean.moneymaker.rin.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TransactionDto {
@@ -19,7 +19,7 @@ public class TransactionDto {
     private String description;
 
     @JsonProperty("date")
-    private DateTime date;
+    private ZonedDateTime date;
 
     @JsonProperty("account")
     private AccountDto account;
@@ -37,7 +37,7 @@ public class TransactionDto {
     }
 
     public TransactionDto(
-            Long id, BigDecimal amount, String description, DateTime date, AccountDto account,
+            Long id, BigDecimal amount, String description, ZonedDateTime date, AccountDto account,
             BudgetDto budget, TransactionCategoryDto transactionCategory,
             RecurringTransactionDto recurringTransaction) {
 
@@ -75,11 +75,11 @@ public class TransactionDto {
         this.description = description;
     }
 
-    public DateTime getDate() {
+    public ZonedDateTime getDate() {
         return date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(ZonedDateTime date) {
         this.date = date;
     }
 

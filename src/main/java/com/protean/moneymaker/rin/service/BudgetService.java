@@ -1,13 +1,14 @@
 package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.dto.BudgetCategoryDto;
+import com.protean.moneymaker.rin.dto.BudgetDto;
 import com.protean.moneymaker.rin.dto.BudgetSummary;
+import com.protean.moneymaker.rin.dto.BudgetTypeDto;
 import com.protean.moneymaker.rin.model.Budget;
 import com.protean.moneymaker.rin.model.BudgetCategory;
 import com.protean.moneymaker.rin.model.BudgetSubCategory;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 
 public interface BudgetService {
@@ -39,6 +40,22 @@ public interface BudgetService {
 
     @Transactional
     Set<BudgetCategoryDto> getAllBudgetCategoryDtos();
+
+    /**
+     * Retrieve all budget categories and group them by budget type.
+     *
+     * @return Set of Budget Type Dto
+     */
+    Set<BudgetTypeDto> getAllBudgetCategoriesByType();
+
+    /**
+     * Create new budgets from dtos and add newly created ids.
+     *
+     * @param newBudgets
+     *          List of budgets to be created.
+     * @return Set of BudgetDtos with ids added.
+     */
+    Set<BudgetDto> createNewBudgets(Set<BudgetDto> newBudgets);
 
     // TODO reset generic budget?
 

@@ -2,9 +2,9 @@ package com.protean.moneymaker.rin.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RecurringTransactionDto {
@@ -37,10 +37,10 @@ public class RecurringTransactionDto {
     private String transactionTypeName;
 
     @JsonProperty("startDate")
-    private DateTime startDate;
+    private ZonedDateTime startDate;
 
     @JsonProperty("endDate")
-    private DateTime endDate;
+    private ZonedDateTime endDate;
 
     @JsonProperty("amount")
     private BigDecimal amount;
@@ -52,7 +52,7 @@ public class RecurringTransactionDto {
             Long id, String name, AccountDto account,
             BudgetSubCategoryDto budgetSubCategory, TransactionCategoryDto transactionCategory,
             String frequencyTypeName, Integer frequency, String occurrenceName, String transactionTypeName,
-            DateTime startDate, DateTime endDate, BigDecimal amount) {
+            ZonedDateTime startDate, ZonedDateTime endDate, BigDecimal amount) {
 
         this.id = id;
         this.name = name;
@@ -140,19 +140,19 @@ public class RecurringTransactionDto {
         this.transactionTypeName = transactionTypeName;
     }
 
-    public DateTime getStartDate() {
+    public ZonedDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 

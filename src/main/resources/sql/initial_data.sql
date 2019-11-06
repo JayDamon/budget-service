@@ -17,9 +17,11 @@ INSERT INTO account_classification (account_classification_id, classification) V
 INSERT INTO account_classification (account_classification_id, classification) VALUES (5, 'Revenue');
 INSERT INTO account_classification (account_classification_id, classification) VALUES (6, 'Expense');
 
-INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (1, 'Week');
-INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (2, 'Month');
-INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (3, 'Year');
+INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (1, 'Weekly');
+INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (2, 'Monthly');
+INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (3, 'Bi-Weekly');
+INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (4, 'Hourly');
+INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (5, 'Annual');
 
 INSERT INTO goal_type (goal_type_id, goal_type) VALUES (1, 'save');
 INSERT INTO goal_type (goal_type_id, goal_type) VALUES (2, 'pay');
@@ -83,14 +85,15 @@ INSERT INTO budget_sub_category (budget_sub_category_id, sub_category_name) VALU
 INSERT INTO budget_sub_category (budget_sub_category_id, sub_category_name) VALUES (17, 'Savings');
 INSERT INTO budget_sub_category (budget_sub_category_id, sub_category_name) VALUES (18, 'Generic');
 
+-- TODO this is just a list of generics and is being turned into a budget, not for user storage
 INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (1, 2, 'Rent / Mortgage');
-INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (2, 2, 'Auto Loan / Lease');
-INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (3, 2, 'Cable / Internet');
-INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (4, 2, 'Cable');
-INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (5, 2, 'Internet');
-INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (6, 2, 'Satellite');
-INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (7, 2, 'Telephone');
-INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (8, 2, 'Cell Phone');
+INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (2, 2, 'Cable / Internet');
+INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (3, 2, 'Cable');
+INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (4, 2, 'Internet');
+INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (5, 2, 'Satellite');
+INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (6, 2, 'Telephone');
+INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (7, 2, 'Cell Phone');
+INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (8, 2, 'Health Insurance');
 INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (9, 5, 'Electricity');
 INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (10, 5, 'Oil');
 INSERT INTO budget_item (budget_item_id, budget_category_id, name) VALUES (11, 5, 'Telephone');

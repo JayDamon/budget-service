@@ -1,8 +1,5 @@
 package com.protean.moneymaker.rin.model;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -61,12 +59,10 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
     private TransactionType transactionType;
 
     @Column(name = "start_date")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime startDate;
+    private ZonedDateTime startDate;
 
     @Column(name = "end_date")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime endDate;
+    private ZonedDateTime endDate;
 
     @Column(name = "amount")
     private BigDecimal amount;
@@ -78,7 +74,7 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
             String name, Account account, BudgetSubCategory budgetSubCategory,
             TransactionCategory transactionCategory, FrequencyType frequencyType,
             Integer frequency, Occurrence occurrence, TransactionType transactionType,
-            DateTime startDate, DateTime endDate, BigDecimal amount) {
+            ZonedDateTime startDate, ZonedDateTime endDate, BigDecimal amount) {
 
         this.name = name;
         this.account = account;
@@ -165,19 +161,19 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
         this.transactionType = transactionType;
     }
 
-    public DateTime getStartDate() {
+    public ZonedDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(ZonedDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 

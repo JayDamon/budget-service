@@ -35,7 +35,7 @@ class TransactionServiceImplIntegrationTest {
                 assertThat(dto.getId(), is(not(nullValue())));
                 assertThat(dto.getAmount(), is(not(nullValue())));
                 assertThat(dto.getDescription(), is(not(nullValue())));
-                assertThat(dto.getDate().monthOfYear(), is(not(nullValue())));
+                assertThat(dto.getDate().getMonth(), is(not(nullValue())));
                 assertThat(dto.getAccount().getId(), is(not(nullValue())));
                 assertThat(dto.getAccount().getName(), is(not(nullValue())));
                 assertThat(dto.getBudget().getId(), is(not(nullValue())));
@@ -43,8 +43,8 @@ class TransactionServiceImplIntegrationTest {
                 assertThat(dto.getBudget().getBudgetCategory().getId(), is(not(nullValue())));
                 assertThat(dto.getBudget().getBudgetCategory().getTypeName(), is(not(nullValue())));
                 assertThat(dto.getBudget().getBudgetCategory().getName(), is(not(nullValue())));
-                assertThat(dto.getBudget().getStartDate().monthOfYear(), is(not(nullValue())));
-                assertThat(dto.getBudget().getEndDate().monthOfYear(), is(not(nullValue())));
+                assertThat(dto.getBudget().getStartDate().getMonth(), is(not(nullValue())));
+                assertThat(dto.getBudget().getEndDate().getMonth(), is(not(nullValue())));
                 assertThat(dto.getBudget().getFrequencyTypeName(), is(not(nullValue())));
                 assertThat(dto.getBudget().getAmount(), is(not(nullValue())));
                 assertThat(dto.getBudget().getInUse(), is(not(nullValue())));
@@ -66,7 +66,7 @@ class TransactionServiceImplIntegrationTest {
                 assertThat(dto.getRecurringTransaction().getFrequency(), is(not(nullValue())));
                 assertThat(dto.getRecurringTransaction().getOccurrenceName(), is(not(nullValue())));
                 assertThat(dto.getRecurringTransaction().getTransactionTypeName(), is(not(nullValue())));
-                assertThat(dto.getRecurringTransaction().getStartDate().monthOfYear(), is(not(nullValue())));
+                assertThat(dto.getRecurringTransaction().getStartDate().getMonth(), is(not(nullValue())));
 //                assertThat(dto.getRecurringTransaction().getEndDate().monthOfYear(), is(not(nullValue())));
                 assertThat(dto.getRecurringTransaction().getAmount(), is(not(nullValue())));
                 dtoChecked = true;
