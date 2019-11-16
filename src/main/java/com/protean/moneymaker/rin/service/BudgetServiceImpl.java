@@ -8,6 +8,7 @@ import com.protean.moneymaker.rin.model.Budget;
 import com.protean.moneymaker.rin.model.BudgetCategory;
 import com.protean.moneymaker.rin.model.BudgetCategoryType;
 import com.protean.moneymaker.rin.model.BudgetSubCategory;
+import com.protean.moneymaker.rin.model.FrequencyType;
 import com.protean.moneymaker.rin.repository.BudgetCategoryRepository;
 import com.protean.moneymaker.rin.repository.BudgetRepository;
 import com.protean.moneymaker.rin.repository.BudgetSubCategoryRepository;
@@ -15,6 +16,7 @@ import com.protean.moneymaker.rin.util.BudgetUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,15 +33,17 @@ public class BudgetServiceImpl implements BudgetService {
     private BudgetRepository budgetRepository;
     private BudgetSubCategoryRepository budgetSubCategoryRepository;
     private BudgetCategoryRepository budgetCategoryRepository;
+    private FrequencyService frequencyService;
 
     public BudgetServiceImpl(
             BudgetRepository budgetRepository,
             BudgetSubCategoryRepository budgetSubCategoryRepository,
-            BudgetCategoryRepository budgetCategoryRepository) {
+            BudgetCategoryRepository budgetCategoryRepository, FrequencyService frequencyService) {
 
         this.budgetRepository = budgetRepository;
         this.budgetSubCategoryRepository = budgetSubCategoryRepository;
         this.budgetCategoryRepository = budgetCategoryRepository;
+        this.frequencyService = frequencyService;
     }
 
     @Override
@@ -155,4 +159,47 @@ public class BudgetServiceImpl implements BudgetService {
 
         return BudgetUtil.convertBudgetsToDto(savedBudgets);
     }
+
+    @Override
+    public Budget updateBudget(BudgetDto budgetDto) {
+
+        if (budgetDto == null) {
+            throw new IllegalArgumentException("Budget must not be null.");
+        }
+        if (budgetDto.getId() == null) {
+            throw new IllegalArgumentException("Budget must have a valid id.");
+        }
+
+        Budget budget = budgetRepository.findById(budgetDto.getId()).orElseThrow(
+                () -> new NoResultException("No budget with id <" + budgetDto.getId() + "> was found."));
+
+        if (budgetDto.getFrequencyTypeId() != null) {
+            FrequencyType frequencyType = frequencyService.getFrequencyTypeById(budgetDto.getFrequencyTypeId());
+            budget.setFrequencyType(frequencyType);
+        }
+        if (budgetDto.getBudgetCategory() != null && budgetDto.getBudgetCategory().getId() != null) {
+            BudgetCategory budgetCategory = budgetCategoryRepository.findById(
+                    budgetDto.getBudgetCategory().getId()).orElseThrow(
+                            () -> new NoResultException("Budget category with id <" + budgetDto.getBudgetCategory().getId() + "> was not found."));
+            budget.setBudgetCategory(budgetCategory);
+        }
+        if (budgetDto.getName() != null) {
+            budget.setName(budgetDto.getName());
+        }
+        if (budgetDto.getStartDate() != null) {
+            budget.setStartDate(budgetDto.getStartDate());
+        }
+        if (budgetDto.getEndDate() != null) {
+            budget.setEndDate(budgetDto.getEndDate());
+        }
+        if (budgetDto.getAmount() != null) {
+            budget.setAmount(budgetDto.getAmount());
+        }
+        if (budgetDto.getInUse() != null) {
+            budget.setInUse(budgetDto.getInUse());
+        }
+
+        return budgetRepository.save(budget);
+    }
+
 }

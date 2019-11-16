@@ -44,4 +44,5 @@ public class BudgetTypeDto {
     public void setBudgetCategories(Set<BudgetCategoryDto> budgetCategories) {
         this.budgetCategories = budgetCategories;
     }
+
 }

@@ -57,6 +57,15 @@ public interface BudgetService {
      */
     Set<BudgetDto> createNewBudgets(Set<BudgetDto> newBudgets);
 
+    /**
+     * Updates budget in the database with only the values provided. Null Values are ignored.
+     *
+     * @param budgetDto
+     *          Dto containing the values being changed.
+     * @return The updated budget.
+     */
+    Budget updateBudget(BudgetDto budgetDto);
+
     // TODO reset generic budget?
 
 }

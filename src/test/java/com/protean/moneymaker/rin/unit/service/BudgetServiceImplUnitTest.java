@@ -9,17 +9,23 @@ import com.protean.moneymaker.rin.model.BudgetCategory;
 import com.protean.moneymaker.rin.model.BudgetCategoryName;
 import com.protean.moneymaker.rin.model.BudgetCategoryType;
 import com.protean.moneymaker.rin.model.BudgetItem;
+import com.protean.moneymaker.rin.model.FrequencyType;
 import com.protean.moneymaker.rin.repository.BudgetCategoryRepository;
 import com.protean.moneymaker.rin.repository.BudgetRepository;
 import com.protean.moneymaker.rin.repository.BudgetSubCategoryRepository;
+import com.protean.moneymaker.rin.repository.FrequencyTypeRepository;
 import com.protean.moneymaker.rin.service.BudgetService;
 import com.protean.moneymaker.rin.service.BudgetServiceImpl;
+import com.protean.moneymaker.rin.service.FrequencyService;
+import com.protean.moneymaker.rin.service.FrequencyServiceImpl;
+import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.persistence.NoResultException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -27,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,8 +45,11 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,12 +57,14 @@ class BudgetServiceImplUnitTest {
 
     @Mock private BudgetCategoryRepository budgetCategoryRepository;
     @Mock private BudgetRepository budgetRepository;
+    @Mock private FrequencyTypeRepository frequencyTypeRepository;
 
     private BudgetService budgetService;
 
     @BeforeEach
     void setUp() {
-        budgetService = new BudgetServiceImpl(budgetRepository, mock(BudgetSubCategoryRepository.class), budgetCategoryRepository);
+        FrequencyService frequencyService = new FrequencyServiceImpl(frequencyTypeRepository);
+        budgetService = new BudgetServiceImpl(budgetRepository, mock(BudgetSubCategoryRepository.class), budgetCategoryRepository, frequencyService);
     }
 
 //    getAllBudgetCategoryDtos
@@ -181,9 +193,7 @@ class BudgetServiceImplUnitTest {
     void createNewBudgets_GivenBudgetsProvided_ThenSaveAndReturnWithIds() {
 
         // Arrange
-        BudgetCategoryDto budgetCategoryDto = new BudgetCategoryDto(5, "TestType", "TestCatName");
-        BudgetDto budgetDto = new BudgetDto(1L, "TestName", budgetCategoryDto, ZonedDateTime.now(),
-                ZonedDateTime.now().plusDays(6), 10, "TestFrequency", BigDecimal.valueOf(54.21), false);
+        BudgetDto budgetDto = getBudgetDto();
 
         when(budgetRepository.saveAll(any())).thenAnswer(i -> {
             List<Budget> budgets = (ArrayList<Budget>)i.getArguments()[0];
@@ -209,6 +219,139 @@ class BudgetServiceImplUnitTest {
         assertThrows(IllegalArgumentException.class, () -> budgetService.createNewBudgets(null));
     }
 
+//    updateBudget
+    @Test
+    void updateBudget_GivenBudgetExistsAndAllValuesChanged_ThenUpdateAllValues() {
+
+        // Arrange
+        Budget currentBudget = createBudget(
+                "A Budget Name", ZonedDateTime.now(), ZonedDateTime.now().plusDays(5),
+                35.02, true, 1L);
+
+        when(budgetRepository.findById(eq(1L))).thenReturn(Optional.of(currentBudget));
+        when(budgetRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
+
+        BudgetCategory budgetCategory = createBudgetCategory("TestType", 2, "TestCatName", 3, 5);
+        FrequencyType frequencyType = createFrequencyType("TestFrequency", 10);
+
+        when(budgetCategoryRepository.findById(eq(5))).thenReturn(Optional.of(budgetCategory));
+        when(frequencyTypeRepository.findById(eq(10))).thenReturn(Optional.of(frequencyType));
+
+        BudgetDto budgetDto = getBudgetDto();
+
+        // Act
+        Budget budget = budgetService.updateBudget(budgetDto);
+
+        // Assert
+        assertThat(budget.getId(), is(equalTo(1L)));
+        assertThat(budget.getName(), is(equalTo("TestName")));
+        assertThat(budget.getStartDate().getDayOfMonth(), is(equalTo(LocalDate.now().getDayOfMonth())));
+        assertThat(budget.getEndDate().getDayOfMonth(), is(equalTo(ZonedDateTime.now().plusDays(6).getDayOfMonth())));
+        assertThat(budget.getFrequencyType().getId(), is(equalTo(10)));
+        assertThat(budget.getFrequencyType().getName(), is(equalTo("TestFrequency")));
+        assertThat(budget.getAmount(), is(equalTo(BigDecimal.valueOf(54.21))));
+        assertThat(budget.getInUse(), is(false));
+
+        BudgetCategory cat = budget.getBudgetCategory();
+        assertThat(cat.getId(), is(equalTo(5)));
+        assertThat(cat.getType().getName(), is(equalTo("TestType")));
+        assertThat(cat.getName().getName(), is(equalTo("TestCatName")));
+
+    }
+
+    @Test
+    void updateBudget_GivenDtoWithOnlyPartialValuesProvided_ThenUpdateOnlyValuesProvided() {
+
+        // Arrange
+        Budget currentBudget = createBudget(
+                "A Budget Name", ZonedDateTime.now(), ZonedDateTime.now().plusDays(5),
+                35.02, true, 1L);
+
+        when(budgetRepository.findById(eq(1L))).thenReturn(Optional.of(currentBudget));
+        when(budgetRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
+
+        BudgetCategory budgetCategory = createBudgetCategory("TestType", 2, "TestCatName", 3, 5);
+
+        when(budgetCategoryRepository.findById(eq(5))).thenReturn(Optional.of(budgetCategory));
+
+        BudgetDto budgetDto = getBudgetDto();
+        budgetDto.setFrequencyTypeId(null);
+        budgetDto.setFrequencyTypeName(null);
+        budgetDto.setAmount(null);
+
+        // Act
+        Budget budget = budgetService.updateBudget(budgetDto);
+
+        // Assert
+        verify(frequencyTypeRepository, times(0)).findById(any());
+
+        assertThat(budget.getId(), is(equalTo(1L)));
+        assertThat(budget.getName(), is(equalTo("TestName")));
+        assertThat(budget.getStartDate().getDayOfMonth(), is(equalTo(LocalDate.now().getDayOfMonth())));
+        assertThat(budget.getEndDate().getDayOfMonth(), is(equalTo(ZonedDateTime.now().plusDays(6).getDayOfMonth())));
+        assertThat(budget.getFrequencyType().getId(), is(equalTo(3)));
+        assertThat(budget.getFrequencyType().getName(), is(equalTo("TestFrequencyTypeName")));
+        assertThat(budget.getAmount(), is(equalTo(BigDecimal.valueOf(35.02))));
+        assertThat(budget.getInUse(), is(false));
+
+        BudgetCategory cat = budget.getBudgetCategory();
+        assertThat(cat.getId(), is(equalTo(5)));
+        assertThat(cat.getType().getName(), is(equalTo("TestType")));
+        assertThat(cat.getName().getName(), is(equalTo("TestCatName")));
+
+    }
+
+    @Test
+    void updateBudget_GivenDtoIsNull_ThenThrowIllegalArgumentException() {
+
+        assertThrows(IllegalArgumentException.class, () -> budgetService.updateBudget(null));
+
+    }
+
+    @Test
+    void updateBudget_GivenDtoIdIsNull_ThenThrowIllegalArgumentException() {
+
+        BudgetDto budgetDto = getBudgetDto();
+        budgetDto.setId(null);
+
+        assertThrows(IllegalArgumentException.class, () -> budgetService.updateBudget(budgetDto));
+
+    }
+
+    @Test
+    void updateBudget_GivenBudgetWithIdDoesNotExist_ThenThrowIllegalArgumentException() {
+
+        when(budgetRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(NoResultException.class, () -> budgetService.updateBudget(getBudgetDto()));
+
+    }
+
+    private FrequencyType createFrequencyType(String testFrequency, int id) {
+        FrequencyType frequencyType = new FrequencyType(testFrequency);
+        frequencyType.setId(id);
+        return frequencyType;
+    }
+
+    private BudgetCategory createBudgetCategory(String testType, int typeId, String testCatName, int nameId, int categoryId) {
+        BudgetCategoryType budgetCategoryType = new BudgetCategoryType(testType);
+        budgetCategoryType.setId(typeId);
+
+        BudgetCategoryName budgetCategoryName = new BudgetCategoryName(testCatName);
+        budgetCategoryName.setId(nameId);
+
+        BudgetCategory budgetCategory = new BudgetCategory(budgetCategoryType, budgetCategoryName);
+        budgetCategory.setId(categoryId);
+        return budgetCategory;
+    }
+
+
+    private BudgetDto getBudgetDto() {
+        BudgetCategoryDto budgetCategoryDto = new BudgetCategoryDto(5, "TestType", "TestCatName");
+        return new BudgetDto(1L, "TestName", budgetCategoryDto, ZonedDateTime.now(),
+                ZonedDateTime.now().plusDays(6), 10, "TestFrequency", BigDecimal.valueOf(54.21), false);
+    }
+
     private List<BudgetCategory> createBudgetCategories() {
 
         BudgetCategory budgetCategory = getBudgetCategory("TestBudgetCategoryType", 1);
@@ -218,13 +361,7 @@ class BudgetServiceImplUnitTest {
     }
 
     private BudgetCategory getBudgetCategory(String type, int typeId) {
-        BudgetCategoryType budgetCategoryType = new BudgetCategoryType(type);
-        budgetCategoryType.setId(typeId);
-
-        BudgetCategoryName budgetCategoryName = new BudgetCategoryName("TestBudgetCategoryName");
-        budgetCategoryName.setId(2);
-        BudgetCategory budgetCategory = new BudgetCategory(budgetCategoryType, budgetCategoryName);
-        budgetCategory.setId(3);
+        BudgetCategory budgetCategory = createBudgetCategory(type, typeId, "TestBudgetCategoryName", 2, 3);
 
         Set<BudgetItem> budgetItems = new HashSet<>();
         BudgetItem budgetItem = new BudgetItem(budgetCategory, "TestBudgetItemName");
@@ -233,6 +370,30 @@ class BudgetServiceImplUnitTest {
 
         budgetCategory.setBudgetItems(budgetItems);
         return budgetCategory;
+    }
+
+    private Budget createBudget(String name, ZonedDateTime startDate, ZonedDateTime endDate, double amount, boolean inUse, long id) {
+        BudgetCategory budgetCategory = createBudgetCategory("TestBudgetCategoryType", 1, "TestBudgetCategoryName", 2, 1);
+
+        BudgetItem itemOne = new BudgetItem(budgetCategory, "Item Name");
+        itemOne.setId(6L);
+
+        BudgetItem itemTwo = new BudgetItem(budgetCategory, "Item Name Two");
+        itemTwo.setId(7L);
+
+        itemOne.setBudgetCategory(budgetCategory);
+
+        budgetCategory.getBudgetItems().add(itemOne);
+        budgetCategory.getBudgetItems().add(itemTwo);
+
+        FrequencyType frequencyType = createFrequencyType("TestFrequencyTypeName", 3);
+
+        Budget budget = new Budget(
+                budgetCategory, name, startDate,
+                endDate, frequencyType, BigDecimal.valueOf(amount), inUse);
+        budget.setId(id);
+
+        return budget;
     }
 
 }

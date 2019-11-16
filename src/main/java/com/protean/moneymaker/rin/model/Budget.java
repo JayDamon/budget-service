@@ -48,7 +48,7 @@ public class Budget extends UserAuditable implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
 
-    @Column(name = "in_use", nullable = false, columnDefinition = "boolean default true")
+    @Column(name = "in_use", columnDefinition = "boolean default true")
     private Boolean inUse;
 
     public Budget() {

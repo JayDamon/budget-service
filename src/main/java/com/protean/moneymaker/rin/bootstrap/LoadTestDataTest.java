@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 
 @Component
-@Profile({"test", "local"})
-public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> {
+@Profile({"test"})
+public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEvent> {
 
     private DataSource dataSource;
 
-    public LoadTestData(DataSource dataSource) {
+    public LoadTestDataTest(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -25,38 +25,39 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadInitialStartData(dataSource);
-        loadTestBudgetData(dataSource);
+        loadCompleteBudgets(dataSource);
+//        loadInitialBudgets(dataSource);
         loadTestAccountData(dataSource);
         loadTestRecurringTransactionData(dataSource);
         loadTestTransactionData(dataSource);
     }
 
     public static void loadInitialStartData(DataSource dataSource) {
-        Resource resource = new ClassPathResource("sql/initial_data.sql");
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
-        databasePopulator.execute(dataSource);
+        loadSql(dataSource, "sql/initial_data.sql");
     }
 
-    public static void loadTestBudgetData(DataSource dataSource) {
-        Resource resource = new ClassPathResource("sql/test_budgets.sql");
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
-        databasePopulator.execute(dataSource);
+    public static void loadInitialBudgets(DataSource dataSource) {
+        loadSql(dataSource, "sql/initial_budgets.sql");
     }
 
     public static void loadTestAccountData(DataSource dataSource) {
-        Resource resource = new ClassPathResource("sql/test_accounts.sql");
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
-        databasePopulator.execute(dataSource);
+        loadSql(dataSource, "sql/test_accounts.sql");
     }
 
     public static void loadTestRecurringTransactionData(DataSource dataSource) {
-        Resource resource = new ClassPathResource("sql/test_recurring_transactions.sql");
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
-        databasePopulator.execute(dataSource);
+        loadSql(dataSource, "sql/test_recurring_transactions.sql");
     }
 
     public static void loadTestTransactionData(DataSource dataSource) {
-        Resource resource = new ClassPathResource("sql/test_transactions.sql");
+        loadSql(dataSource, "sql/test_transactions.sql");
+    }
+
+    public static void loadCompleteBudgets(DataSource dataSource) {
+        loadSql(dataSource, "sql/complete_budgets.sql");
+    }
+
+    private static void loadSql(DataSource dataSource, String s) {
+        Resource resource = new ClassPathResource(s);
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.execute(dataSource);
     }
