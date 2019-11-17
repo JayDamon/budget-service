@@ -38,7 +38,8 @@ public class BudgetServiceImpl implements BudgetService {
     public BudgetServiceImpl(
             BudgetRepository budgetRepository,
             BudgetSubCategoryRepository budgetSubCategoryRepository,
-            BudgetCategoryRepository budgetCategoryRepository, FrequencyService frequencyService) {
+            BudgetCategoryRepository budgetCategoryRepository,
+            FrequencyService frequencyService) {
 
         this.budgetRepository = budgetRepository;
         this.budgetSubCategoryRepository = budgetSubCategoryRepository;
