@@ -8,4 +8,6 @@ public interface FrequencyService {
 
     List<FrequencyType> getAllFrequencyTypes();
 
+    FrequencyType getFrequencyTypeById(int id);
+
 }

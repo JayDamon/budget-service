@@ -31,6 +31,15 @@ public class BudgetUtil {
 
     }
 
+    public static BudgetDto convertBudgetToDto(Budget budget) {
+
+        if (budget == null) {
+            throw new IllegalArgumentException("Budget must not be null.");
+        }
+
+        return modelMapper.map(budget, BudgetDto.class);
+    }
+
     public static Set<Budget> convertBudgetDtosToBudget(Collection<BudgetDto> budgetDtos) {
 
         if (budgetDtos == null) {
