@@ -1,17 +1,23 @@
 package com.protean.moneymaker.rin.service;
 
+import com.protean.moneymaker.rin.dto.BudgetSummary;
+import com.protean.moneymaker.rin.dto.TransactionBudgetSummary;
 import com.protean.moneymaker.rin.dto.TransactionDto;
+import com.protean.moneymaker.rin.model.BudgetCategory;
 import com.protean.moneymaker.rin.model.BudgetSubCategory;
 import com.protean.moneymaker.rin.model.Transaction;
 import com.protean.moneymaker.rin.model.TransactionCategory;
-import com.protean.moneymaker.rin.repository.TransactionCategoryRepository;
+import com.protean.moneymaker.rin.model.TransactionType;
 import com.protean.moneymaker.rin.repository.TransactionRepository;
 import com.protean.moneymaker.rin.repository.TransactionSubCategoryRepository;
+import com.protean.moneymaker.rin.repository.TransactionTypeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,15 +26,15 @@ import java.util.Set;
 public class TransactionServiceImpl implements TransactionService {
 
     private TransactionRepository transactionRepository;
-    private TransactionCategoryRepository transactionCategoryRepository;
     private TransactionSubCategoryRepository transactionSubCategoryRepository;
+    private TransactionTypeRepository transactionTypeRepository;
 
     public TransactionServiceImpl(TransactionRepository transactionRepository,
-                                  TransactionCategoryRepository transactionCategoryRepository,
-                                  TransactionSubCategoryRepository transactionSubCategoryRepository) {
+                                  TransactionSubCategoryRepository transactionSubCategoryRepository,
+                                  TransactionTypeRepository transactionTypeRepository) {
         this.transactionRepository = transactionRepository;
-        this.transactionCategoryRepository = transactionCategoryRepository;
         this.transactionSubCategoryRepository = transactionSubCategoryRepository;
+        this.transactionTypeRepository = transactionTypeRepository;
     }
 
     @Override
@@ -109,5 +115,27 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void deleteTransactions(List<Transaction> transactions) {
         transactionRepository.deleteAll(transactions);
+    }
+
+    @Override
+    public Set<TransactionBudgetSummary> getTransactionBudgetSummaryForAllTransactionTypes(int year, int month, Set<BudgetSummary> budgetSummaries) {
+
+        if (year <= 0) {
+            throw  new IllegalArgumentException("Year must be greater than zero, but was <" + year + ">");
+        }
+        if (month <= 0 || month > 12) {
+            throw  new IllegalArgumentException("Valid month between 1 and 12 must be provided, but was <" + month + ">");
+        }
+
+        Set<TransactionBudgetSummary> summaries = new HashSet<>();
+
+        for (BudgetSummary b : budgetSummaries) {
+            TransactionBudgetSummary summary = transactionRepository.getBudgetSummaries(year, month, b.getCategoryId(), b.getTransactionTypeId()).orElse(
+                    new TransactionBudgetSummary(b.getTransactionType(), b.getCategory(), month, year, b.getPlanned(), BigDecimal.ZERO, false)
+            );
+            summaries.add(summary);
+        }
+
+        return summaries;
     }
 }

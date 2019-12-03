@@ -17,11 +17,11 @@ INSERT INTO account_classification (account_classification_id, classification) V
 INSERT INTO account_classification (account_classification_id, classification) VALUES (5, 'Revenue');
 INSERT INTO account_classification (account_classification_id, classification) VALUES (6, 'Expense');
 
-INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (1, 'Weekly');
-INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (2, 'Monthly');
-INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (3, 'Bi-Weekly');
-INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (4, 'Hourly');
-INSERT INTO frequency_type(frequency_type_id, frequency_type) VALUES (5, 'Annual');
+INSERT INTO frequency_type(frequency_type_id, frequency_type, month_factor) VALUES (1, 'Weekly', 4);
+INSERT INTO frequency_type(frequency_type_id, frequency_type, month_factor) VALUES (2, 'Monthly', 1);
+INSERT INTO frequency_type(frequency_type_id, frequency_type, month_factor) VALUES (3, 'Bi-Weekly', 2);
+INSERT INTO frequency_type(frequency_type_id, frequency_type, month_factor) VALUES (4, 'Hourly', 672);
+INSERT INTO frequency_type(frequency_type_id, frequency_type, month_factor) VALUES (5, 'Annual', .08333333);
 
 INSERT INTO goal_type (goal_type_id, goal_type) VALUES (1, 'save');
 INSERT INTO goal_type (goal_type_id, goal_type) VALUES (2, 'pay');

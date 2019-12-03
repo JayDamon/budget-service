@@ -2,8 +2,8 @@ package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.dto.BudgetCategoryDto;
 import com.protean.moneymaker.rin.dto.BudgetDto;
-import com.protean.moneymaker.rin.dto.BudgetSummary;
 import com.protean.moneymaker.rin.dto.BudgetTypeDto;
+import com.protean.moneymaker.rin.dto.TransactionBudgetSummary;
 import com.protean.moneymaker.rin.model.Budget;
 import com.protean.moneymaker.rin.model.BudgetCategory;
 import com.protean.moneymaker.rin.model.BudgetSubCategory;
@@ -33,7 +33,7 @@ public interface BudgetService {
 
     void deleteUserDefinedBudget(Budget budgets);
 
-    Set<BudgetSummary> getBudgetSummary(int[] years, int[] months);
+    Set<TransactionBudgetSummary> getBudgetSummary(int years, int months);
 
     @Transactional
     Set<BudgetCategory> getAllBudgetCategories();

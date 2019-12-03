@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Week, month, year // TODO should probably be an enum
+ * Weekly, Monthly, Annual, Bi-Weekly, Hourly
  */
 @Entity
 @Table(name = "frequency_type")
@@ -23,6 +23,10 @@ public class FrequencyType implements Serializable {
 
     @Column(name = "frequency_type")
     private String name;
+
+    // Factor used to multiply amount by to normalize to a monthly value
+    @Column(name = "month_factor")
+    private Double monthFactor;
 
     public FrequencyType() {
     }
@@ -45,6 +49,14 @@ public class FrequencyType implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getMonthFactor() {
+        return monthFactor;
+    }
+
+    public void setMonthFactor(Double monthFactor) {
+        this.monthFactor = monthFactor;
     }
 
     @Override

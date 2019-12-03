@@ -1,10 +1,30 @@
 package com.protean.moneymaker.rin.unit.service;
 
-import com.protean.moneymaker.rin.dto.*;
-import com.protean.moneymaker.rin.model.*;
-import com.protean.moneymaker.rin.repository.*;
-import com.protean.moneymaker.rin.service.*;
-import org.hamcrest.collection.IsCollectionWithSize;
+import com.protean.moneymaker.rin.dto.BudgetCategoryDto;
+import com.protean.moneymaker.rin.dto.BudgetDto;
+import com.protean.moneymaker.rin.dto.BudgetItemDto;
+import com.protean.moneymaker.rin.dto.BudgetTypeDto;
+import com.protean.moneymaker.rin.dto.TransactionBudgetSummary;
+import com.protean.moneymaker.rin.model.Account;
+import com.protean.moneymaker.rin.model.Budget;
+import com.protean.moneymaker.rin.model.BudgetCategory;
+import com.protean.moneymaker.rin.model.BudgetCategoryName;
+import com.protean.moneymaker.rin.model.BudgetCategoryType;
+import com.protean.moneymaker.rin.model.BudgetItem;
+import com.protean.moneymaker.rin.model.FrequencyType;
+import com.protean.moneymaker.rin.model.Transaction;
+import com.protean.moneymaker.rin.model.TransactionType;
+import com.protean.moneymaker.rin.repository.BudgetCategoryRepository;
+import com.protean.moneymaker.rin.repository.BudgetRepository;
+import com.protean.moneymaker.rin.repository.BudgetSubCategoryRepository;
+import com.protean.moneymaker.rin.repository.FrequencyTypeRepository;
+import com.protean.moneymaker.rin.repository.TransactionRepository;
+import com.protean.moneymaker.rin.service.BudgetService;
+import com.protean.moneymaker.rin.service.BudgetServiceImpl;
+import com.protean.moneymaker.rin.service.FrequencyService;
+import com.protean.moneymaker.rin.service.FrequencyServiceImpl;
+import com.protean.moneymaker.rin.service.TransactionService;
+import com.protean.moneymaker.rin.service.TransactionServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,11 +34,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import javax.persistence.NoResultException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -29,6 +52,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -318,40 +342,53 @@ class BudgetServiceImplUnitTest {
     }
 
     @Test
-    void getBudgetSummary_GivenTransactionsForBudgetsExist_ThenReturnBudgetSummary() {
+    void getBudgetSummarY_GivenTransactionsForBudgetsExist_THenReturnBudgetSummary() {
 
         // Arrange
-        Budget budget = createBudget("TestBudgetOne", ZonedDateTime.now(), null, 25, true, 1L);
-        Budget budgetTwo = createBudget("TestBudgetTwo", ZonedDateTime.now(), null, 50, true, 1L);
+        TransactionBudgetSummary summary = new TransactionBudgetSummary(
+                "TestType", "TestCategory", 1, 2017, 50.02, BigDecimal.valueOf(40.30), false);
 
-        Transaction transactionOne = createTransaction(1L, budget, BigDecimal.valueOf(25));
-        Transaction transactionTwo = createTransaction(2L, budgetTwo, BigDecimal.valueOf(10));
-        Transaction transactionThree = createTransaction(3L, budgetTwo, BigDecimal.valueOf(20));
-
-        Set<Transaction> transactions = new HashSet<>(Arrays.asList(transactionOne, transactionTwo, transactionThree));
-
-        when(transactionRepository.findAllByDateAfterAndDateBefore(any(), any())).thenReturn(transactions);
-
-        ZonedDateTime localDateTime = ZonedDateTime.now();
-        int month = localDateTime.getDayOfMonth();
-        int year = localDateTime.getYear();
-        String text = localDateTime.format(formatter);
+//        when(transactionRepository.getBudgetSummaries(eq(2017), eq(1), anyInt(), anyInt())).thenReturn(summary);
 
         // Act
-        Set<BudgetSummary> budgetSummaries = budgetService.getBudgetSummary(new int[]{month}, new int[]{year});
+        Set<TransactionBudgetSummary> summaries = budgetService.getBudgetSummary(2017, 1);
 
         // Assert
-        assertThat(budgetSummaries, hasSize(1));
-        List<BudgetSummary> summaryList = new ArrayList<>(budgetSummaries);
-        BudgetSummary summary = summaryList.get(0);
-        assertThat(summary.getCategory(), is(equalTo("TestBudgetCategoryName")));
-        assertThat(summary.getMonth(), is(equalTo(month)));
-        assertThat(summary.getMonthText(), is(equalTo(text)));
-        assertThat(summary.getYear(), is(equalTo(year)));
-        assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(75))));
-        assertThat(summary.getActual(), is(equalTo(BigDecimal.valueOf(55))));
-        assertThat(summary.isExpected(), is(equalTo(false))); // TODO need to make sure everything works if it is income as well
+        assertThat(summaries, hasSize(1));
 
+        summaries.forEach(s -> assertThat(s, is(equalTo(summary))));
+
+    }
+
+    @Test
+    void getBudgetSummary_GivenYearLessThanZero_ThenThrowIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> budgetService.getBudgetSummary(0, 1));
+        assertThrows(IllegalArgumentException.class,
+                () -> budgetService.getBudgetSummary(-500, 1));
+    }
+
+    @Test
+    void getBudgetSummary_GivenMonthLessThanZero_ThenThrowIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> budgetService.getBudgetSummary(1, 0));
+        assertThrows(IllegalArgumentException.class,
+                () -> budgetService.getBudgetSummary(1, -500));
+    }
+
+    @Test
+    void getBudgetSummary_GivenMonthGreaterThanTwelve_ThenThrowIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class,
+                () -> budgetService.getBudgetSummary(1, 13));
+        assertThrows(IllegalArgumentException.class,
+                () -> budgetService.getBudgetSummary(1, 500));
+    }
+
+    private Budget getBudgetWithCustomCategory(String categoryName, int categoryId, String budgetname, int amount, int budgetId) {
+        BudgetCategory incomeCat = createBudgetCategory("TestBudgetCategoryType", 1, categoryName, 2, categoryId);
+        Budget budget = createBudget(budgetname, ZonedDateTime.now(), null, amount, true, budgetId);
+        budget.setBudgetCategory(incomeCat);
+        return budget;
     }
 
     private Transaction createTransaction(long transactionId, Budget budget, BigDecimal amount) {
@@ -426,9 +463,11 @@ class BudgetServiceImplUnitTest {
 
         FrequencyType frequencyType = createFrequencyType("TestFrequencyTypeName", 3);
 
+        TransactionType transactionType = new TransactionType("TransactionType");
+
         Budget budget = new Budget(
                 budgetCategory, name, startDate,
-                endDate, frequencyType, BigDecimal.valueOf(amount), inUse);
+                endDate, frequencyType, BigDecimal.valueOf(amount), inUse, transactionType);
         budget.setId(id);
 
         return budget;

@@ -4,6 +4,7 @@ import com.protean.moneymaker.rin.dto.BudgetCategoryDto;
 import com.protean.moneymaker.rin.dto.BudgetDto;
 import com.protean.moneymaker.rin.dto.BudgetSummary;
 import com.protean.moneymaker.rin.dto.BudgetTypeDto;
+import com.protean.moneymaker.rin.dto.TransactionBudgetSummary;
 import com.protean.moneymaker.rin.model.Budget;
 import com.protean.moneymaker.rin.model.BudgetCategory;
 import com.protean.moneymaker.rin.model.BudgetCategoryType;
@@ -17,7 +18,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -103,8 +107,14 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Set<BudgetSummary> getBudgetSummary(int[] years, int[] months) {
-        return null;
+    public Set<TransactionBudgetSummary> getBudgetSummary(int year, int month) {
+
+        ZonedDateTime startDate = ZonedDateTime.of(year, month, 1, 0, 0, 0, 0, ZoneId.systemDefault());
+        ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getMonthValue());
+
+        Set<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(startDate, endDate);
+
+        return transactionService.getTransactionBudgetSummaryForAllTransactionTypes(year, month, summaries);
     }
 
     @Override

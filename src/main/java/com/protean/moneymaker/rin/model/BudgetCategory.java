@@ -12,8 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
+import java.util.StringJoiner;
 
 @Entity
 @Table(name = "budget_category")
@@ -31,6 +31,8 @@ public class BudgetCategory {
     @OneToOne
     @JoinColumn(name = "budget_category_name_id")
     private BudgetCategoryName name;
+
+
 
     @OneToMany(mappedBy = "budgetCategory", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Set<BudgetItem> budgetItems = new LinkedHashSet<>();
@@ -77,26 +79,12 @@ public class BudgetCategory {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BudgetCategory that = (BudgetCategory) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, type, name);
-    }
-
-    @Override
     public String toString() {
-        return "BudgetCategory{" +
-                "budgetCategoryId=" + id +
-                ", budgetCategoryType=" + type +
-                ", budgetCategoryName=" + name +
-                '}';
+        return new StringJoiner(", ", BudgetCategory.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("type=" + type)
+                .add("name=" + name)
+                .add("budgetItems=" + budgetItems)
+                .toString();
     }
 }

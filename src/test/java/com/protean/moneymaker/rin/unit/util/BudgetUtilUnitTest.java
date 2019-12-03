@@ -9,6 +9,7 @@ import com.protean.moneymaker.rin.model.BudgetCategoryName;
 import com.protean.moneymaker.rin.model.BudgetCategoryType;
 import com.protean.moneymaker.rin.model.BudgetItem;
 import com.protean.moneymaker.rin.model.FrequencyType;
+import com.protean.moneymaker.rin.model.TransactionType;
 import com.protean.moneymaker.rin.util.BudgetUtil;
 import org.junit.jupiter.api.Test;
 
@@ -221,6 +222,7 @@ class BudgetUtilUnitTest {
         BudgetCategoryName budgetCategoryName = new BudgetCategoryName("TestBudgetCategoryName");
         budgetCategoryName.setId(2);
 
+
         BudgetCategory budgetCategory = new BudgetCategory(budgetCategoryType, budgetCategoryName);
         budgetCategory.setId(1);
 
@@ -238,9 +240,11 @@ class BudgetUtilUnitTest {
         FrequencyType frequencyType = new FrequencyType("TestFrequencyTypeName");
         frequencyType.setId(3);
 
+        TransactionType transactionType = new TransactionType("TransactionTypeName");
+
         Budget budget = new Budget(
                 budgetCategory, name, startDate,
-                endDate, frequencyType, BigDecimal.valueOf(amount), inUse);
+                endDate, frequencyType, BigDecimal.valueOf(amount), inUse, transactionType);
         budget.setId(id);
 
         return budget;

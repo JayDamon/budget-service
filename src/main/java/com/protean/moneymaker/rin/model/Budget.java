@@ -9,12 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.Objects;
+import java.util.Set;
+import java.util.StringJoiner;
 
 /**
  * User defined budgets
@@ -51,12 +53,16 @@ public class Budget extends UserAuditable implements Serializable {
     @Column(name = "in_use", columnDefinition = "boolean default true")
     private Boolean inUse;
 
+    @ManyToOne
+    @JoinColumn(name = "transaction_type_id")
+    private TransactionType transactionType;
+
     public Budget() {
     }
 
     public Budget(
             BudgetCategory budgetCategory, String name, ZonedDateTime startDate, ZonedDateTime endDate,
-            FrequencyType frequencyType, BigDecimal amount, Boolean inUse) {
+            FrequencyType frequencyType, BigDecimal amount, Boolean inUse, TransactionType transactionType) {
 
         this.budgetCategory = budgetCategory;
         this.name = name;
@@ -65,6 +71,7 @@ public class Budget extends UserAuditable implements Serializable {
         this.frequencyType = frequencyType;
         this.amount = amount;
         this.inUse = inUse;
+        this.transactionType = transactionType;
     }
 
     public Long getId() {
@@ -131,38 +138,26 @@ public class Budget extends UserAuditable implements Serializable {
         this.inUse = inUse;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Budget budget = (Budget) o;
-        return Objects.equals(id, budget.id) &&
-                Objects.equals(budgetCategory, budget.budgetCategory) &&
-                Objects.equals(name, budget.name) &&
-                Objects.equals(startDate, budget.startDate) &&
-                Objects.equals(endDate, budget.endDate) &&
-                Objects.equals(frequencyType, budget.frequencyType) &&
-                Objects.equals(amount, budget.amount) &&
-                Objects.equals(inUse, budget.inUse);
+    public TransactionType getTransactionType() {
+        return transactionType;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, budgetCategory, name, startDate, endDate, frequencyType, amount, inUse);
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
     }
 
     @Override
     public String toString() {
-        return "Budget{" +
-                "budgetId=" + id +
-                ", budgetCategory=" + budgetCategory +
-                ", budgetItemName='" + name + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", budgetFrequency=" + frequencyType +
-                ", amount=" + amount +
-                ", inUse=" + inUse +
-                '}';
+        return new StringJoiner(", ", Budget.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("budgetCategory=" + budgetCategory)
+                .add("name='" + name + "'")
+                .add("startDate=" + startDate)
+                .add("endDate=" + endDate)
+                .add("frequencyType=" + frequencyType)
+                .add("amount=" + amount)
+                .add("inUse=" + inUse)
+                .add("transactionType=" + transactionType)
+                .toString();
     }
-
 }

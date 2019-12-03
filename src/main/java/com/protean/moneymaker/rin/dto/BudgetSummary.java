@@ -1,48 +1,27 @@
 package com.protean.moneymaker.rin.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.math.BigDecimal;
+import java.util.StringJoiner;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BudgetSummary {
 
-    @JsonProperty("categoryy")
     private String category;
 
-    @JsonProperty("month")
-    private Integer month;
+    private Integer categoryId;
 
-    @JsonProperty("monthText")
-    private String monthText;
+    private String transactionType;
 
-    @JsonProperty("year")
-    private Integer year;
+    private Integer transactionTypeId;
 
-    @JsonProperty("planned")
     private BigDecimal planned;
 
-    @JsonProperty("actual")
-    private BigDecimal actual;
-
-    @JsonProperty("expected")
-    private boolean expected;
-
-    public BudgetSummary() {
-    }
-
     public BudgetSummary(
-            String category, Integer month, String monthText, Integer year,
-            BigDecimal planned, BigDecimal actual, boolean expected) {
-
+            String category, Integer categoryId, String transactionType, Integer transactionTypeId, Double planned) {
         this.category = category;
-        this.month = month;
-        this.monthText = monthText;
-        this.year = year;
-        this.planned = planned;
-        this.actual = actual;
-        this.expected = expected;
+        this.categoryId = categoryId;
+        this.transactionType = transactionType;
+        this.transactionTypeId = transactionTypeId;
+        this.planned = BigDecimal.valueOf(planned);
     }
 
     public String getCategory() {
@@ -53,28 +32,28 @@ public class BudgetSummary {
         this.category = category;
     }
 
-    public Integer getMonth() {
-        return month;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setMonth(Integer month) {
-        this.month = month;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public String getMonthText() {
-        return monthText;
+    public String getTransactionType() {
+        return transactionType;
     }
 
-    public void setMonthText(String monthText) {
-        this.monthText = monthText;
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
     }
 
-    public Integer getYear() {
-        return year;
+    public Integer getTransactionTypeId() {
+        return transactionTypeId;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setTransactionTypeId(Integer transactionTypeId) {
+        this.transactionTypeId = transactionTypeId;
     }
 
     public BigDecimal getPlanned() {
@@ -85,19 +64,11 @@ public class BudgetSummary {
         this.planned = planned;
     }
 
-    public BigDecimal getActual() {
-        return actual;
-    }
-
-    public void setActual(BigDecimal actual) {
-        this.actual = actual;
-    }
-
-    public boolean isExpected() {
-        return expected;
-    }
-
-    public void setExpected(boolean expected) {
-        this.expected = expected;
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", BudgetSummary.class.getSimpleName() + "[", "]")
+                .add("category='" + category + "'")
+                .add("planned=" + planned)
+                .toString();
     }
 }
