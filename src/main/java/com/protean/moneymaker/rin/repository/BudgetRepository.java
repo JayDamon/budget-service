@@ -39,18 +39,17 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
                 "bct.id, " +
                 "t.name, " +
                 "t.id, " +
-                "SUM(b.amount * f.monthFactor))" +
+                "SUM(b.amount * f.monthFactor)) " +
             "FROM Budget b " +
             "INNER JOIN b.budgetCategory bc " +
             "INNER JOIN bc.type as bct " +
             "INNER JOIN b.frequencyType f " +
             "INNER JOIN b.transactionType t " +
-            "WHERE b.startDate <= :startDate AND (b.endDate IS NULL OR b.endDate >= :endDate) " +
+            "WHERE b.startDate <= :startDate AND (b.endDate IS NULL OR b.endDate >= :endDate)" +
             "GROUP BY bct.name, t.name " +
             "ORDER BY bct.name ")
     Set<BudgetSummary> getBudgetSummaries(
             @Param("startDate") ZonedDateTime startDate,
-            @Param("endDate") ZonedDateTime endDate); // TODO this really does need to be done individually by type, otherwise i have no month to grab to verify it is 0
-    // TODO i may need to get the expected budget amounts first, then pull in the transaction sums
+            @Param("endDate") ZonedDateTime endDate);
 
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AccountDto {
+public class ShortAccountDto {
 
     @JsonProperty("id")
     private Long id;
@@ -12,10 +12,10 @@ public class AccountDto {
     @JsonProperty("name")
     private String name;
 
-    public AccountDto() {
+    public ShortAccountDto() {
     }
 
-    public AccountDto(Long id, String name) {
+    public ShortAccountDto(Long id, String name) {
         this.id = id;
         this.name = name;
     }

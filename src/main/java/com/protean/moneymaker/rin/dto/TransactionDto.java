@@ -22,7 +22,7 @@ public class TransactionDto {
     private ZonedDateTime date;
 
     @JsonProperty("account")
-    private AccountDto account;
+    private ShortAccountDto account;
 
     @JsonProperty("budget")
     private BudgetDto budget;
@@ -37,7 +37,7 @@ public class TransactionDto {
     }
 
     public TransactionDto(
-            Long id, BigDecimal amount, String description, ZonedDateTime date, AccountDto account,
+            Long id, BigDecimal amount, String description, ZonedDateTime date, ShortAccountDto account,
             BudgetDto budget, TransactionCategoryDto transactionCategory,
             RecurringTransactionDto recurringTransaction) {
 
@@ -83,11 +83,11 @@ public class TransactionDto {
         this.date = date;
     }
 
-    public AccountDto getAccount() {
+    public ShortAccountDto getAccount() {
         return account;
     }
 
-    public void setAccount(AccountDto account) {
+    public void setAccount(ShortAccountDto account) {
         this.account = account;
     }
 

@@ -22,17 +22,17 @@ public class AccountType implements Serializable {
     private Integer id;
 
     @Column(name = "full_account_type")
-    private String fullType;
+    private String fullName;
 
     @Column(name = "short_account_type")
-    private String shortType;
+    private String shortName;
 
     public AccountType() {
     }
 
-    public AccountType(String fullType, String shortType) {
-        this.fullType = fullType;
-        this.shortType = shortType;
+    public AccountType(String fullName, String shortName) {
+        this.fullName = fullName;
+        this.shortName = shortName;
     }
 
     public Integer getId() {
@@ -43,20 +43,20 @@ public class AccountType implements Serializable {
         this.id = id;
     }
 
-    public String getFullType() {
-        return fullType;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullType(String fullType) {
-        this.fullType = fullType;
+    public void setFullName(String fullType) {
+        this.fullName = fullType;
     }
 
-    public String getShortType() {
-        return shortType;
+    public String getShortName() {
+        return shortName;
     }
 
-    public void setShortType(String shortType) {
-        this.shortType = shortType;
+    public void setShortName(String shortType) {
+        this.shortName = shortType;
     }
 
     @Override
@@ -65,21 +65,21 @@ public class AccountType implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AccountType that = (AccountType) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(fullType, that.fullType) &&
-                Objects.equals(shortType, that.shortType);
+                Objects.equals(fullName, that.fullName) &&
+                Objects.equals(shortName, that.shortName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fullType, shortType);
+        return Objects.hash(id, fullName, shortName);
     }
 
     @Override
     public String toString() {
         return "AccountType{" +
                 "accountTypeid=" + id +
-                ", fullType='" + fullType + '\'' +
-                ", shortType='" + shortType + '\'' +
+                ", fullType='" + fullName + '\'' +
+                ", shortType='" + shortName + '\'' +
                 '}';
     }
 }

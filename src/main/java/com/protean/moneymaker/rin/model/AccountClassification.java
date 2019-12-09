@@ -22,13 +22,13 @@ public class AccountClassification implements Serializable {
     private Integer id;
 
     @Column(name = "classification")
-    private String classification;
+    private String name;
 
     public AccountClassification() {
     }
 
-    public AccountClassification(String classification) {
-        this.classification = classification;
+    public AccountClassification(String name) {
+        this.name = name;
     }
 
     public Integer getId() {
@@ -39,12 +39,12 @@ public class AccountClassification implements Serializable {
         this.id = id;
     }
 
-    public String getClassification() {
-        return classification;
+    public String getName() {
+        return name;
     }
 
-    public void setClassification(String classification) {
-        this.classification = classification;
+    public void setName(String classification) {
+        this.name = classification;
     }
 
     @Override
@@ -53,19 +53,19 @@ public class AccountClassification implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AccountClassification that = (AccountClassification) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(classification, that.classification);
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classification);
+        return Objects.hash(id, name);
     }
 
     @Override
     public String toString() {
         return "AccountClassification{" +
                 "accountClassificationId=" + id +
-                ", classification='" + classification + '\'' +
+                ", classification='" + name + '\'' +
                 '}';
     }
 }

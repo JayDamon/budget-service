@@ -16,7 +16,7 @@ public class RecurringTransactionDto {
     private String name;
 
     @JsonProperty("account")
-    private AccountDto account;
+    private ShortAccountDto account;
 
     @JsonProperty("subCategory")
     private BudgetSubCategoryDto budgetSubCategory;
@@ -49,7 +49,7 @@ public class RecurringTransactionDto {
     }
 
     public RecurringTransactionDto(
-            Long id, String name, AccountDto account,
+            Long id, String name, ShortAccountDto account,
             BudgetSubCategoryDto budgetSubCategory, TransactionCategoryDto transactionCategory,
             String frequencyTypeName, Integer frequency, String occurrenceName, String transactionTypeName,
             ZonedDateTime startDate, ZonedDateTime endDate, BigDecimal amount) {
@@ -84,11 +84,11 @@ public class RecurringTransactionDto {
         this.name = name;
     }
 
-    public AccountDto getAccount() {
+    public ShortAccountDto getAccount() {
         return account;
     }
 
-    public void setAccount(AccountDto account) {
+    public void setAccount(ShortAccountDto account) {
         this.account = account;
     }
 

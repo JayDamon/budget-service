@@ -133,7 +133,11 @@ public class TransactionServiceImpl implements TransactionService {
             TransactionBudgetSummary summary = transactionRepository.getBudgetSummaries(year, month, b.getCategoryId(), b.getTransactionTypeId()).orElse(
                     new TransactionBudgetSummary(b.getTransactionType(), b.getCategory(), month, year, b.getPlanned(), BigDecimal.ZERO, false)
             );
-            summaries.add(summary);
+
+            if (summary.getPlanned().doubleValue() > 0 || summary.getActual().doubleValue() > 0) {
+                summaries.add(summary);
+            }
+
         }
 
         return summaries;
