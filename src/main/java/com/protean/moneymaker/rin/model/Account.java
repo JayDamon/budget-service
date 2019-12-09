@@ -29,7 +29,7 @@ public class Account extends UserAuditable implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "account_type_id", nullable = false)
-    private AccountType account;
+    private AccountType accountType;
 
     @Column(name = "starting_balance", nullable = false)
     private BigDecimal startingBalance;
@@ -51,12 +51,12 @@ public class Account extends UserAuditable implements Serializable {
     }
 
     public Account(
-            String name, AccountType account, BigDecimal startingBalance,
+            String name, AccountType accountType, BigDecimal startingBalance,
             BigDecimal currentBalance, AccountClassification accountClassification,
             Boolean isPrimaryAccount, Boolean isInCashFlow) {
 
         this.name = name;
-        this.account = account;
+        this.accountType = accountType;
         this.startingBalance = startingBalance;
         this.currentBalance = currentBalance;
         this.accountClassification = accountClassification;
@@ -80,12 +80,12 @@ public class Account extends UserAuditable implements Serializable {
         this.name = name;
     }
 
-    public AccountType getAccount() {
-        return account;
+    public AccountType getAccountType() {
+        return accountType;
     }
 
-    public void setAccount(AccountType account) {
-        this.account = account;
+    public void setAccountType(AccountType account) {
+        this.accountType = account;
     }
 
     public BigDecimal getStartingBalance() {
@@ -135,7 +135,7 @@ public class Account extends UserAuditable implements Serializable {
         Account account1 = (Account) o;
         return Objects.equals(id, account1.id) &&
                 Objects.equals(name, account1.name) &&
-                Objects.equals(account, account1.account) &&
+                Objects.equals(accountType, account1.accountType) &&
                 Objects.equals(startingBalance, account1.startingBalance) &&
                 Objects.equals(currentBalance, account1.currentBalance) &&
                 Objects.equals(accountClassification, account1.accountClassification) &&
@@ -145,7 +145,7 @@ public class Account extends UserAuditable implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, account, startingBalance, currentBalance, accountClassification, isPrimaryAccount, isInCashFlow);
+        return Objects.hash(id, name, accountType, startingBalance, currentBalance, accountClassification, isPrimaryAccount, isInCashFlow);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class Account extends UserAuditable implements Serializable {
         return "Account{" +
                 "accountId=" + id +
                 ", name='" + name + '\'' +
-                ", account=" + account +
+                ", account=" + accountType +
                 ", startingBalance=" + startingBalance +
                 ", currentBalance=" + currentBalance +
                 ", accountClassification=" + accountClassification +
