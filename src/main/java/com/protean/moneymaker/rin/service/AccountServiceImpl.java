@@ -114,5 +114,6 @@ public class AccountServiceImpl implements AccountService {
     public List<AccountClassification> getAccountClassifications() {
 
         return accountClassificationRepository.findAll();
+
     }
 }
