@@ -2,7 +2,6 @@ package com.protean.moneymaker.rin.repository;
 
 import com.protean.moneymaker.rin.dto.BudgetCategoryInUse;
 import com.protean.moneymaker.rin.dto.BudgetSummary;
-import com.protean.moneymaker.rin.dto.TransactionBudgetSummary;
 import com.protean.moneymaker.rin.model.Budget;
 import com.protean.moneymaker.rin.model.BudgetCategoryType;
 import org.springframework.data.jpa.repository.JpaRepository;

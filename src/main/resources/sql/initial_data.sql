@@ -66,6 +66,7 @@ INSERT INTO budget_category (budget_category_id, budget_category_type_id, budget
 INSERT INTO budget_category (budget_category_id, budget_category_type_id, budget_category_name_id) VALUES (9, 3, 6); -- discretionary investment
 INSERT INTO budget_category (budget_category_id, budget_category_type_id, budget_category_name_id) VALUES (10, 3, 3); -- discretionary spending
 
+-- TODO change to transaction sub category
 INSERT INTO budget_sub_category (budget_sub_category_id, sub_category_name) VALUES (1, 'Income');
 INSERT INTO budget_sub_category (budget_sub_category_id, sub_category_name) VALUES (2, 'Housing');
 INSERT INTO budget_sub_category (budget_sub_category_id, sub_category_name) VALUES (3, 'Utilities');

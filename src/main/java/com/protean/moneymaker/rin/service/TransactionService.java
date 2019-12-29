@@ -3,7 +3,6 @@ package com.protean.moneymaker.rin.service;
 import com.protean.moneymaker.rin.dto.BudgetSummary;
 import com.protean.moneymaker.rin.dto.TransactionBudgetSummary;
 import com.protean.moneymaker.rin.dto.TransactionDto;
-import com.protean.moneymaker.rin.model.BudgetCategory;
 import com.protean.moneymaker.rin.model.BudgetSubCategory;
 import com.protean.moneymaker.rin.model.Transaction;
 import com.protean.moneymaker.rin.model.TransactionCategory;
