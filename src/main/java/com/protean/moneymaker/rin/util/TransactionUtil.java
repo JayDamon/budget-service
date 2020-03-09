@@ -1,11 +1,14 @@
 package com.protean.moneymaker.rin.util;
 
 import com.protean.moneymaker.rin.dto.TransactionCategoryDto;
+import com.protean.moneymaker.rin.dto.TransactionDto;
+import com.protean.moneymaker.rin.model.Transaction;
 import com.protean.moneymaker.rin.model.TransactionCategory;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 public class TransactionUtil {
@@ -23,14 +26,38 @@ public class TransactionUtil {
         List<TransactionCategoryDto> dtos = new ArrayList<>();
 
         for (TransactionCategory cat : categories) {
-            dtos.add(mapEntityToDto(cat));
+            dtos.add(mapDtoToEntity(cat));
         }
 
         return dtos;
     }
 
-    public static TransactionCategoryDto mapEntityToDto(TransactionCategory category) {
+    public static TransactionCategoryDto mapDtoToEntity(TransactionCategory category) {
         return mapper.map(category, TransactionCategoryDto.class);
+    }
+
+    public static Collection<Transaction> mapDtosToEntities(Collection<TransactionDto> dtos) {
+        Collection<Transaction> transactions = new HashSet<>();
+        for (TransactionDto dto : dtos) {
+            transactions.add(mapDtoToEntity(dto));
+        }
+            return transactions;
+    }
+
+    public static Transaction mapDtoToEntity(TransactionDto dto) {
+        return mapper.map(dto, Transaction.class);
+    }
+
+    public static Collection<TransactionDto> mapEntityCollectionToDtos(Collection<Transaction> transactions) {
+        Collection<TransactionDto> dtos = new HashSet<>();
+        for (Transaction t : transactions) {
+            dtos.add(mapEntityToDto(t));
+        }
+        return dtos;
+    }
+
+    public static TransactionDto mapEntityToDto(Transaction transaction) {
+        return mapper.map(transaction, TransactionDto.class);
     }
 
 }

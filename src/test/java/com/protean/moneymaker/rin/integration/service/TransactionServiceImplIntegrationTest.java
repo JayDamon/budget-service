@@ -53,7 +53,7 @@ class TransactionServiceImplIntegrationTest {
                 assertThat(dto.getTransactionCategory().getBudgetSubCategory().getId(), is(not(nullValue())));
                 assertThat(dto.getTransactionCategory().getBudgetSubCategory().getName(), is(not(nullValue())));
                 assertThat(dto.getRecurringTransaction().getId(), is(not(nullValue())));
-                assertThat(dto.getRecurringTransaction().getName(), is(not(nullValue())));
+                assertThat(dto.getRecurringTransaction().getRecurringTransactionName(), is(not(nullValue())));
                 assertThat(dto.getRecurringTransaction().getAccount().getId(), is(not(nullValue())));
                 assertThat(dto.getRecurringTransaction().getAccount().getName(), is(not(nullValue())));
                 assertThat(dto.getRecurringTransaction().getBudgetSubCategory().getId(), is(not(nullValue())));

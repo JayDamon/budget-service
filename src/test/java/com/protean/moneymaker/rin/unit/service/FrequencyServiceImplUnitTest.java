@@ -62,7 +62,7 @@ class FrequencyServiceImplUnitTest {
 
         for (FrequencyType type : types) {
             assertThat(type.getId(), is(oneOf(1, 2)));
-            assertThat(type.getName(), is(oneOf("Name", "NameTwo")));
+            assertThat(type.getFrequencyTypeName(), is(oneOf("Name", "NameTwo")));
         }
 
     }
@@ -93,7 +93,7 @@ class FrequencyServiceImplUnitTest {
 
         // Assert
         assertThat(retrievedFrequencyType, is(not(nullValue())));
-        assertThat(retrievedFrequencyType.getName(), is(equalTo("testName")));
+        assertThat(retrievedFrequencyType.getFrequencyTypeName(), is(equalTo("testName")));
         assertThat(retrievedFrequencyType.getId(), is(equalTo(1)));
     }
 
@@ -109,7 +109,7 @@ class FrequencyServiceImplUnitTest {
     private FrequencyType createFrequencyType(int id, String name) {
         FrequencyType frequencyType = new FrequencyType();
         frequencyType.setId(id);
-        frequencyType.setName(name);
+        frequencyType.setFrequencyTypeName(name);
         return frequencyType;
     }
 

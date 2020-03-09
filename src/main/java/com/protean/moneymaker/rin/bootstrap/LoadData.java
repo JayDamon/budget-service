@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 
 @Component
-@Profile({"local"})
-public class LoadTestDataLocal implements ApplicationListener<ContextRefreshedEvent> {
+@Profile({"mysql"})
+public class LoadData implements ApplicationListener<ContextRefreshedEvent> {
 
     private DataSource dataSource;
 
-    public LoadTestDataLocal(DataSource dataSource) {
+    public LoadData(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -25,35 +25,10 @@ public class LoadTestDataLocal implements ApplicationListener<ContextRefreshedEv
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadInitialStartData(dataSource);
-//        loadCompleteBudgets(dataSource);
-//        loadInitialBudgets(dataSource);
-//        loadTestAccountData(dataSource);
-//        loadTestRecurringTransactionData(dataSource);
-//        loadTestTransactionData(dataSource);
     }
 
     public static void loadInitialStartData(DataSource dataSource) {
         loadSql(dataSource, "sql/initial_data.sql");
-    }
-
-    public static void loadInitialBudgets(DataSource dataSource) {
-        loadSql(dataSource, "sql/initial_budgets.sql");
-    }
-
-    public static void loadTestAccountData(DataSource dataSource) {
-        loadSql(dataSource, "sql/test_accounts.sql");
-    }
-
-    public static void loadTestRecurringTransactionData(DataSource dataSource) {
-        loadSql(dataSource, "sql/test_recurring_transactions.sql");
-    }
-
-    public static void loadTestTransactionData(DataSource dataSource) {
-        loadSql(dataSource, "sql/test_transactions.sql");
-    }
-
-    public static void loadCompleteBudgets(DataSource dataSource) {
-        loadSql(dataSource, "sql/complete_budgets.sql");
     }
 
     private static void loadSql(DataSource dataSource, String s) {
@@ -63,3 +38,4 @@ public class LoadTestDataLocal implements ApplicationListener<ContextRefreshedEv
     }
 
 }
+

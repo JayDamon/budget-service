@@ -15,6 +15,8 @@ import com.protean.moneymaker.rin.repository.BudgetRepository;
 import com.protean.moneymaker.rin.repository.BudgetSubCategoryRepository;
 import com.protean.moneymaker.rin.util.BudgetUtil;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
@@ -109,7 +111,7 @@ public class BudgetServiceImpl implements BudgetService {
     public Set<TransactionBudgetSummary> getBudgetSummary(int year, int month) {
 
         ZonedDateTime startDate = ZonedDateTime.of(year, month, 1, 0, 0, 0, 0, ZoneId.systemDefault());
-        ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getMonthValue());
+        ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getDayOfMonth());
 
         Set<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(startDate, endDate);
 
@@ -168,9 +170,9 @@ public class BudgetServiceImpl implements BudgetService {
 
         List<Budget> budgetList = new ArrayList<>(BudgetUtil.convertBudgetDtosToBudgetIncludeOnlyIdForChildEntity(newBudgets));
 
-        List<Budget> savedBudgets = budgetRepository.saveAll(budgetList);
+        budgetList = budgetRepository.saveAll(budgetList);
 
-        return BudgetUtil.convertBudgetsToDto(savedBudgets);
+        return BudgetUtil.convertBudgetsToDto(budgetList);
     }
 
     @Override

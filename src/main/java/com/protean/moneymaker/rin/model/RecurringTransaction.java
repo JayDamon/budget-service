@@ -28,7 +28,7 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
     private Long id;
 
     @Column(name = "name")
-    private String name;
+    private String recurringTransactionName;
 
     @OneToOne
     @JoinColumn(name = "account_id")
@@ -71,12 +71,12 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
     }
 
     public RecurringTransaction(
-            String name, Account account, BudgetSubCategory budgetSubCategory,
+            String recurringTransactionName, Account account, BudgetSubCategory budgetSubCategory,
             TransactionCategory transactionCategory, FrequencyType frequencyType,
             Integer frequency, Occurrence occurrence, TransactionType transactionType,
             ZonedDateTime startDate, ZonedDateTime endDate, BigDecimal amount) {
 
-        this.name = name;
+        this.recurringTransactionName = recurringTransactionName;
         this.account = account;
         this.budgetSubCategory = budgetSubCategory;
         this.transactionCategory = transactionCategory;
@@ -97,12 +97,12 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRecurringTransactionName() {
+        return recurringTransactionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRecurringTransactionName(String name) {
+        this.recurringTransactionName = name;
     }
 
     public Account getAccount() {
@@ -191,7 +191,7 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
         if (o == null || getClass() != o.getClass()) return false;
         RecurringTransaction that = (RecurringTransaction) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
+                Objects.equals(recurringTransactionName, that.recurringTransactionName) &&
                 Objects.equals(account, that.account) &&
                 Objects.equals(budgetSubCategory, that.budgetSubCategory) &&
                 Objects.equals(transactionCategory, that.transactionCategory) &&
@@ -206,14 +206,14 @@ public class RecurringTransaction extends UserAuditable implements Serializable 
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, account, budgetSubCategory, transactionCategory, frequencyType, frequency, occurrence, transactionType, startDate, endDate, amount);
+        return Objects.hash(id, recurringTransactionName, account, budgetSubCategory, transactionCategory, frequencyType, frequency, occurrence, transactionType, startDate, endDate, amount);
     }
 
     @Override
     public String toString() {
         return "RecurringTransaction{" +
                 "recurringTransactionId=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + recurringTransactionName + '\'' +
                 ", account=" + account +
                 ", budgetSubCategory=" + budgetSubCategory +
                 ", transactionCategory=" + transactionCategory +

@@ -12,7 +12,7 @@ import java.util.Set;
 
 public interface TransactionService {
 
-    List<Transaction> saveAllTransactions(List<Transaction> transactions);
+    Set<Transaction> saveAllTransactions(Set<TransactionDto> transactions);
 
     Transaction saveTransaction(Transaction transaction);
 

@@ -23,11 +23,11 @@ class FrequencyUtilUnitTest {
         // Arrange
         FrequencyType frequencyType = new FrequencyType();
         frequencyType.setId(1);
-        frequencyType.setName("Name");
+        frequencyType.setFrequencyTypeName("Name");
 
         FrequencyType frequencyTypeTwo = new FrequencyType();
         frequencyTypeTwo.setId(2);
-        frequencyTypeTwo.setName("NameTwo");
+        frequencyTypeTwo.setFrequencyTypeName("NameTwo");
 
         Set<FrequencyType> frequencyTypes = new HashSet<>();
         frequencyTypes.add(frequencyType);

@@ -3,6 +3,7 @@ package com.protean.moneymaker.rin.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
@@ -22,6 +23,7 @@ public class TransactionDto {
     private ZonedDateTime date;
 
     @JsonProperty("account")
+    @NotNull
     private ShortAccountDto account;
 
     @JsonProperty("budget")

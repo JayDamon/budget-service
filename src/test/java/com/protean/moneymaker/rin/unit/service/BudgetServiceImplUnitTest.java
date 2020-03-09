@@ -261,7 +261,7 @@ class BudgetServiceImplUnitTest {
         assertThat(budget.getStartDate().getDayOfMonth(), is(equalTo(LocalDate.now().getDayOfMonth())));
         assertThat(budget.getEndDate().getDayOfMonth(), is(equalTo(ZonedDateTime.now().plusDays(6).getDayOfMonth())));
         assertThat(budget.getFrequencyType().getId(), is(equalTo(10)));
-        assertThat(budget.getFrequencyType().getName(), is(equalTo("TestFrequency")));
+        assertThat(budget.getFrequencyType().getFrequencyTypeName(), is(equalTo("TestFrequency")));
         assertThat(budget.getAmount(), is(equalTo(BigDecimal.valueOf(54.21))));
         assertThat(budget.getInUse(), is(false));
 
@@ -303,7 +303,7 @@ class BudgetServiceImplUnitTest {
         assertThat(budget.getStartDate().getDayOfMonth(), is(equalTo(LocalDate.now().getDayOfMonth())));
         assertThat(budget.getEndDate().getDayOfMonth(), is(equalTo(ZonedDateTime.now().plusDays(6).getDayOfMonth())));
         assertThat(budget.getFrequencyType().getId(), is(equalTo(3)));
-        assertThat(budget.getFrequencyType().getName(), is(equalTo("TestFrequencyTypeName")));
+        assertThat(budget.getFrequencyType().getFrequencyTypeName(), is(equalTo("TestFrequencyTypeName")));
         assertThat(budget.getAmount(), is(equalTo(BigDecimal.valueOf(35.02))));
         assertThat(budget.getInUse(), is(false));
 

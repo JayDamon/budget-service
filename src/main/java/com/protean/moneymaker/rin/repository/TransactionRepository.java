@@ -20,13 +20,13 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
 
     @Query(value = "SELECT " +
             "new com.protean.moneymaker.rin.dto.TransactionBudgetSummary(" +
-                "tt.name, bct.name, " +
+                "tt.transactionTypeName, bct.name, " +
                 "month(t.date), year(t.date), " +
                 "SUM(b.amount * f.monthFactor), ABS(SUM(t.amount)), " +
             "CASE " +
-            "   WHEN tt.name = 'Income' AND " +
+            "   WHEN tt.transactionTypeName = 'Income' AND " +
             "       SUM(b.amount * f.monthFactor) > SUM(t.amount) THEN false " +
-            "   WHEN tt.name = 'Expense' AND " +
+            "   WHEN tt.transactionTypeName = 'Expense' AND " +
             "       SUM(b.amount * f.monthFactor) < (ABS(SUM(t.amount))) THEN false " +
             "   ELSE true END) " +
             "FROM Transaction As t " +
@@ -37,8 +37,8 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
             "INNER JOIN t.transactionType as tt " +
             "WHERE month(t.date) = :month AND year(t.date) = :year " +
             "   AND bct.id = :typeId AND tt.id = :tTypeId " +
-            "GROUP BY month(t.date), year(t.date),  bct.name, tt.name " +
-            "ORDER BY year(t.date), month(t.date), tt.name DESC, bct.name")
+            "GROUP BY month(t.date), year(t.date),  bct.name, tt.transactionTypeName " +
+            "ORDER BY year(t.date), month(t.date), tt.transactionTypeName DESC, bct.name")
     Optional<TransactionBudgetSummary> getBudgetSummaries(
             @Param("year") int year,
             @Param("month") int month,

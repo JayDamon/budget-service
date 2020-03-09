@@ -9,6 +9,7 @@ import com.protean.moneymaker.rin.model.TransactionCategory;
 import com.protean.moneymaker.rin.repository.TransactionRepository;
 import com.protean.moneymaker.rin.repository.TransactionSubCategoryRepository;
 import com.protean.moneymaker.rin.repository.TransactionTypeRepository;
+import com.protean.moneymaker.rin.util.TransactionUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,10 +37,10 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> saveAllTransactions(List<Transaction> transactions) {
+    public Set<Transaction> saveAllTransactions(Set<TransactionDto> transactions) {
 
-        List<Transaction> savedTransactions = new ArrayList<>();
-        transactionRepository.saveAll(transactions).forEach(savedTransactions::add);
+        Set<Transaction> savedTransactions = new HashSet<>();
+        transactionRepository.saveAll(TransactionUtil.mapDtosToEntities(transactions)).forEach(savedTransactions::add);
 
         return savedTransactions;
     }

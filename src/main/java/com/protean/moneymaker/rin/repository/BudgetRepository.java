@@ -36,7 +36,7 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
             "new com.protean.moneymaker.rin.dto.BudgetSummary(" +
                 "bct.name, " +
                 "bct.id, " +
-                "t.name, " +
+                "t.transactionTypeName, " +
                 "t.id, " +
                 "SUM(b.amount * f.monthFactor)) " +
             "FROM Budget b " +
@@ -45,7 +45,7 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
             "INNER JOIN b.frequencyType f " +
             "INNER JOIN b.transactionType t " +
             "WHERE b.startDate <= :startDate AND (b.endDate IS NULL OR b.endDate >= :endDate)" +
-            "GROUP BY bct.name, t.name " +
+            "GROUP BY bct.name, t.transactionTypeName " +
             "ORDER BY bct.name ")
     Set<BudgetSummary> getBudgetSummaries(
             @Param("startDate") ZonedDateTime startDate,
