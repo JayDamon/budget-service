@@ -66,11 +66,14 @@ public class BudgetUtil {
         for (BudgetDto dto : budgetDtos) {
             Budget budget = modelMapper.map(dto, Budget.class);
             if (budget.getFrequencyType() != null) {
-                budget.getFrequencyType().setName(null);
+                budget.getFrequencyType().setFrequencyTypeName(null);
             }
             if (budget.getBudgetCategory() != null) {
                 budget.getBudgetCategory().setName(null);
                 budget.getBudgetCategory().setType(null);
+            }
+            if (dto.getInUse() == null) {
+                budget.setInUse(true);
             }
             budgets.add(budget);
         }

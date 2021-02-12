@@ -4,19 +4,15 @@ import com.protean.moneymaker.rin.dto.AccountClassificationDto;
 import com.protean.moneymaker.rin.dto.AccountDto;
 import com.protean.moneymaker.rin.dto.AccountTypeDto;
 import com.protean.moneymaker.rin.model.Account;
-import com.protean.moneymaker.rin.model.AccountClassification;
 import com.protean.moneymaker.rin.model.AccountType;
 import com.protean.moneymaker.rin.util.AccountUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyIterable;
@@ -36,13 +32,10 @@ class AccountUtilUnitTest {
         AccountType accountType = new AccountType("TestAccountType", "sht");
         accountType.setId(1);
 
-        AccountClassification accountClassification = new AccountClassification("TestAccountClassification");
-        accountClassification.setId(2);
 
         this.account = new Account("TestName", accountType, BigDecimal.valueOf(25.23),
-                BigDecimal.valueOf(50.22), accountClassification, true, false);
+                BigDecimal.valueOf(50.22), true, false);
         this.account.setId(3L);
-
 
         AccountTypeDto accountTypeDto = new AccountTypeDto(2, "Savings", "Savings");
 
@@ -50,7 +43,7 @@ class AccountUtilUnitTest {
 
         this.accountDto = new AccountDto(
                 1L, "NewName", accountTypeDto, BigDecimal.valueOf(500.01),
-                BigDecimal.valueOf(200), classificationDto, false, false);
+                BigDecimal.valueOf(200), false, false);
     }
 
     @Test
@@ -72,8 +65,6 @@ class AccountUtilUnitTest {
             assertThat(dto.getType().getFullName(), is(equalTo("TestAccountType")));
             assertThat(dto.getType().getShortName(), is(equalTo("sht")));
 
-            assertThat(dto.getClassification().getId(), is(equalTo(2)));
-            assertThat(dto.getClassification().getName(), is(equalTo("TestAccountClassification")));
         }
 
     }
@@ -104,9 +95,6 @@ class AccountUtilUnitTest {
         assertThat(dto.getType().getFullName(), is(equalTo("TestAccountType")));
         assertThat(dto.getType().getShortName(), is(equalTo("sht")));
 
-        assertThat(dto.getClassification().getId(), is(equalTo(2)));
-        assertThat(dto.getClassification().getName(), is(equalTo("TestAccountClassification")));
-
     }
 
     @Test
@@ -120,7 +108,6 @@ class AccountUtilUnitTest {
     @Test
     void mapDtoToEntityOnlyNonNull_GivenValidDto_ThenMapOnlyProvidedFields() {
 
-        this.accountDto.setClassification(null);
         this.accountDto.setName(null);
 
         Account a = AccountUtil.mapDtoToEntityOnlyNonNull(this.accountDto);
@@ -134,14 +121,12 @@ class AccountUtilUnitTest {
         assertThat(a.getAccountType().getId(), is(equalTo(this.accountDto.getType().getId())));
         assertThat(a.getAccountType().getFullName(), is(equalTo(this.accountDto.getType().getFullName())));
         assertThat(a.getAccountType().getShortName(), is(equalTo(this.accountDto.getType().getShortName())));
-        assertThat(a.getAccountClassification(), is(nullValue()));
 
     }
 
     @Test
     void mapDtoToEntityOnlyNonNull_GivenAccountProvided_ThenMapOnlyProvidedFields() {
 
-        this.accountDto.setClassification(null);
         this.accountDto.setName(null);
 
         Account a = AccountUtil.mapDtoToEntityOnlyNonNull(this.accountDto, this.account);
@@ -155,8 +140,6 @@ class AccountUtilUnitTest {
         assertThat(a.getAccountType().getId(), is(equalTo(this.accountDto.getType().getId())));
         assertThat(a.getAccountType().getFullName(), is(equalTo(this.accountDto.getType().getFullName())));
         assertThat(a.getAccountType().getShortName(), is(equalTo(this.accountDto.getType().getShortName())));
-        assertThat(a.getAccountClassification().getId(), is(equalTo(this.account.getAccountClassification().getId())));
-        assertThat(a.getAccountClassification().getName(), is(equalTo(this.account.getAccountClassification().getName())));
 
     }
 
@@ -204,35 +187,5 @@ class AccountUtilUnitTest {
         assertThat(AccountUtil.mapAccountTypesToDtos(new ArrayList<>()), is(emptyIterable()));
 
     }
-
-    @Test
-    void mapAccountClassificationsToDtos_GivenValidClassifications_ThenMapToDtos() {
-
-        AccountClassification classification = new AccountClassification("TestName");
-        classification.setId(1);
-
-        Collection<AccountClassificationDto> classifications = AccountUtil.mapAccountClassificationsToDtos(Collections.singletonList(classification));
-
-        for (AccountClassificationDto dto : classifications) {
-            assertThat(dto.getId(), is(equalTo(1)));
-            assertThat(dto.getName(), is(equalTo("TestName")));
-        }
-
-    }
-
-    @Test
-    void mapAccountClassificationsToDtos_GivenNullCollectionProvided_ThenThrowIllegalArgumentException() {
-
-        assertThrows(IllegalArgumentException.class, () -> AccountUtil.mapAccountClassificationsToDtos(null));
-
-    }
-
-    @Test
-    void mapAccountClassificationsToDtos_GivenEmptyCollectionProvided_ThenReturnEmptyCollection() {
-
-        assertThat(AccountUtil.mapAccountClassificationsToDtos(new ArrayList<>()), is(emptyIterable()));
-
-    }
-
 
 }

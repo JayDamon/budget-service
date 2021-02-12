@@ -70,15 +70,19 @@ public class BudgetSubCategory implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         BudgetSubCategory that = (BudgetSubCategory) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(transactionCategories, that.transactionCategories);
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return transactionCategories != null ? transactionCategories.equals(that.transactionCategories) : that.transactionCategories == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, transactionCategories);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @Profile({"test"})
 public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEvent> {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public LoadTestDataTest(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -26,7 +26,6 @@ public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEve
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadInitialStartData(dataSource);
         loadCompleteBudgets(dataSource);
-//        loadInitialBudgets(dataSource);
         loadTestAccountData(dataSource);
         loadTestRecurringTransactionData(dataSource);
         loadTestTransactionData(dataSource);

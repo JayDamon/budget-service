@@ -37,9 +37,9 @@ public class Account extends UserAuditable implements Serializable {
     @Column(name = "current_balance")
     private BigDecimal currentBalance;
 
-    @OneToOne
-    @JoinColumn(name = "account_classification_id")
-    private AccountClassification accountClassification;
+//    @OneToOne
+//    @JoinColumn(name = "account_classification_id")
+//    private AccountClassification accountClassification;
 
     @Column(name = "is_primary_account")
     private Boolean isPrimaryAccount;
@@ -51,15 +51,19 @@ public class Account extends UserAuditable implements Serializable {
     }
 
     public Account(
-            String name, AccountType accountType, BigDecimal startingBalance,
-            BigDecimal currentBalance, AccountClassification accountClassification,
-            Boolean isPrimaryAccount, Boolean isInCashFlow) {
+            String name,
+            AccountType accountType,
+            BigDecimal startingBalance,
+            BigDecimal currentBalance,
+//            AccountClassification accountClassification,
+            Boolean isPrimaryAccount,
+            Boolean isInCashFlow) {
 
         this.name = name;
         this.accountType = accountType;
         this.startingBalance = startingBalance;
         this.currentBalance = currentBalance;
-        this.accountClassification = accountClassification;
+//        this.accountClassification = accountClassification;
         this.isPrimaryAccount = isPrimaryAccount;
         this.isInCashFlow = isInCashFlow;
     }
@@ -104,13 +108,13 @@ public class Account extends UserAuditable implements Serializable {
         this.currentBalance = currentBalance;
     }
 
-    public AccountClassification getAccountClassification() {
-        return accountClassification;
-    }
-
-    public void setAccountClassification(AccountClassification accountClassification) {
-        this.accountClassification = accountClassification;
-    }
+//    public AccountClassification getAccountClassification() {
+//        return accountClassification;
+//    }
+//
+//    public void setAccountClassification(AccountClassification accountClassification) {
+//        this.accountClassification = accountClassification;
+//    }
 
     public Boolean getPrimaryAccount() {
         return isPrimaryAccount;
@@ -138,14 +142,16 @@ public class Account extends UserAuditable implements Serializable {
                 Objects.equals(accountType, account1.accountType) &&
                 Objects.equals(startingBalance, account1.startingBalance) &&
                 Objects.equals(currentBalance, account1.currentBalance) &&
-                Objects.equals(accountClassification, account1.accountClassification) &&
+//                Objects.equals(accountClassification, account1.accountClassification) &&
                 Objects.equals(isPrimaryAccount, account1.isPrimaryAccount) &&
                 Objects.equals(isInCashFlow, account1.isInCashFlow);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, accountType, startingBalance, currentBalance, accountClassification, isPrimaryAccount, isInCashFlow);
+        return Objects.hash(id, name, accountType, startingBalance, currentBalance,
+//                accountClassification,
+                isPrimaryAccount, isInCashFlow);
     }
 
     @Override
@@ -156,7 +162,7 @@ public class Account extends UserAuditable implements Serializable {
                 ", account=" + accountType +
                 ", startingBalance=" + startingBalance +
                 ", currentBalance=" + currentBalance +
-                ", accountClassification=" + accountClassification +
+//                ", accountClassification=" + accountClassification +
                 ", isPrimaryAccount=" + isPrimaryAccount +
                 ", isInCashFlow=" + isInCashFlow +
                 '}';

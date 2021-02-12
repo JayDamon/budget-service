@@ -22,7 +22,7 @@ public class FrequencyType implements Serializable {
     private Integer id;
 
     @Column(name = "frequency_type")
-    private String name;
+    private String frequencyTypeName;
 
     // Factor used to multiply amount by to normalize to a monthly value
     @Column(name = "month_factor")
@@ -31,8 +31,8 @@ public class FrequencyType implements Serializable {
     public FrequencyType() {
     }
 
-    public FrequencyType(String name) {
-        this.name = name;
+    public FrequencyType(String frequencyTypeName) {
+        this.frequencyTypeName = frequencyTypeName;
     }
 
     public Integer getId() {
@@ -43,12 +43,12 @@ public class FrequencyType implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFrequencyTypeName() {
+        return frequencyTypeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFrequencyTypeName(String name) {
+        this.frequencyTypeName = name;
     }
 
     public Double getMonthFactor() {
@@ -65,19 +65,19 @@ public class FrequencyType implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         FrequencyType that = (FrequencyType) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name);
+                Objects.equals(frequencyTypeName, that.frequencyTypeName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, frequencyTypeName);
     }
 
     @Override
     public String toString() {
         return "FrequencyType{" +
                 "frequencyTypeId=" + id +
-                ", frequency='" + name + '\'' +
+                ", frequency='" + frequencyTypeName + '\'' +
                 '}';
     }
 }

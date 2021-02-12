@@ -23,9 +23,6 @@ public class AccountDto {
     @JsonProperty("currentBalance")
     private BigDecimal currentbalance;
 
-    @JsonProperty("classification")
-    private AccountClassificationDto classification;
-
     @JsonProperty("isPrimary")
     private Boolean isPrimary;
 
@@ -36,16 +33,19 @@ public class AccountDto {
     }
 
     public AccountDto(
-            Long id, String name, AccountTypeDto type, BigDecimal startingBalance,
-            BigDecimal currentbalance, AccountClassificationDto classification,
-            Boolean isPrimary, Boolean isInCashFlow) {
+            Long id,
+            String name,
+            AccountTypeDto type,
+            BigDecimal startingBalance,
+            BigDecimal currentbalance,
+            Boolean isPrimary,
+            Boolean isInCashFlow) {
 
         this.id = id;
         this.name = name;
         this.type = type;
         this.startingBalance = startingBalance;
         this.currentbalance = currentbalance;
-        this.classification = classification;
         this.isPrimary = isPrimary;
         this.isInCashFlow = isInCashFlow;
     }
@@ -88,14 +88,6 @@ public class AccountDto {
 
     public void setCurrentbalance(BigDecimal currentbalance) {
         this.currentbalance = currentbalance;
-    }
-
-    public AccountClassificationDto getClassification() {
-        return classification;
-    }
-
-    public void setClassification(AccountClassificationDto classification) {
-        this.classification = classification;
     }
 
     public Boolean getPrimary() {

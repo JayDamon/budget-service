@@ -22,13 +22,13 @@ public class TransactionType implements Serializable {
     private Integer id;
 
     @Column(name = "transaction_type")
-    private String name;
+    private String transactionTypeName;
 
     public TransactionType() {
     }
 
-    public TransactionType(String name) {
-        this.name = name;
+    public TransactionType(String transactionTypeName) {
+        this.transactionTypeName = transactionTypeName;
     }
 
     public Integer getId() {
@@ -39,12 +39,12 @@ public class TransactionType implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTransactionTypeName() {
+        return transactionTypeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTransactionTypeName(String name) {
+        this.transactionTypeName = name;
     }
 
     @Override
@@ -53,19 +53,19 @@ public class TransactionType implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         TransactionType that = (TransactionType) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name);
+                Objects.equals(transactionTypeName, that.transactionTypeName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, transactionTypeName);
     }
 
     @Override
     public String toString() {
         return "TransactionType{" +
                 "transactionTypeId=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + transactionTypeName + '\'' +
                 '}';
     }
 }

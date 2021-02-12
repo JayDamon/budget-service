@@ -21,7 +21,6 @@ import javax.persistence.NoResultException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -32,13 +31,13 @@ import java.util.Set;
 @Service
 public class BudgetServiceImpl implements BudgetService {
 
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
-    private BudgetRepository budgetRepository;
-    private BudgetSubCategoryRepository budgetSubCategoryRepository;
-    private BudgetCategoryRepository budgetCategoryRepository;
-    private FrequencyService frequencyService;
-    private TransactionService transactionService;
+    private final BudgetRepository budgetRepository;
+    private final BudgetSubCategoryRepository budgetSubCategoryRepository;
+    private final BudgetCategoryRepository budgetCategoryRepository;
+    private final FrequencyService frequencyService;
+    private final TransactionService transactionService;
 
     public BudgetServiceImpl(
             BudgetRepository budgetRepository,
@@ -110,9 +109,9 @@ public class BudgetServiceImpl implements BudgetService {
     public Set<TransactionBudgetSummary> getBudgetSummary(int year, int month) {
 
         ZonedDateTime startDate = ZonedDateTime.of(year, month, 1, 0, 0, 0, 0, ZoneId.systemDefault());
-        ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getMonthValue());
+        ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getDayOfMonth());
 
-        Set<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(startDate, endDate);
+        List<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(startDate, endDate);
 
         return transactionService.getTransactionBudgetSummaryForAllTransactionTypes(year, month, summaries);
     }
@@ -142,17 +141,20 @@ public class BudgetServiceImpl implements BudgetService {
 
             BudgetCategoryType type = budgetCategory.getType();
             if (budgetTypeMap.containsKey(type.getId())) {
+
                 budgetTypeDto = budgetTypeMap.get(type.getId());
+
             } else {
+
                 budgetTypeDto = new BudgetTypeDto();
                 budgetTypeDto.setId(type.getId());
                 budgetTypeDto.setType(type.getName());
+
             }
 
             BudgetCategoryDto cat = modelMapper.map(budgetCategory, BudgetCategoryDto.class);
             cat.setTypeName(null);
             budgetTypeDto.getBudgetCategories().add(cat);
-
 
             budgetTypeMap.put(type.getId(), budgetTypeDto);
         }
@@ -169,9 +171,9 @@ public class BudgetServiceImpl implements BudgetService {
 
         List<Budget> budgetList = new ArrayList<>(BudgetUtil.convertBudgetDtosToBudgetIncludeOnlyIdForChildEntity(newBudgets));
 
-        List<Budget> savedBudgets = budgetRepository.saveAll(budgetList);
+        budgetList = budgetRepository.saveAll(budgetList);
 
-        return BudgetUtil.convertBudgetsToDto(savedBudgets);
+        return BudgetUtil.convertBudgetsToDto(budgetList);
     }
 
     @Override

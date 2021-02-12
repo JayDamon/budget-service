@@ -3,14 +3,13 @@ package com.protean.moneymaker.rin.service;
 import com.protean.moneymaker.rin.dto.BudgetSummary;
 import com.protean.moneymaker.rin.dto.TransactionBudgetSummary;
 import com.protean.moneymaker.rin.dto.TransactionDto;
-import com.protean.moneymaker.rin.model.BudgetCategory;
 import com.protean.moneymaker.rin.model.BudgetSubCategory;
 import com.protean.moneymaker.rin.model.Transaction;
 import com.protean.moneymaker.rin.model.TransactionCategory;
-import com.protean.moneymaker.rin.model.TransactionType;
 import com.protean.moneymaker.rin.repository.TransactionRepository;
 import com.protean.moneymaker.rin.repository.TransactionSubCategoryRepository;
 import com.protean.moneymaker.rin.repository.TransactionTypeRepository;
+import com.protean.moneymaker.rin.util.TransactionUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,23 +24,23 @@ import java.util.Set;
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
-    private TransactionRepository transactionRepository;
-    private TransactionSubCategoryRepository transactionSubCategoryRepository;
-    private TransactionTypeRepository transactionTypeRepository;
+    private final TransactionRepository transactionRepository;
+    private final TransactionSubCategoryRepository transactionSubCategoryRepository;
+    private final TransactionTypeRepository transactionTypeRepository;
 
     public TransactionServiceImpl(TransactionRepository transactionRepository,
-                                  TransactionSubCategoryRepository transactionSubCategoryRepository,
-                                  TransactionTypeRepository transactionTypeRepository) {
+            TransactionSubCategoryRepository transactionSubCategoryRepository,
+            TransactionTypeRepository transactionTypeRepository) {
         this.transactionRepository = transactionRepository;
         this.transactionSubCategoryRepository = transactionSubCategoryRepository;
         this.transactionTypeRepository = transactionTypeRepository;
     }
 
     @Override
-    public List<Transaction> saveAllTransactions(List<Transaction> transactions) {
+    public Set<Transaction> saveAllTransactions(Set<TransactionDto> transactions) {
 
-        List<Transaction> savedTransactions = new ArrayList<>();
-        transactionRepository.saveAll(transactions).forEach(savedTransactions::add);
+        Set<Transaction> savedTransactions = new HashSet<>();
+        transactionRepository.saveAll(TransactionUtil.mapDtosToEntities(transactions)).forEach(savedTransactions::add);
 
         return savedTransactions;
     }
@@ -118,20 +117,20 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Set<TransactionBudgetSummary> getTransactionBudgetSummaryForAllTransactionTypes(int year, int month, Set<BudgetSummary> budgetSummaries) {
+    public Set<TransactionBudgetSummary> getTransactionBudgetSummaryForAllTransactionTypes(int year, int month, List<BudgetSummary> budgetSummaries) {
 
         if (year <= 0) {
-            throw  new IllegalArgumentException("Year must be greater than zero, but was <" + year + ">");
+            throw new IllegalArgumentException("Year must be greater than zero, but was <" + year + ">");
         }
         if (month <= 0 || month > 12) {
-            throw  new IllegalArgumentException("Valid month between 1 and 12 must be provided, but was <" + month + ">");
+            throw new IllegalArgumentException("Valid month between 1 and 12 must be provided, but was <" + month + ">");
         }
 
         Set<TransactionBudgetSummary> summaries = new HashSet<>();
 
-        for (BudgetSummary b : budgetSummaries) {
-            TransactionBudgetSummary summary = transactionRepository.getBudgetSummaries(year, month, b.getCategoryId(), b.getTransactionTypeId()).orElse(
-                    new TransactionBudgetSummary(b.getTransactionType(), b.getCategory(), month, year, b.getPlanned(), BigDecimal.ZERO, false)
+        for (BudgetSummary budget : budgetSummaries) {
+            TransactionBudgetSummary summary = transactionRepository.getBudgetSummaries(year, month, budget.getCategoryId(), budget.getTransactionTypeId()).orElse(
+                    new TransactionBudgetSummary(budget.getTransactionType(), budget.getCategory(), month, year, budget.getPlanned(), BigDecimal.ZERO, false)
             );
 
             if (summary.getPlanned().doubleValue() > 0 || summary.getActual().doubleValue() > 0) {

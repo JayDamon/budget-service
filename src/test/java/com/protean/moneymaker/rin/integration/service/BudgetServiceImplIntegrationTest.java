@@ -47,20 +47,6 @@ class BudgetServiceImplIntegrationTest {
     }
 
     @Test
-    void getAllInactiveBudgets() {
-        Set<Budget> inactiveBudgets = budgetService.getAllInactiveBudgets();
-        assertThat(inactiveBudgets, is(not(nullValue())));
-        assertThat(inactiveBudgets, hasSize(2));
-        int found = 0;
-        for (Budget budget : inactiveBudgets) {
-            if (!budget.getInUse()) {
-                found++;
-            }
-        }
-        assertThat(found, is((equalTo(2))));
-    }
-
-    @Test
     void getAllBudgetCategories() {
 
         Set<BudgetCategory> budgetCategories = budgetService.getAllBudgetCategories();

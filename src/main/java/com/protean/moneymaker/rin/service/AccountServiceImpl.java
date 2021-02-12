@@ -2,9 +2,7 @@ package com.protean.moneymaker.rin.service;
 
 import com.protean.moneymaker.rin.dto.AccountDto;
 import com.protean.moneymaker.rin.model.Account;
-import com.protean.moneymaker.rin.model.AccountClassification;
 import com.protean.moneymaker.rin.model.AccountType;
-import com.protean.moneymaker.rin.repository.AccountClassificationRepository;
 import com.protean.moneymaker.rin.repository.AccountRepository;
 import com.protean.moneymaker.rin.repository.AccountTypeRepository;
 import com.protean.moneymaker.rin.util.AccountUtil;
@@ -17,15 +15,17 @@ import java.util.List;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    private AccountRepository accountRepository;
-    private AccountTypeRepository accountTypeRepository;
-    private AccountClassificationRepository accountClassificationRepository;
+    private final AccountRepository accountRepository;
+    private final AccountTypeRepository accountTypeRepository;
+//    private AccountClassificationRepository accountClassificationRepository;
 
     public AccountServiceImpl(AccountRepository accountRepository,
-                              AccountTypeRepository accountTypeRepository, AccountClassificationRepository accountClassificationRepository) {
+            AccountTypeRepository accountTypeRepository
+//                              AccountClassificationRepository accountClassificationRepository
+    ) {
         this.accountRepository = accountRepository;
         this.accountTypeRepository = accountTypeRepository;
-        this.accountClassificationRepository = accountClassificationRepository;
+//        this.accountClassificationRepository = accountClassificationRepository;
     }
 
     @Override
@@ -40,10 +40,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Account> getAllAccounts() {
 
-        List<Account> accounts = new ArrayList<>();
-        accountRepository.findAll().forEach(accounts::add);
-
-        return accounts;
+        return new ArrayList<>(accountRepository.findAll());
     }
 
     @Override
@@ -64,10 +61,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Account> saveAccounts(List<Account> accounts) {
 
-        List<Account> savedAccounts = new ArrayList<>();
-        accountRepository.saveAll(accounts).forEach(savedAccounts::add);
-
-        return savedAccounts;
+        return new ArrayList<>(accountRepository.saveAll(accounts));
     }
 
     @Override
@@ -110,10 +104,10 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
-    @Override
-    public List<AccountClassification> getAccountClassifications() {
-
-        return accountClassificationRepository.findAll();
-
-    }
+//    @Override
+//    public List<AccountClassification> getAccountClassifications() {
+//
+//        return accountClassificationRepository.findAll();
+//
+//    }
 }
