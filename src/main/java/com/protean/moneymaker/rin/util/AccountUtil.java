@@ -1,10 +1,8 @@
 package com.protean.moneymaker.rin.util;
 
-import com.protean.moneymaker.rin.dto.AccountClassificationDto;
 import com.protean.moneymaker.rin.dto.AccountDto;
 import com.protean.moneymaker.rin.dto.AccountTypeDto;
 import com.protean.moneymaker.rin.model.Account;
-import com.protean.moneymaker.rin.model.AccountClassification;
 import com.protean.moneymaker.rin.model.AccountType;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
@@ -17,7 +15,7 @@ import java.util.List;
 
 public class AccountUtil {
 
-    private static ModelMapper mapper = new ModelMapper();
+    private static final ModelMapper mapper = new ModelMapper();
 
     public static Collection<AccountDto> mapEntityCollectionToDtoCollection(Collection<Account> accounts) {
 
@@ -82,18 +80,18 @@ public class AccountUtil {
         return dtos;
     }
 
-    public static Collection<AccountClassificationDto> mapAccountClassificationsToDtos(Collection<AccountClassification> classifications) {
-
-        if (classifications == null) {
-            throw new IllegalArgumentException("Non null collection must be provided");
-        }
-
-        Collection<AccountClassificationDto> dtos = new ArrayList<>();
-
-        for (AccountClassification c  : classifications) {
-            dtos.add(mapper.map(c, AccountClassificationDto.class));
-        }
-
-        return dtos;
-    }
+//    public static Collection<AccountClassificationDto> mapAccountClassificationsToDtos(Collection<AccountClassification> classifications) {
+//
+//        if (classifications == null) {
+//            throw new IllegalArgumentException("Non null collection must be provided");
+//        }
+//
+//        Collection<AccountClassificationDto> dtos = new ArrayList<>();
+//
+//        for (AccountClassification c  : classifications) {
+//            dtos.add(mapper.map(c, AccountClassificationDto.class));
+//        }
+//
+//        return dtos;
+//    }
 }

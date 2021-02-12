@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -34,11 +35,11 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
 
     @Query(value = "SELECT " +
             "new com.protean.moneymaker.rin.dto.BudgetSummary(" +
-                "bct.name, " +
-                "bct.id, " +
-                "t.transactionTypeName, " +
-                "t.id, " +
-                "SUM(b.amount * f.monthFactor)) " +
+            "bct.name, " +
+            "bct.id, " +
+            "t.transactionTypeName, " +
+            "t.id, " +
+            "SUM(b.amount * f.monthFactor)) " +
             "FROM Budget b " +
             "INNER JOIN b.budgetCategory bc " +
             "INNER JOIN bc.type as bct " +
@@ -47,7 +48,7 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
             "WHERE b.startDate <= :startDate AND (b.endDate IS NULL OR b.endDate >= :endDate)" +
             "GROUP BY bct.name, t.transactionTypeName " +
             "ORDER BY bct.name ")
-    Set<BudgetSummary> getBudgetSummaries(
+    List<BudgetSummary> getBudgetSummaries(
             @Param("startDate") ZonedDateTime startDate,
             @Param("endDate") ZonedDateTime endDate);
 

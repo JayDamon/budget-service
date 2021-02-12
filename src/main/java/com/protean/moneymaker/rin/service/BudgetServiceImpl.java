@@ -15,8 +15,6 @@ import com.protean.moneymaker.rin.repository.BudgetRepository;
 import com.protean.moneymaker.rin.repository.BudgetSubCategoryRepository;
 import com.protean.moneymaker.rin.util.BudgetUtil;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
@@ -33,13 +31,13 @@ import java.util.Set;
 @Service
 public class BudgetServiceImpl implements BudgetService {
 
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
-    private BudgetRepository budgetRepository;
-    private BudgetSubCategoryRepository budgetSubCategoryRepository;
-    private BudgetCategoryRepository budgetCategoryRepository;
-    private FrequencyService frequencyService;
-    private TransactionService transactionService;
+    private final BudgetRepository budgetRepository;
+    private final BudgetSubCategoryRepository budgetSubCategoryRepository;
+    private final BudgetCategoryRepository budgetCategoryRepository;
+    private final FrequencyService frequencyService;
+    private final TransactionService transactionService;
 
     public BudgetServiceImpl(
             BudgetRepository budgetRepository,
@@ -113,7 +111,7 @@ public class BudgetServiceImpl implements BudgetService {
         ZonedDateTime startDate = ZonedDateTime.of(year, month, 1, 0, 0, 0, 0, ZoneId.systemDefault());
         ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getDayOfMonth());
 
-        Set<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(startDate, endDate);
+        List<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(startDate, endDate);
 
         return transactionService.getTransactionBudgetSummaryForAllTransactionTypes(year, month, summaries);
     }
@@ -143,17 +141,20 @@ public class BudgetServiceImpl implements BudgetService {
 
             BudgetCategoryType type = budgetCategory.getType();
             if (budgetTypeMap.containsKey(type.getId())) {
+
                 budgetTypeDto = budgetTypeMap.get(type.getId());
+
             } else {
+
                 budgetTypeDto = new BudgetTypeDto();
                 budgetTypeDto.setId(type.getId());
                 budgetTypeDto.setType(type.getName());
+
             }
 
             BudgetCategoryDto cat = modelMapper.map(budgetCategory, BudgetCategoryDto.class);
             cat.setTypeName(null);
             budgetTypeDto.getBudgetCategories().add(cat);
-
 
             budgetTypeMap.put(type.getId(), budgetTypeDto);
         }

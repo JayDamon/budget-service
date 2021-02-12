@@ -27,7 +27,7 @@ class TransactionServiceImplIntegrationTest {
         Set<TransactionDto> dtos = transactionService.getAllTransactionDtos();
 
         // Assert
-        assertThat(dtos, hasSize(837));
+        assertThat(dtos, hasSize(891));
 
         boolean dtoChecked = false;
         for (TransactionDto dto : dtos) {

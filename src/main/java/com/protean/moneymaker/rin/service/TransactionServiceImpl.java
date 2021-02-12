@@ -24,13 +24,13 @@ import java.util.Set;
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
-    private TransactionRepository transactionRepository;
-    private TransactionSubCategoryRepository transactionSubCategoryRepository;
-    private TransactionTypeRepository transactionTypeRepository;
+    private final TransactionRepository transactionRepository;
+    private final TransactionSubCategoryRepository transactionSubCategoryRepository;
+    private final TransactionTypeRepository transactionTypeRepository;
 
     public TransactionServiceImpl(TransactionRepository transactionRepository,
-                                  TransactionSubCategoryRepository transactionSubCategoryRepository,
-                                  TransactionTypeRepository transactionTypeRepository) {
+            TransactionSubCategoryRepository transactionSubCategoryRepository,
+            TransactionTypeRepository transactionTypeRepository) {
         this.transactionRepository = transactionRepository;
         this.transactionSubCategoryRepository = transactionSubCategoryRepository;
         this.transactionTypeRepository = transactionTypeRepository;
@@ -117,20 +117,20 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Set<TransactionBudgetSummary> getTransactionBudgetSummaryForAllTransactionTypes(int year, int month, Set<BudgetSummary> budgetSummaries) {
+    public Set<TransactionBudgetSummary> getTransactionBudgetSummaryForAllTransactionTypes(int year, int month, List<BudgetSummary> budgetSummaries) {
 
         if (year <= 0) {
-            throw  new IllegalArgumentException("Year must be greater than zero, but was <" + year + ">");
+            throw new IllegalArgumentException("Year must be greater than zero, but was <" + year + ">");
         }
         if (month <= 0 || month > 12) {
-            throw  new IllegalArgumentException("Valid month between 1 and 12 must be provided, but was <" + month + ">");
+            throw new IllegalArgumentException("Valid month between 1 and 12 must be provided, but was <" + month + ">");
         }
 
         Set<TransactionBudgetSummary> summaries = new HashSet<>();
 
-        for (BudgetSummary b : budgetSummaries) {
-            TransactionBudgetSummary summary = transactionRepository.getBudgetSummaries(year, month, b.getCategoryId(), b.getTransactionTypeId()).orElse(
-                    new TransactionBudgetSummary(b.getTransactionType(), b.getCategory(), month, year, b.getPlanned(), BigDecimal.ZERO, false)
+        for (BudgetSummary budget : budgetSummaries) {
+            TransactionBudgetSummary summary = transactionRepository.getBudgetSummaries(year, month, budget.getCategoryId(), budget.getTransactionTypeId()).orElse(
+                    new TransactionBudgetSummary(budget.getTransactionType(), budget.getCategory(), month, year, budget.getPlanned(), BigDecimal.ZERO, false)
             );
 
             if (summary.getPlanned().doubleValue() > 0 || summary.getActual().doubleValue() > 0) {

@@ -3,6 +3,7 @@ package com.protean.moneymaker.rin.unit.service;
 import com.protean.moneymaker.rin.dto.BudgetCategoryDto;
 import com.protean.moneymaker.rin.dto.BudgetDto;
 import com.protean.moneymaker.rin.dto.BudgetItemDto;
+import com.protean.moneymaker.rin.dto.BudgetSummary;
 import com.protean.moneymaker.rin.dto.BudgetTypeDto;
 import com.protean.moneymaker.rin.dto.TransactionBudgetSummary;
 import com.protean.moneymaker.rin.model.Account;
@@ -33,6 +34,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.persistence.NoResultException;
 import java.math.BigDecimal;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -52,6 +54,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -341,13 +344,14 @@ class BudgetServiceImplUnitTest {
     }
 
     @Test
-    void getBudgetSummarY_GivenTransactionsForBudgetsExist_THenReturnBudgetSummary() {
+    void getBudgetSummary_GivenTransactionsForBudgetsExist_THenReturnBudgetSummary() {
 
         // Arrange
         TransactionBudgetSummary summary = new TransactionBudgetSummary(
                 "TestType", "TestCategory", 1, 2017, 50.02, BigDecimal.valueOf(40.30), false);
 
-//        when(transactionRepository.getBudgetSummaries(eq(2017), eq(1), anyInt(), anyInt())).thenReturn(summary);
+        when(transactionRepository.getBudgetSummaries(eq(2017), eq(1), anyInt(), anyInt())).thenReturn(Optional.of(summary));
+        when(budgetRepository.getBudgetSummaries(any(), any())).thenReturn(Collections.singletonList(new BudgetSummary("cat", 1, "type", 1, 2.0)));
 
         // Act
         Set<TransactionBudgetSummary> summaries = budgetService.getBudgetSummary(2017, 1);
@@ -368,19 +372,9 @@ class BudgetServiceImplUnitTest {
     }
 
     @Test
-    void getBudgetSummary_GivenMonthLessThanZero_ThenThrowIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class,
-                () -> budgetService.getBudgetSummary(1, 0));
-        assertThrows(IllegalArgumentException.class,
-                () -> budgetService.getBudgetSummary(1, -500));
-    }
-
-    @Test
     void getBudgetSummary_GivenMonthGreaterThanTwelve_ThenThrowIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(DateTimeException.class,
                 () -> budgetService.getBudgetSummary(1, 13));
-        assertThrows(IllegalArgumentException.class,
-                () -> budgetService.getBudgetSummary(1, 500));
     }
 
     private Budget getBudgetWithCustomCategory(String categoryName, int categoryId, String budgetname, int amount, int budgetId) {
