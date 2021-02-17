@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: rin
+server:
+  port: 8084
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+---
+
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://172.16.0.7:3310/money-maker-test
+    username: mm-app
+    password: SaveMoney
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    data:
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

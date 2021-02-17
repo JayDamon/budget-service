@@ -32,8 +32,6 @@ public class BudgetCategory {
     @JoinColumn(name = "budget_category_name_id")
     private BudgetCategoryName name;
 
-
-
     @OneToMany(mappedBy = "budgetCategory", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Set<BudgetItem> budgetItems = new LinkedHashSet<>();
 
