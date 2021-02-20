@@ -1,13 +1,3 @@
-INSERT INTO account_type (account_type_id, full_account_type, short_account_type)
-VALUES (1, 'Basic Checking', 'Checking'),
-       (2, 'Savings', 'Savings'),
-       (3, 'Interest Bearing Checking', 'Interest'),
-       (4, 'Money Market', 'MM'),
-       (5, 'Certification of Deposit', 'CD'),
-       (6, 'Investment Retirement', 'Retirement'),
-       (7, 'Brokerage', 'Brokerage'),
-       (8, 'Credit Card', 'Credit Card');
-
 INSERT INTO frequency_type(frequency_type_id, frequency_type, month_factor)
 VALUES (1, 'Weekly', 4),
        (2, 'Monthly', 1),
@@ -19,17 +9,22 @@ INSERT INTO goal_type (goal_type_id, goal_type)
 VALUES (1, 'save'),
        (2, 'pay');
 
+INSERT INTO occurrence(occurrence_id, occurrence)
+VALUES (1, 'Specific Date'),
+       (2, 'End of Month'),
+       (3, 'First of Month'),
+       (4, 'Monday'),
+       (5, 'Tuesday'),
+       (6, 'Wednesday'),
+       (7, 'Thursday'),
+       (8, 'Friday'),
+       (9, 'Saturday'),
+       (10, 'Sunday');
+
 INSERT INTO budget_category_type (budget_category_type_id, budget_category_type)
 VALUES (1, 'fixed'),
        (2, 'flexible'),
        (3, 'discretionary');
--- INSERT INTO budget_category (budget_category_id, category_name) VALUES (1, 'Income');
--- INSERT INTO budget_category (budget_category_id, category_name) VALUES (2, 'Discressionary');
--- INSERT INTO budget_category (budget_category_id, category_name) VALUES (3, 'Non-Discressionary');
--- INSERT INTO budget_category (budget_category_id, category_name) VALUES (4, 'Bills');
--- INSERT INTO budget_category (budget_category_id, category_name) VALUES (5, 'Savings');
--- INSERT INTO budget_category (budget_category_id, category_name) VALUES (6, 'Investment');
--- INSERT INTO budget_category (budget_category_id, category_name) VALUES (7, 'Other');
 
 INSERT INTO budget_category_name (budget_category_name_id, category_name)
 VALUES (1, 'income'),
@@ -52,26 +47,6 @@ VALUES (1, 1, 1), -- fixed income
        (10, 3, 3);
 -- discretionary spending
 
--- TODO change to transaction sub category
-INSERT INTO budget_sub_category (budget_sub_category_id, sub_category_name)
-VALUES (1, 'Income'),
-       (2, 'Housing'),
-       (3, 'Utilities'),
-       (4, 'Credit Card'),
-       (5, 'Health'),
-       (6, 'Banking'),
-       (7, 'Food/Beverage'),
-       (8, 'Gas/Automotive'),
-       (9, 'Household/Supplies'),
-       (10, 'Entertainment'),
-       (11, 'Education'),
-       (12, 'Gifts and Contributions'),
-       (13, 'Personal'),
-       (14, 'Business'),
-       (15, 'Taxes'),
-       (16, 'Miscellaneous'),
-       (17, 'Savings'),
-       (18, 'Generic');
 
 -- TODO this is just a list of generics and is being turned into a budget, not for user storage
 INSERT INTO budget_item (budget_item_id, budget_category_id, name)
