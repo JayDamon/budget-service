@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -144,9 +143,9 @@ public class BudgetServiceImpl implements BudgetService {
         }
 
         if ("Income".equalsIgnoreCase(transactionType)) {
-            return expected.compareTo(actual) == 1;
+            return expected.compareTo(actual) > 0;
         } else if ("Expense".equalsIgnoreCase(transactionType)) {
-            return expected.compareTo(actual) == -1;
+            return expected.compareTo(actual) < 0;
         }
 
         return true;
@@ -240,7 +239,7 @@ public class BudgetServiceImpl implements BudgetService {
         if (budgetDto.getBudgetCategory() != null && budgetDto.getBudgetCategory().getId() != null) {
             BudgetCategory budgetCategory = budgetCategoryRepository.findById(
                     budgetDto.getBudgetCategory().getId()).orElseThrow(
-                            () -> new NoResultException("Budget category with id <" + budgetDto.getBudgetCategory().getId() + "> was not found."));
+                    () -> new NoResultException("Budget category with id <" + budgetDto.getBudgetCategory().getId() + "> was not found."));
             budget.setBudgetCategory(budgetCategory);
         }
         if (budgetDto.getName() != null) {

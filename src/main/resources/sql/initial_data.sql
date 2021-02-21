@@ -44,7 +44,8 @@ VALUES (1, 1, 1), -- fixed income
        (7, 3, 4), -- discretionary subscription
        (8, 3, 5), -- discretionary savings
        (9, 3, 6), -- discretionary investment
-       (10, 3, 3); -- discretionary spending
+       (10, 3, 3);
+-- discretionary spending
 
 
 -- TODO this is just a list of generics and is being turned into a budget, not for user storage

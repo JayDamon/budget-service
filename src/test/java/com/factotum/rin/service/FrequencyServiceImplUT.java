@@ -79,7 +79,7 @@ class FrequencyServiceImplUT {
         assertThat(types, is(emptyIterable()));
     }
 
-//    getFrequencyTypeById
+    //    getFrequencyTypeById
     @Test
     void getFrequencyTypeById_GivenFrequencyTypeExists_ThenReturnFrequencyType() {
 

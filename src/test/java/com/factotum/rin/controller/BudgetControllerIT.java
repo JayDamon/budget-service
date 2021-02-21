@@ -91,8 +91,8 @@ class BudgetControllerIT {
 
         MvcResult mv = mockMvc.perform(
                 post(BASE_URI)
-                    .content(objectMapper.writeValueAsString(basicBudgetDtos))
-                    .contentType(MediaType.APPLICATION_JSON))
+                        .content(objectMapper.writeValueAsString(basicBudgetDtos))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").exists())
@@ -100,7 +100,7 @@ class BudgetControllerIT {
                 .andExpect(jsonPath("$[0].budgetCategory.id").exists())
                 .andReturn();
 
-        ArrayNode node = (ArrayNode)objectMapper.readTree(mv.getResponse().getContentAsString());
+        ArrayNode node = (ArrayNode) objectMapper.readTree(mv.getResponse().getContentAsString());
         int id = node.get(0).get("budgetCategory").get("id").intValue();
 
         BudgetCategory b = budgetCategoryRepository.findById(id).orElse(null);
@@ -123,8 +123,8 @@ class BudgetControllerIT {
 
         mockMvc.perform(
                 patch(BASE_URI + "/{id}", "20")
-                    .content(objectMapper.writeValueAsString(completeBudgetDto))
-                    .contentType(MediaType.APPLICATION_JSON))
+                        .content(objectMapper.writeValueAsString(completeBudgetDto))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(equalTo(20))))

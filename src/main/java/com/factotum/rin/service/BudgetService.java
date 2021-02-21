@@ -53,8 +53,7 @@ public interface BudgetService {
     /**
      * Create new budgets from dtos and add newly created ids.
      *
-     * @param newBudgets
-     *          List of budgets to be created.
+     * @param newBudgets List of budgets to be created.
      * @return Set of BudgetDtos with ids added.
      */
     Set<BudgetDto> createNewBudgets(Set<BudgetDto> newBudgets);
@@ -62,8 +61,7 @@ public interface BudgetService {
     /**
      * Updates budget in the database with only the values provided. Null Values are ignored.
      *
-     * @param budgetDto
-     *          Dto containing the values being changed.
+     * @param budgetDto Dto containing the values being changed.
      * @return The updated budget.
      */
     Budget updateBudget(BudgetDto budgetDto);
