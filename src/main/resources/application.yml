@@ -39,3 +39,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+    show-sql: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+  h2:
+    console:
+      enabled: true

@@ -2,9 +2,11 @@ package com.factotum.rin.service;
 
 import com.factotum.rin.dto.BudgetCategoryDto;
 import com.factotum.rin.dto.BudgetItemDto;
+import com.factotum.rin.dto.BudgetSummary;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategory;
 import com.factotum.rin.model.BudgetItem;
+import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,10 +14,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -27,7 +34,7 @@ import static org.hamcrest.Matchers.nullValue;
 @Transactional
 @SpringBootTest
 @ActiveProfiles("test")
-class BudgetServiceImplT {
+class BudgetServiceImplIT {
 
     @Autowired
     private BudgetService budgetService;
@@ -46,6 +53,43 @@ class BudgetServiceImplT {
             }
         }
         assertThat(found, is(equalTo(30)));
+    }
+
+    @Test
+    void getAllBudgetSummaries_ReturnBudgetSummaries() {
+
+        ZonedDateTime startDate = ZonedDateTime.of(2017, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault());
+        ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getDayOfMonth());
+
+        List<BudgetSummary> summaries = budgetService.getBudgetSummaries(startDate, endDate);
+
+        assertThat(summaries, IsCollectionWithSize.hasSize(5));
+
+        int summariesChecked = 0;
+
+        System.out.println(summaries);
+        for (BudgetSummary summary : summaries) {
+            int categoryId = summary.getCategoryId();
+            int transactionTypeId = summary.getTransactionTypeId();
+            if (categoryId == 3 && transactionTypeId == 2) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(1674.99999967))));
+                summariesChecked++;
+            } else if (categoryId == 1 && transactionTypeId == 1) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(3000.0))));
+                summariesChecked++;
+            } else if (categoryId == 1 && transactionTypeId == 2) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(2127.5699999999997))));
+                summariesChecked++;
+            } else if (categoryId == 2 && transactionTypeId == 1) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(0.0))));
+                summariesChecked++;
+            } else if (categoryId == 2 && transactionTypeId == 2) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(350.0))));
+                summariesChecked++;
+            }
+        }
+
+        assertThat(summariesChecked, is(equalTo(5)));
     }
 
     @Test

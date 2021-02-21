@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Min;
+import java.util.List;
 import java.util.Set;
 
 @Validated
@@ -62,7 +63,7 @@ public class BudgetController {
     }
 
     @GetMapping("/summary")
-    public Set<TransactionBudgetSummary> getBudgetSummary(
+    public List<TransactionBudgetSummary> getBudgetSummary(
             @RequestParam(name = "year") int year,
             @RequestParam(name = "month") int month) {
 

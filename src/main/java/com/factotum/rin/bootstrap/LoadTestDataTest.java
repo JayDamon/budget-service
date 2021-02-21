@@ -18,6 +18,8 @@ public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEve
 
     private final DataSource dataSource;
 
+    private boolean dataLoaded = false;
+
     public LoadTestDataTest(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -25,9 +27,15 @@ public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEve
     @Override
     @Transactional
     public void onApplicationEvent(@NonNull ContextRefreshedEvent event) {
-        loadInitialStartData(dataSource);
-        loadCompleteBudgets(dataSource);
-        loadTestRecurringTransactionData(dataSource);
+
+        if (!dataLoaded) {
+
+            loadInitialStartData(dataSource);
+            loadCompleteBudgets(dataSource);
+            loadTestRecurringTransactionData(dataSource);
+            dataLoaded = true;
+
+        }
     }
 
     public static void loadInitialStartData(DataSource dataSource) {

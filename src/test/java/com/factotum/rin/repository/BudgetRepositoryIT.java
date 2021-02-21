@@ -10,12 +10,17 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 @DataJpaTest
@@ -46,7 +51,8 @@ class BudgetRepositoryIT {
     }
 
     @Test
-    void getBudgetSummary_GivenBudgetsExist_TenReturnBudgetSummaries() {
+    void
+    getBudgetSummary_GivenBudgetsExist_TenReturnBudgetSummaries() {
 
         ZonedDateTime startDate = ZonedDateTime.of(2017, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault());
         ZonedDateTime endDate = ZonedDateTime.of(2017, 1, 31, 0, 0, 0, 0, ZoneId.systemDefault());
@@ -55,7 +61,30 @@ class BudgetRepositoryIT {
 
         assertThat(summaries, hasSize(5));
 
-        System.out.println(summaries);
+        int summariesChecked = 0;
+
+        for (BudgetSummary summary : summaries) {
+            int categoryId = summary.getCategoryId();
+            int transactionTypeId = summary.getTransactionTypeId();
+            if (categoryId == 3 && transactionTypeId == 2) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(1674.99999967))));
+                summariesChecked++;
+            } else if (categoryId == 1 && transactionTypeId == 1) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(3000.0))));
+                summariesChecked++;
+            } else if (categoryId == 1 && transactionTypeId == 2) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(2127.5699999999997))));
+                summariesChecked++;
+            } else if (categoryId == 2 && transactionTypeId == 1) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(0.0))));
+                summariesChecked++;
+            } else if (categoryId == 2 && transactionTypeId == 2) {
+                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(350.0))));
+                summariesChecked++;
+            }
+        }
+
+        assertThat(summariesChecked, is(equalTo(5)));
     }
 
 }

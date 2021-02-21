@@ -204,20 +204,22 @@ class BudgetControllerIT {
     @Test
     void getBudgetSummary_GivenBudgetsExist_ThenReturnBudgetSummary() throws Exception {
 
+        int expectedSize = 5;
+
         mockMvc.perform(
                 get(BASE_URI + "/summary")
                         .param("year", "2017")
                         .param("month", "1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[*]", hasSize(4)))
-                .andExpect(jsonPath("$.[*].category", hasSize(4)))
-                .andExpect(jsonPath("$.[*].month", hasSize(4)))
-                .andExpect(jsonPath("$.[*].monthText", hasSize(4)))
-                .andExpect(jsonPath("$.[*].year", hasSize(4)))
-                .andExpect(jsonPath("$.[*].planned", hasSize(4)))
-                .andExpect(jsonPath("$.[*].actual", hasSize(4)))
-                .andExpect(jsonPath("$.[*].expected", hasSize(4)));
+                .andExpect(jsonPath("$.[*]", hasSize(expectedSize)))
+                .andExpect(jsonPath("$.[*].category", hasSize(expectedSize)))
+                .andExpect(jsonPath("$.[*].month", hasSize(expectedSize)))
+                .andExpect(jsonPath("$.[*].monthText", hasSize(expectedSize)))
+                .andExpect(jsonPath("$.[*].year", hasSize(expectedSize)))
+                .andExpect(jsonPath("$.[*].planned", hasSize(expectedSize)))
+                .andExpect(jsonPath("$.[*].actual", hasSize(expectedSize)))
+                .andExpect(jsonPath("$.[*].expected", hasSize(expectedSize)));
 
     }
 

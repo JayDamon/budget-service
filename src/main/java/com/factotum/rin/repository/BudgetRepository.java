@@ -34,19 +34,31 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
 
     @Query(value = "SELECT " +
             "new com.factotum.rin.dto.BudgetSummary(" +
-            "bct.name, " +
-            "bct.id, " +
-            "b.transactionType, " +
-            "SUM(b.amount * f.monthFactor)) " +
+            "   bct.name, " +
+            "   bct.id, " +
+            "   b.transactionTypeId, " +
+            "   SUM(b.amount * f.monthFactor) " +
+            ") " +
             "FROM Budget b " +
             "INNER JOIN b.budgetCategory bc " +
             "INNER JOIN bc.type as bct " +
             "INNER JOIN b.frequencyType f " +
             "WHERE b.startDate <= :startDate AND (b.endDate IS NULL OR b.endDate >= :endDate)" +
-            "GROUP BY bct.name, b.transactionType " +
+            "GROUP BY bct.name, b.transactionTypeId " +
             "ORDER BY bct.name ")
     List<BudgetSummary> getBudgetSummaries(
             @Param("startDate") ZonedDateTime startDate,
             @Param("endDate") ZonedDateTime endDate);
+
+    @Query(value =
+            "SELECT b.id FROM Budget b " +
+                    "JOIN b.budgetCategory bc " +
+                    "JOIN bc.type t " +
+                    "WHERE b.startDate <= :startDate " +
+                    "AND (b.endDate IS NULL OR b.endDate >= :endDate) " +
+                    "AND t.id = :budgetCategoryTypeId " +
+                    "AND b.transactionTypeId = :transactionTypeId")
+    Set<Long> queryAllBudgetIdsForSummary(
+            int transactionTypeId, int budgetCategoryTypeId, ZonedDateTime startDate, ZonedDateTime endDate);
 
 }

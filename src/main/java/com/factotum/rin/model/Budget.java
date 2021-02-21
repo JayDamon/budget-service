@@ -61,6 +61,6 @@ public class Budget extends UserAuditable implements Serializable {
     private Boolean inUse;
 
     @Column(name = "transaction_type_id")
-    private Integer transactionType;
+    private Integer transactionTypeId;
 
 }

@@ -2,12 +2,14 @@ package com.factotum.rin.service;
 
 import com.factotum.rin.dto.BudgetCategoryDto;
 import com.factotum.rin.dto.BudgetDto;
+import com.factotum.rin.dto.BudgetSummary;
 import com.factotum.rin.dto.BudgetTypeDto;
 import com.factotum.rin.dto.TransactionBudgetSummary;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +33,9 @@ public interface BudgetService {
 
     void deleteUserDefinedBudget(Budget budgets);
 
-    Set<TransactionBudgetSummary> getBudgetSummary(int years, int months);
+    List<TransactionBudgetSummary> getBudgetSummary(int years, int months);
+
+    List<BudgetSummary> getBudgetSummaries(ZonedDateTime startDate, ZonedDateTime endDate);
 
     @Transactional
     List<BudgetCategory> getAllBudgetCategories();

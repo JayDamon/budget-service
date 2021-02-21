@@ -5,6 +5,8 @@ import com.factotum.rin.dto.BudgetDto;
 import com.factotum.rin.dto.BudgetSummary;
 import com.factotum.rin.dto.BudgetTypeDto;
 import com.factotum.rin.dto.TransactionBudgetSummary;
+import com.factotum.rin.dto.TransactionTotal;
+import com.factotum.rin.http.TransactionService;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategory;
 import com.factotum.rin.model.BudgetCategoryType;
@@ -14,10 +16,15 @@ import com.factotum.rin.repository.BudgetRepository;
 import com.factotum.rin.util.BudgetUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,6 +32,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class BudgetServiceImpl implements BudgetService {
@@ -34,15 +42,18 @@ public class BudgetServiceImpl implements BudgetService {
     private final BudgetRepository budgetRepository;
     private final BudgetCategoryRepository budgetCategoryRepository;
     private final FrequencyService frequencyService;
+    private final TransactionService transactionService;
 
     public BudgetServiceImpl(
             BudgetRepository budgetRepository,
             BudgetCategoryRepository budgetCategoryRepository,
-            FrequencyService frequencyService) {
+            FrequencyService frequencyService,
+            TransactionService transactionService) {
 
         this.budgetRepository = budgetRepository;
         this.budgetCategoryRepository = budgetCategoryRepository;
         this.frequencyService = frequencyService;
+        this.transactionService = transactionService;
     }
 
     @Override
@@ -92,16 +103,61 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Set<TransactionBudgetSummary> getBudgetSummary(int year, int month) {
+    @Transactional
+    public List<TransactionBudgetSummary> getBudgetSummary(int year, int month) {
 
         ZonedDateTime startDate = ZonedDateTime.of(year, month, 1, 0, 0, 0, 0, ZoneId.systemDefault());
         ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getDayOfMonth());
 
+        List<BudgetSummary> summaries = getBudgetSummaries(startDate, endDate);
+
+        return summaries.stream().map(s -> {
+
+            Set<Long> budgetIds = budgetRepository
+                    .queryAllBudgetIdsForSummary(
+                            s.getTransactionTypeId(),
+                            s.getCategoryId(),
+                            startDate,
+                            endDate);
+
+            TransactionTotal total = transactionService.getTransactionTotal(year, month, s.getTransactionTypeId(), budgetIds);
+
+            return TransactionBudgetSummary.builder()
+                    .transactionType(total.getTransactionType())
+                    .category(s.getCategory())
+                    .month(month)
+                    .monthText(LocalDateTime.now().withMonth(month).format(DateTimeFormatter.ofPattern("MMMM")))
+                    .year(year)
+                    .planned(s.getPlanned())
+                    .actual(total.getTotal())
+                    .expected(totalIsExpected(total.getTransactionType(), total.getTotal(), s.getPlanned()))
+                    .build();
+
+        }).collect(Collectors.toList());
+
+    }
+
+    private boolean totalIsExpected(String transactionType, BigDecimal actual, BigDecimal expected) {
+
+        if (actual == null) {
+            return !(expected.doubleValue() > 0);
+        }
+
+        if ("Income".equalsIgnoreCase(transactionType)) {
+            return expected.compareTo(actual) == 1;
+        } else if ("Expense".equalsIgnoreCase(transactionType)) {
+            return expected.compareTo(actual) == -1;
+        }
+
+        return true;
+    }
+
+    @Override
+    public List<BudgetSummary> getBudgetSummaries(ZonedDateTime startDate, ZonedDateTime endDate) {
+
         List<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(startDate, endDate);
 
-        // TODO: convert to feign class
-        return new HashSet<>();
-//        return transactionService.getTransactionBudgetSummaryForAllTransactionTypes(year, month, summaries);
+        return summaries;
     }
 
     @Override

@@ -6,6 +6,8 @@ import com.factotum.rin.dto.BudgetItemDto;
 import com.factotum.rin.dto.BudgetSummary;
 import com.factotum.rin.dto.BudgetTypeDto;
 import com.factotum.rin.dto.TransactionBudgetSummary;
+import com.factotum.rin.dto.TransactionTotal;
+import com.factotum.rin.http.TransactionService;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategory;
 import com.factotum.rin.model.BudgetCategoryName;
@@ -43,6 +45,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.oneOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
@@ -58,6 +61,8 @@ class BudgetServiceImplUT {
     private BudgetRepository budgetRepository;
     @Mock
     private FrequencyTypeRepository frequencyTypeRepository;
+    @Mock
+    private TransactionService transactionService;
 
     private BudgetService budgetService;
 
@@ -67,10 +72,10 @@ class BudgetServiceImplUT {
     void setUp() {
         FrequencyService frequencyService = new FrequencyServiceImpl(frequencyTypeRepository);
         budgetService = new BudgetServiceImpl(
-                budgetRepository, budgetCategoryRepository, frequencyService);
+                budgetRepository, budgetCategoryRepository, frequencyService, transactionService);
     }
 
-//    getAllBudgetCategoryDtos
+    //    getAllBudgetCategoryDtos
     @Test
     void getAllBudgetCategories_GivenValidReturn_ThenCategoriesComplete() {
 
@@ -190,7 +195,7 @@ class BudgetServiceImplUT {
         assertThat(budgetTypes, hasSize(0));
     }
 
-//    createNewBudgets
+    //    createNewBudgets
     @Test
     @SuppressWarnings("unchecked")
     void createNewBudgets_GivenBudgetsProvided_ThenSaveAndReturnWithIds() {
@@ -199,7 +204,7 @@ class BudgetServiceImplUT {
         BudgetDto budgetDto = getBudgetDto();
 
         when(budgetRepository.saveAll(any())).thenAnswer(i -> {
-            List<Budget> budgets = (ArrayList<Budget>)i.getArguments()[0];
+            List<Budget> budgets = (ArrayList<Budget>) i.getArguments()[0];
             long id = 1;
             for (Budget b : budgets) {
                 b.setId(id);
@@ -222,7 +227,7 @@ class BudgetServiceImplUT {
         assertThrows(IllegalArgumentException.class, () -> budgetService.createNewBudgets(null));
     }
 
-//    updateBudget
+    //    updateBudget
     @Test
     void updateBudget_GivenBudgetExistsAndAllValuesChanged_ThenUpdateAllValues() {
 
@@ -335,12 +340,24 @@ class BudgetServiceImplUT {
 
         // Arrange
         TransactionBudgetSummary summary = new TransactionBudgetSummary(
-                "TestType", "TestCategory", 1, 2017, 50.02, BigDecimal.valueOf(40.30), false);
+                "TestType", "TestCategory", 1, 2017, 50.02, BigDecimal.valueOf(40.30), true);
 
-        when(budgetRepository.getBudgetSummaries(any(), any())).thenReturn(Collections.singletonList(new BudgetSummary("cat", 1, 1, 2.0)));
+        when(budgetRepository.getBudgetSummaries(any(), any()))
+                .thenReturn(
+                        Collections.singletonList(
+                                new BudgetSummary(
+                                        "TestCategory",
+                                        1,
+                                        1,
+                                        50.02)));
+
+        when(budgetRepository.queryAllBudgetIdsForSummary(anyInt(), anyInt(), any(), any()))
+                .thenReturn(new HashSet<>(Collections.singletonList(1L)));
+
+        when(transactionService.getTransactionTotal(eq(2017), eq(1), eq(1), any(Set.class))).thenReturn(new TransactionTotal("TestType", BigDecimal.valueOf(40.30)));
 
         // Act
-        Set<TransactionBudgetSummary> summaries = budgetService.getBudgetSummary(2017, 1);
+        List<TransactionBudgetSummary> summaries = budgetService.getBudgetSummary(2017, 1);
 
         // Assert
         assertThat(summaries, hasSize(1));
