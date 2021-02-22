@@ -30,7 +30,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "budget")
-public class Budget extends UserAuditable implements Serializable {
+public class Budget implements Serializable {
 
     @Id
     @Column(name = "budget_id")

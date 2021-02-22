@@ -1,11 +1,14 @@
 plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.springframework.cloud.contract' version '3.0.1'
 	id 'java'
+	id 'maven'
+	id 'maven-publish'
 }
 
 group = 'com.factotum'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '15'
 
 configurations {
@@ -16,9 +19,11 @@ configurations {
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 ext {
+	set('springBootAdminVersion', "2.3.1")
 	set('springCloudVersion', "2020.0.1")
 }
 
@@ -30,20 +35,31 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	implementation 'org.modelmapper:modelmapper:2.3.0'
-	testImplementation group: 'org.springframework.cloud', name: 'spring-cloud-contract-stub-runner', version: '3.0.1'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
+	testImplementation group: 'org.springframework.cloud', name: 'spring-cloud-contract-stub-runner', version: '3.0.1'
+	testCompile 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
 }
 
 dependencyManagement {
 	imports {
+		mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
+}
+
+contracts {
+	testFramework = "JUNIT5"
+	packageWithBaseClasses = 'com.factotum.rin.contract'
+}
+
+jar {
+	archivesBaseName = 'rin'
+	archiveVersion = '0.0.1'
 }
 
 test {

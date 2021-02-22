@@ -2,6 +2,8 @@ package com.factotum.rin.controller;
 
 import com.factotum.rin.dto.BudgetDto;
 import com.factotum.rin.dto.TransactionBudgetSummary;
+import com.factotum.rin.model.Budget;
+import com.factotum.rin.repository.BudgetRepository;
 import com.factotum.rin.service.BudgetService;
 import com.factotum.rin.util.BudgetUtil;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Set;
@@ -24,9 +27,11 @@ import java.util.Set;
 public class BudgetController {
 
     private final BudgetService budgetService;
+    private final BudgetRepository budgetRepository;
 
-    public BudgetController(BudgetService budgetService) {
+    public BudgetController(BudgetService budgetService, BudgetRepository budgetRepository) {
         this.budgetService = budgetService;
+        this.budgetRepository = budgetRepository;
     }
 
     @GetMapping("")
@@ -36,6 +41,14 @@ public class BudgetController {
                 budgetService.getAllActiveBudgets()
         );
 
+    }
+
+    @GetMapping("/{id}")
+    public BudgetDto getBudgetById(@PathVariable(name = "id") long id) {
+
+        Budget budget = budgetRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        return BudgetUtil.convertBudgetToDto(budget);
     }
 
     @PostMapping("")

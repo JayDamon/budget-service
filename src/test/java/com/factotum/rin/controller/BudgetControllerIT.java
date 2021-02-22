@@ -40,7 +40,7 @@ class BudgetControllerIT {
     @Autowired
     private BudgetCategoryRepository budgetCategoryRepository;
 
-    private static final String BASE_URI = "/v1/budgets";
+    private static final String URI = "/v1/budgets";
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Set<BudgetDto> basicBudgetDtos = new HashSet<>();
@@ -67,10 +67,10 @@ class BudgetControllerIT {
     }
 
     @Test
-    void getBudgets_GivenBudgetsExist_ThenReturnOkWithBudgetDto() throws Exception {
+    void getActiveBudgets_GivenBudgetsExist_ThenReturnOkWithBudgetDto() throws Exception {
 
         mockMvc.perform(
-                get(BASE_URI))
+                get(URI))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").exists())
@@ -87,10 +87,35 @@ class BudgetControllerIT {
     }
 
     @Test
+    void getBudgetById_GivenBudgetExists_ThenReturnBudget() throws Exception {
+
+        mockMvc.perform(
+                get(URI + "/{id}", 1))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.name").exists())
+                .andExpect(jsonPath("$.budgetCategory").exists())
+                .andExpect(jsonPath("$.budgetCategory.id").exists())
+                .andExpect(jsonPath("$.budgetCategory.type").exists())
+                .andExpect(jsonPath("$.budgetCategory.name").exists())
+                .andExpect(jsonPath("$.budgetCategory.budgetItems").exists());
+
+    }
+
+    @Test
+    void getBudgetById_GivenBudgetDoesNotExist_ThenReturnNotFound() throws Exception {
+        mockMvc.perform(
+                get(URI + "/{id}", 999))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     void createNewBudgets_GivenSimpleBudgetProvided_ThenCreateBudgetsAndReturnWithIds() throws Exception {
 
         MvcResult mv = mockMvc.perform(
-                post(BASE_URI)
+                post(URI)
                         .content(objectMapper.writeValueAsString(basicBudgetDtos))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -113,7 +138,7 @@ class BudgetControllerIT {
     @Test
     void createNewBudgets_GivenNoBudgetProvided_ThenReturnBadRequest() throws Exception {
         mockMvc.perform(
-                post(BASE_URI))
+                post(URI))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -122,7 +147,7 @@ class BudgetControllerIT {
     void updateBudget_GivenValidBudgetProvided_ThenReturnUpdatedBudget() throws Exception {
 
         mockMvc.perform(
-                patch(BASE_URI + "/{id}", "20")
+                patch(URI + "/{id}", "20")
                         .content(objectMapper.writeValueAsString(completeBudgetDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -147,7 +172,7 @@ class BudgetControllerIT {
         basicBudgetDto.setId(20L);
 
         mockMvc.perform(
-                patch(BASE_URI + "/{id}", "20")
+                patch(URI + "/{id}", "20")
                         .content(objectMapper.writeValueAsString(basicBudgetDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -170,7 +195,7 @@ class BudgetControllerIT {
     void updateBudget_GivenBudgetJsonIdAndPathIdDontMatch_TheReturnBadRequest() throws Exception {
 
         mockMvc.perform(
-                patch(BASE_URI + "/{id}", "1")
+                patch(URI + "/{id}", "1")
                         .content(objectMapper.writeValueAsString(completeBudgetDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -183,7 +208,7 @@ class BudgetControllerIT {
         completeBudgetDto.setId(null);
 
         mockMvc.perform(
-                patch(BASE_URI + "/{id}", "1")
+                patch(URI + "/{id}", "1")
                         .content(objectMapper.writeValueAsString(completeBudgetDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -194,7 +219,7 @@ class BudgetControllerIT {
     void updateBudget_GivenPathIdLessThanOne_TheReturnBadRequest() throws Exception {
 
         mockMvc.perform(
-                patch(BASE_URI + "/{id}", "0")
+                patch(URI + "/{id}", "0")
                         .content(objectMapper.writeValueAsString(completeBudgetDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -207,7 +232,7 @@ class BudgetControllerIT {
         int expectedSize = 5;
 
         mockMvc.perform(
-                get(BASE_URI + "/summary")
+                get(URI + "/summary")
                         .param("year", "2017")
                         .param("month", "1"))
                 .andDo(print())
@@ -227,7 +252,7 @@ class BudgetControllerIT {
     void getBudgetSummary_GivenNoBudgetsExist_ThenReturnBudgetSummary() throws Exception {
 
         mockMvc.perform(
-                get(BASE_URI + "/summary")
+                get(URI + "/summary")
                         .param("year", "2016")
                         .param("month", "1"))
                 .andDo(print())
@@ -240,7 +265,7 @@ class BudgetControllerIT {
     void getBudgetSummary_GivenYearProvidedWithNoMonth_ThenReturnBadRequest() throws Exception {
 
         mockMvc.perform(
-                get(BASE_URI + "/summary")
+                get(URI + "/summary")
                         .param("year", "2018"))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
@@ -251,7 +276,7 @@ class BudgetControllerIT {
     void getBudgetSummary_GivenMonthProvidedWithNoYear_ThenReturnBadRequest() throws Exception {
 
         mockMvc.perform(
-                get(BASE_URI + "/summary")
+                get(URI + "/summary")
                         .param("month", "1"))
                 .andDo(print())
                 .andExpect(status().isBadRequest());

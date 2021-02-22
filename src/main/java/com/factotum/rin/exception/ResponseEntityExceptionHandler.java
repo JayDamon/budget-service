@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
 
@@ -39,7 +40,15 @@ public class ResponseEntityExceptionHandler extends org.springframework.web.serv
     @ExceptionHandler(value = {NoResultException.class})
     protected ResponseEntity<?> handleResourceNotFound(NoResultException e, WebRequest request) {
         log.error("Resource not found, " + e, e);
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST,
+        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND,
+                request);
+    }
+
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @ExceptionHandler(value = {EntityNotFoundException.class})
+    protected ResponseEntity<?> handleResourceNotFound(EntityNotFoundException e, WebRequest request) {
+        log.error("Resource not found, " + e, e);
+        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND,
                 request);
     }
 
