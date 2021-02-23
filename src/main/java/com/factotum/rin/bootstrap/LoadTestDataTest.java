@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 
 @Component
-@Profile({"test"})
+@Profile({"test", "h2"})
 public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEvent> {
 
     private final DataSource dataSource;

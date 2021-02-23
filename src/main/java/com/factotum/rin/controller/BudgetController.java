@@ -46,7 +46,7 @@ public class BudgetController {
     @GetMapping("/{id}")
     public BudgetDto getBudgetById(@PathVariable(name = "id") long id) {
 
-        Budget budget = budgetRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Budget budget = budgetRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Unable to find budget with id %s", id)));
 
         return BudgetUtil.convertBudgetToDto(budget);
     }
