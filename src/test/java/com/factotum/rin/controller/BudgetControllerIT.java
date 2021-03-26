@@ -3,6 +3,8 @@ package com.factotum.rin.controller;
 import com.factotum.rin.IntegrationTest;
 import com.factotum.rin.dto.BudgetCategoryDto;
 import com.factotum.rin.dto.BudgetDto;
+import com.factotum.rin.dto.TransactionTotal;
+import com.factotum.rin.http.TransactionService;
 import com.factotum.rin.model.BudgetCategory;
 import com.factotum.rin.repository.BudgetCategoryRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +12,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -25,6 +28,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -39,6 +45,9 @@ class BudgetControllerIT {
     private MockMvc mockMvc;
     @Autowired
     private BudgetCategoryRepository budgetCategoryRepository;
+
+    @MockBean
+    private TransactionService transactionService;
 
     private static final String URI = "/v1/budgets";
 
@@ -230,6 +239,8 @@ class BudgetControllerIT {
     void getBudgetSummary_GivenBudgetsExist_ThenReturnBudgetSummary() throws Exception {
 
         int expectedSize = 5;
+
+        when(transactionService.getTransactionTotal(anyInt(), anyInt(), anyInt(), any())).thenAnswer(i -> new TransactionTotal("TransactionType", BigDecimal.ONE));
 
         mockMvc.perform(
                 get(URI + "/summary")
