@@ -1,14 +1,12 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.3'
+	id 'org.springframework.boot' version '2.5.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'maven'
-	id 'maven-publish'
 }
 
 group = 'com.factotum'
 version = '0.0.1'
-sourceCompatibility = '15'
+sourceCompatibility = '16'
 
 configurations {
 	compileOnly {
@@ -21,8 +19,8 @@ repositories {
 }
 
 ext {
-	set('springBootAdminVersion', "2.4.0")
-	set('springCloudVersion', "2020.0.1")
+	set('springBootAdminVersion', "2.4.2")
+	set('springCloudVersion', "2020.0.3")
 }
 
 dependencies {
@@ -32,7 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-	implementation 'org.modelmapper:modelmapper:2.3.0'
+	implementation 'org.modelmapper:modelmapper:2.4.4'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'

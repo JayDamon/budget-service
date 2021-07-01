@@ -66,8 +66,6 @@ class BudgetServiceImplUT {
 
     private BudgetService budgetService;
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM");
-
     @BeforeEach
     void setUp() {
         FrequencyService frequencyService = new FrequencyServiceImpl(frequencyTypeRepository);
