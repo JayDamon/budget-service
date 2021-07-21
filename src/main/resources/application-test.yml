@@ -1,0 +1,15 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  cloud:
+    kubernetes:
+      enabled: false
+      discovery:
+        enabled: false
+    discovery:
+      enabled: false
