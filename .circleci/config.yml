@@ -22,7 +22,9 @@ jobs:
           command: ./gradlew clean test
       - run:
           name: Package
-          command: ./gradlew build -x test
+          command: |
+            chmod +x ./gradlew
+            ./gradlew build -x test
       - save_cache:
           key: v1-gradle-debs-{{ checksum "build.gradle" }}
           paths:
