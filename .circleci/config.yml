@@ -19,11 +19,12 @@ jobs:
             - v1-gradle-debs
       - run:
           name: Test
-          command: ./gradlew clean test
-      - run:
-          name: Package
           command: |
             chmod +x ./gradlew
+            ./gradlew clean test
+      - run:
+          name: Package
+          command:
             ./gradlew build -x test
       - save_cache:
           key: v1-gradle-debs-{{ checksum "build.gradle" }}
