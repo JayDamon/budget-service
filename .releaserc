@@ -26,7 +26,7 @@
     [
       "@semantic-release-plus/docker",
       {
-        "name": "repo.treescale.com/jaydamon/rin-budget-service",
+        "name": "repo.treescale.com/jaydamon/mm-rin-budget-service",
         "registryUrl": "repo.treescale.com",
         "publishLatestTag": true,
         "publishMajorTag": true,
