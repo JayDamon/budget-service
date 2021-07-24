@@ -4,14 +4,13 @@ spring:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
   datasource:
-    url: jdbc:mysql://172.16.0.7:3310/money-maker-test
-    username: mm-app
-    password: SaveMoney
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  sql:
-    init:
-      data-locations:
+    url: jdbc:mysql://172.16.0.7:3306/mm_budget_dev
+    username: app_user
+    password: 6NSMqvSszpKq42Jf
+    driver-class-name: com.mysql.jdbc.Driver
+  flyway:
+    baseline-on-migrate: true
 server:
   port: 8084

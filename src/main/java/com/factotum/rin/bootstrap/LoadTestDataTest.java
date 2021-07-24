@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 
 @Component
-@Profile({"test", "h2"})
+@Profile({"test", "local"})
 public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEvent> {
 
     private final DataSource dataSource;
@@ -39,19 +39,19 @@ public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEve
     }
 
     public static void loadInitialStartData(DataSource dataSource) {
-        loadSql(dataSource, "sql/initial_data.sql");
+        loadSql(dataSource, "test_data/initial_data.sql");
     }
 
     public static void loadInitialBudgets(DataSource dataSource) {
-        loadSql(dataSource, "sql/initial_budgets.sql");
+        loadSql(dataSource, "test_data/initial_budgets.sql");
     }
 
     public static void loadTestRecurringTransactionData(DataSource dataSource) {
-        loadSql(dataSource, "sql/test_recurring_transactions.sql");
+        loadSql(dataSource, "test_data/test_recurring_transactions.sql");
     }
 
     public static void loadCompleteBudgets(DataSource dataSource) {
-        loadSql(dataSource, "sql/complete_budgets.sql");
+        loadSql(dataSource, "test_data/complete_budgets.sql");
     }
 
     private static void loadSql(DataSource dataSource, String s) {

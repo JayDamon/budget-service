@@ -23,3 +23,15 @@ spring:
         enabled: false
     discovery:
       enabled: false
+
+---
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    baseline-on-migrate: true
+  sql:
+    init:
+      continue-on-error: true

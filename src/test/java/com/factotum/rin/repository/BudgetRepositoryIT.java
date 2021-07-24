@@ -26,7 +26,7 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 @TestPropertySource(properties = {
         "spring.jpa.hibernate.ddl-auto=create-drop"
 })
-@Sql({"classpath:sql/initial_data.sql", "classpath:sql/complete_budgets.sql"})
+@Sql({"classpath:test_data/initial_data.sql", "classpath:test_data/complete_budgets.sql"})
 class BudgetRepositoryIT {
 
     @Autowired

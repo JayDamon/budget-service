@@ -57,7 +57,7 @@ public class Budget implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
 
-    @Column(name = "in_use", columnDefinition = "boolean default true")
+    @Column(name = "in_use")
     private Boolean inUse;
 
     @Column(name = "transaction_type_id")
