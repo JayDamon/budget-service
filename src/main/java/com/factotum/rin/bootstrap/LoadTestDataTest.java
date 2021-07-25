@@ -47,11 +47,11 @@ public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEve
     }
 
     public static void loadTestRecurringTransactionData(DataSource dataSource) {
-        loadSql(dataSource, "test_data/test_recurring_transactions.sql");
+        loadSql(dataSource, "test_data/V1_1__add_test_recurrin_transactions.sql");
     }
 
     public static void loadCompleteBudgets(DataSource dataSource) {
-        loadSql(dataSource, "test_data/complete_budgets.sql");
+        loadSql(dataSource, "test_data/V1_2__add_test_budgets.sql");
     }
 
     private static void loadSql(DataSource dataSource, String s) {
