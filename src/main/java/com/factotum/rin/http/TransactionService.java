@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Set;
 
-@FeignClient(name = "moneymaker-transaction-service")
+@FeignClient(name = "moneymaker-transaction-service", url = "http://moneymaker-transaction-service:8080")
 @RequestMapping("/v1/transactions")
 public interface TransactionService {
 
