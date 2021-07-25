@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [0.3.1](https://github.com/JayDamon/rin-budget-service/compare/v0.3.0...v0.3.1) (2021-07-25)
+
+
+### Bug Fixes
+
+* **discovery:** Use generic discovery client ([38830da](https://github.com/JayDamon/rin-budget-service/commit/38830daa1584acb8192c3d2fd28c091a1b003c7d))
+
 # [0.3.0](https://github.com/JayDamon/rin-budget-service/compare/v0.2.0...v0.3.0) (2021-07-25)
 
 
