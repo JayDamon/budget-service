@@ -16,7 +16,7 @@ class BudgetCategoryControllerIT {
     @Autowired
     private MockMvc mockMvc;
 
-    private static final String BASE_URI = "/v1/budget-categories";
+    private static final String BASE_URI = "/v1/budgets/categories";
 
     @Test
     void getAllBudgetCategories_GivenDataExists_ThenReturnValidBudgetCategories() throws Exception {

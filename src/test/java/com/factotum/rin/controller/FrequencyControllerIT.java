@@ -17,7 +17,7 @@ class FrequencyControllerIT {
     @Autowired
     private MockMvc mockMvc;
 
-    private static final String BASE_URI = "/v1/frequency-types";
+    private static final String BASE_URI = "/v1/budgets/frequency-types";
 
     @Test
     void getFrequencyTypes_GiveFrequencyTypesExist_ThenReturnAllTypes() throws Exception {
