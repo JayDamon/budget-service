@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [0.3.0](https://github.com/JayDamon/rin-budget-service/compare/v0.2.0...v0.3.0) (2021-07-25)
+
+
+### Bug Fixes
+
+* **tests:** Use updated api paths ([8de4ed1](https://github.com/JayDamon/rin-budget-service/commit/8de4ed1111490d12538d6ae8faeb16a14be6810b))
+
+
+### Features
+
+* **api:** Update api to work with k8s gateway ([0421ad4](https://github.com/JayDamon/rin-budget-service/commit/0421ad4b5112ec782b32885d516489ab3cce1eaa))
+
 # [0.1.0](https://github.com/JayDamon/rin-budget-service/compare/v0.0.1...v0.1.0) (2021-07-21)
 
 
