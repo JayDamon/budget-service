@@ -12,5 +12,7 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: false
+  flyway:
+    locations: 'classpath:db/migration,test_data'
 server:
   port: 8084
