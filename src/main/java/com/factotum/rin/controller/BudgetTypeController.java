@@ -11,7 +11,7 @@ import java.util.Set;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping("/v1/budget-types")
+@RequestMapping("/v1/budgets/types")
 public class BudgetTypeController {
 
     private final BudgetService budgetService;

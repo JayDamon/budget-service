@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/budget-categories")
+@RequestMapping("/v1/budgets/categories")
 public class BudgetCategoryController {
 
     private final BudgetService budgetService;
@@ -18,7 +18,6 @@ public class BudgetCategoryController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllBudgetCategories() {
-
         return ResponseEntity.ok(budgetService.getAllBudgetCategoryDtos());
     }
 }

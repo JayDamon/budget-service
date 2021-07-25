@@ -13,7 +13,7 @@ import java.util.List;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping("/v1/frequency-types")
+@RequestMapping("/v1/budgets/frequency-types")
 public class FrequencyController {
 
     private final FrequencyService frequencyService;

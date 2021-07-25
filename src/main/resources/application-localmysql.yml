@@ -9,7 +9,6 @@ spring:
     url: jdbc:mysql://172.16.0.7:3306/mm_budget_dev
     username: app_user
     password: 6NSMqvSszpKq42Jf
-    driver-class-name: com.mysql.jdbc.Driver
   flyway:
     baseline-on-migrate: true
 server:

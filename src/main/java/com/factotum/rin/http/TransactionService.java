@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Set;
 
-@FeignClient(name = "oaka")
+@FeignClient(name = "moneymaker-transaction-service")
 @RequestMapping("/v1/transactions")
 public interface TransactionService {
 
