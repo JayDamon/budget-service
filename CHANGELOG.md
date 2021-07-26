@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [0.3.3](https://github.com/JayDamon/rin-budget-service/compare/v0.3.2...v0.3.3) (2021-07-25)
+
+
+### Bug Fixes
+
+* **client:** Set port for http requests ([7d1db58](https://github.com/JayDamon/rin-budget-service/commit/7d1db58aa121051355968e86ee1b6d8f6a475779))
+
 ## [0.3.2](https://github.com/JayDamon/rin-budget-service/compare/v0.3.1...v0.3.2) (2021-07-25)
 
 
