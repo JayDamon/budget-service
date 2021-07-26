@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [0.3.4](https://github.com/JayDamon/rin-budget-service/compare/v0.3.3...v0.3.4) (2021-07-26)
+
+
+### Bug Fixes
+
+* **client:** Remove Ports ([e20c555](https://github.com/JayDamon/rin-budget-service/commit/e20c5551badb72535cb58a29d45a45e4c2964f86))
+
 ## [0.3.3](https://github.com/JayDamon/rin-budget-service/compare/v0.3.2...v0.3.3) (2021-07-25)
 
 
