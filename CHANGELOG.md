@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [0.4.0](https://github.com/JayDamon/rin-budget-service/compare/v0.3.4...v0.4.0) (2021-07-27)
+
+
+### Features
+
+* **client:** Add local docker config ([d150abd](https://github.com/JayDamon/rin-budget-service/commit/d150abde80f73074d8a6452aec9c6d107e704018))
+
 ## [0.3.4](https://github.com/JayDamon/rin-budget-service/compare/v0.3.3...v0.3.4) (2021-07-26)
 
 
