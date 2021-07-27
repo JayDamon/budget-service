@@ -10,9 +10,10 @@ spring:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     show-sql: false
   flyway:
     locations: 'classpath:db/migration,test_data'
+    baseline-on-migrate: true
 server:
   port: 8084
