@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [0.4.1](https://github.com/JayDamon/rin-budget-service/compare/v0.4.0...v0.4.1) (2021-07-27)
+
+
+### Bug Fixes
+
+* **db:** Fix flyway data load ([c062e95](https://github.com/JayDamon/rin-budget-service/commit/c062e9507eb234eaa4de5a9ff633de66e93015db))
+
 # [0.4.0](https://github.com/JayDamon/rin-budget-service/compare/v0.3.4...v0.4.0) (2021-07-27)
 
 
