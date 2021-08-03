@@ -28,7 +28,6 @@ import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -352,6 +351,7 @@ class BudgetServiceImplUT {
         when(budgetRepository.queryAllBudgetIdsForSummary(anyInt(), anyInt(), any(), any()))
                 .thenReturn(new HashSet<>(Collections.singletonList(1L)));
 
+        //noinspection unchecked
         when(transactionService.getTransactionTotal(eq(2017), eq(1), eq(1), any(Set.class))).thenReturn(new TransactionTotal("TestType", BigDecimal.valueOf(40.30)));
 
         // Act

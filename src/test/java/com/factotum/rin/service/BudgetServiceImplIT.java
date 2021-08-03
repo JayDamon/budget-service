@@ -10,6 +10,7 @@ import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,7 @@ import static org.hamcrest.Matchers.nullValue;
 @Transactional
 @SpringBootTest
 @ActiveProfiles("test")
+@WithMockUser
 class BudgetServiceImplIT {
 
     @Autowired

@@ -17,3 +17,22 @@ spring:
     baseline-on-migrate: true
 server:
   port: 8084
+
+---
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/auth/realms/moneymaker
+      client:
+        registration:
+          rin-budget-service:
+            provider: keycloak
+            client-id: rin-budget-service
+            client-secret: 3eeef679-dac3-4092-ab78-6059244adcbf
+            authorization-grant-type: client_credentials
+        provider:
+          keycloak:
+            token-uri: http://localhost:8081/auth/realms/moneymaker/protocol/openid-connect/token
