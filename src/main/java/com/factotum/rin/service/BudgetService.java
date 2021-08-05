@@ -15,8 +15,6 @@ import java.util.Set;
 
 public interface BudgetService {
 
-    // TODO monthly budget remaining - this is for cashflow
-
     Set<Budget> getAllActiveBudgets();
 
     Set<Budget> getAllBudgets();
