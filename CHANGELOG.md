@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [0.5.0](https://github.com/JayDamon/rin-budget-service/compare/v0.4.1...v0.5.0) (2021-08-05)
+
+
+### Features
+
+* **security:** Integrate local with oauth2/keycloak ([b84bd89](https://github.com/JayDamon/rin-budget-service/commit/b84bd898ba2d2b1de242c0f1346deb6bc55726a1))
+
 ## [0.4.1](https://github.com/JayDamon/rin-budget-service/compare/v0.4.0...v0.4.1) (2021-07-27)
 
 
