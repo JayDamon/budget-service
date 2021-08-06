@@ -22,6 +22,7 @@ jobs:
             - v1-maven-debs
       - run:
           name: Test
+          command: |
             chmod +x ./mvnw
             ./mvnw clean test
       - run:
