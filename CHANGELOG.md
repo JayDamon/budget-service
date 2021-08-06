@@ -1,5 +1,24 @@
 # Semantic Versioning Changelog
 
+# [1.0.0](https://github.com/JayDamon/rin-budget-service/compare/v0.5.0...v1.0.0) (2021-08-06)
+
+
+### Bug Fixes
+
+* **ci:** Change docker file to point to maven output directory ([8974532](https://github.com/JayDamon/rin-budget-service/commit/89745322cd4eb9a63380898e0f4e1ee39c6782ab))
+* **ci:** Fix main branch only exclusion ([53a0264](https://github.com/JayDamon/rin-budget-service/commit/53a0264fc20124d183a424f9f575f73eca52ee3f))
+
+
+### Features
+
+* **build:** Convert to maven ([1817366](https://github.com/JayDamon/rin-budget-service/commit/18173661883de72bb986df5fc6c18996c947a11e))
+* **ci:** limit to only main branch for circle CI ([b9c3084](https://github.com/JayDamon/rin-budget-service/commit/b9c3084f24f09566e82acd8e843ee45e488f999f))
+
+
+### BREAKING CHANGES
+
+* **build:** now usint maven instead of gradle to keep consistency for all apps
+
 # [0.5.0](https://github.com/JayDamon/rin-budget-service/compare/v0.4.1...v0.5.0) (2021-08-05)
 
 
