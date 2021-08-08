@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.1.0](https://github.com/JayDamon/rin-budget-service/compare/v1.0.0...v1.1.0) (2021-08-08)
+
+
+### Features
+
+* **security:** Add discriminator based multi tenancy ([c363be3](https://github.com/JayDamon/rin-budget-service/commit/c363be307c1fe1df65e55049a08fa1ecad2dabde))
+
 # [1.0.0](https://github.com/JayDamon/rin-budget-service/compare/v0.5.0...v1.0.0) (2021-08-06)
 
 
