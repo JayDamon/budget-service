@@ -1,5 +1,6 @@
 package com.factotum.rin.model;
 
+import com.factotum.rin.component.TenantEntityListener;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.ToString;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +32,8 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "budget")
-public class Budget implements Serializable {
+@EntityListeners(TenantEntityListener.class)
+public class Budget implements TenantEntity, Serializable {
 
     @Id
     @Column(name = "budget_id")
@@ -62,5 +65,8 @@ public class Budget implements Serializable {
 
     @Column(name = "transaction_type_id")
     private Integer transactionTypeId;
+
+    @Column(name = "tenant_id")
+    private String tenantId;
 
 }

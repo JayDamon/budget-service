@@ -17,6 +17,7 @@ import com.factotum.rin.model.FrequencyType;
 import com.factotum.rin.repository.BudgetCategoryRepository;
 import com.factotum.rin.repository.BudgetRepository;
 import com.factotum.rin.repository.FrequencyTypeRepository;
+import com.factotum.rin.util.SecurityTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -233,7 +235,7 @@ class BudgetServiceImplUT {
                 "A Budget Name", ZonedDateTime.now(), ZonedDateTime.now().plusDays(5),
                 35.02, true, 1L);
 
-        when(budgetRepository.findById(eq(1L))).thenReturn(Optional.of(currentBudget));
+        when(budgetRepository.findByIdAndTenantId(eq(1L), any())).thenReturn(Optional.of(currentBudget));
         when(budgetRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
         BudgetCategory budgetCategory = createBudgetCategory("TestType", 2, "TestCatName", 3, 5);
@@ -245,7 +247,7 @@ class BudgetServiceImplUT {
         BudgetDto budgetDto = getBudgetDto();
 
         // Act
-        Budget budget = budgetService.updateBudget(budgetDto);
+        Budget budget = budgetService.updateBudget(SecurityTestUtil.getTestJwt(), budgetDto);
 
         // Assert
         assertThat(budget.getId(), is(equalTo(1L)));
@@ -272,7 +274,7 @@ class BudgetServiceImplUT {
                 "A Budget Name", ZonedDateTime.now(), ZonedDateTime.now().plusDays(5),
                 35.02, true, 1L);
 
-        when(budgetRepository.findById(eq(1L))).thenReturn(Optional.of(currentBudget));
+        when(budgetRepository.findByIdAndTenantId(eq(1L), any())).thenReturn(Optional.of(currentBudget));
         when(budgetRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
         BudgetCategory budgetCategory = createBudgetCategory("TestType", 2, "TestCatName", 3, 5);
@@ -285,7 +287,7 @@ class BudgetServiceImplUT {
         budgetDto.setAmount(null);
 
         // Act
-        Budget budget = budgetService.updateBudget(budgetDto);
+        Budget budget = budgetService.updateBudget(SecurityTestUtil.getTestJwt(), budgetDto);
 
         // Assert
         verify(frequencyTypeRepository, times(0)).findById(any());
@@ -309,7 +311,7 @@ class BudgetServiceImplUT {
     @Test
     void updateBudget_GivenDtoIsNull_ThenThrowIllegalArgumentException() {
 
-        assertThrows(IllegalArgumentException.class, () -> budgetService.updateBudget(null));
+        assertThrows(IllegalArgumentException.class, () -> budgetService.updateBudget(null, null));
 
     }
 
@@ -319,17 +321,15 @@ class BudgetServiceImplUT {
         BudgetDto budgetDto = getBudgetDto();
         budgetDto.setId(null);
 
-        assertThrows(IllegalArgumentException.class, () -> budgetService.updateBudget(budgetDto));
-
+        assertThrows(IllegalArgumentException.class, () -> budgetService.updateBudget(null, budgetDto));
     }
 
     @Test
     void updateBudget_GivenBudgetWithIdDoesNotExist_ThenThrowIllegalArgumentException() {
 
-        when(budgetRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(budgetRepository.findByIdAndTenantId(anyLong(), any())).thenReturn(Optional.empty());
 
-        assertThrows(NoResultException.class, () -> budgetService.updateBudget(getBudgetDto()));
-
+        assertThrows(NoResultException.class, () -> budgetService.updateBudget(SecurityTestUtil.getTestJwt(), getBudgetDto()));
     }
 
     @Test
@@ -339,7 +339,7 @@ class BudgetServiceImplUT {
         TransactionBudgetSummary summary = new TransactionBudgetSummary(
                 "TestType", "TestCategory", 1, 2017, 50.02, BigDecimal.valueOf(40.30), true);
 
-        when(budgetRepository.getBudgetSummaries(any(), any()))
+        when(budgetRepository.getBudgetSummaries(any(), any(), anyString()))
                 .thenReturn(
                         Collections.singletonList(
                                 new BudgetSummary(
@@ -348,26 +348,25 @@ class BudgetServiceImplUT {
                                         1,
                                         50.02)));
 
-        when(budgetRepository.queryAllBudgetIdsForSummary(anyInt(), anyInt(), any(), any()))
+        when(budgetRepository.queryAllBudgetIdsForSummary(anyInt(), anyInt(), any(), any(), anyString()))
                 .thenReturn(new HashSet<>(Collections.singletonList(1L)));
 
         //noinspection unchecked
         when(transactionService.getTransactionTotal(eq(2017), eq(1), eq(1), any(Set.class))).thenReturn(new TransactionTotal("TestType", BigDecimal.valueOf(40.30)));
 
         // Act
-        List<TransactionBudgetSummary> summaries = budgetService.getBudgetSummary(2017, 1);
+        List<TransactionBudgetSummary> summaries = budgetService.getBudgetSummary(SecurityTestUtil.getTestJwt(), 2017, 1);
 
         // Assert
         assertThat(summaries, hasSize(1));
 
         summaries.forEach(s -> assertThat(s, is(equalTo(summary))));
-
     }
 
     @Test
     void getBudgetSummary_GivenMonthGreaterThanTwelve_ThenThrowIllegalArgumentException() {
         assertThrows(DateTimeException.class,
-                () -> budgetService.getBudgetSummary(1, 13));
+                () -> budgetService.getBudgetSummary(SecurityTestUtil.getTestJwt(), 1, 13));
     }
 
     private Budget getBudgetWithCustomCategory(String categoryName, int categoryId, String budgetname, int amount, int budgetId) {
@@ -437,7 +436,7 @@ class BudgetServiceImplUT {
 
         return new Budget(
                 id, budgetCategory, name, startDate,
-                endDate, frequencyType, BigDecimal.valueOf(amount), inUse, 1);
+                endDate, frequencyType, BigDecimal.valueOf(amount), inUse, 1, null);
     }
 
 }

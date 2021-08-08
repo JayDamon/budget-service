@@ -14,7 +14,9 @@ import com.factotum.rin.model.FrequencyType;
 import com.factotum.rin.repository.BudgetCategoryRepository;
 import com.factotum.rin.repository.BudgetRepository;
 import com.factotum.rin.util.BudgetUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class BudgetServiceImpl implements BudgetService {
 
@@ -56,14 +59,14 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Set<Budget> getAllActiveBudgets() {
-        return new LinkedHashSet<>(budgetRepository.findBudgetsByInUseTrue());
+    public Set<Budget> getAllActiveBudgets(Jwt jwt) {
+        return new LinkedHashSet<>(budgetRepository.findBudgetsByInUseTrueAndTenantId(jwt.getClaimAsString("sub")));
     }
 
     @Override
-    public Set<Budget> getAllBudgets() {
+    public Set<Budget> getAllBudgets(Jwt jwt) {
 
-        return new HashSet<>(budgetRepository.findAll());
+        return new HashSet<>(budgetRepository.findAllByTenantId(jwt.getClaimAsString("sub")));
     }
 
     @Override
@@ -103,12 +106,12 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     @Transactional
-    public List<TransactionBudgetSummary> getBudgetSummary(int year, int month) {
+    public List<TransactionBudgetSummary> getBudgetSummary(Jwt jwt, int year, int month) {
 
         ZonedDateTime startDate = ZonedDateTime.of(year, month, 1, 0, 0, 0, 0, ZoneId.systemDefault());
         ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getDayOfMonth());
 
-        List<BudgetSummary> summaries = getBudgetSummaries(startDate, endDate);
+        List<BudgetSummary> summaries = getBudgetSummaries(jwt, startDate, endDate);
 
         return summaries.stream().map(s -> {
 
@@ -117,8 +120,8 @@ public class BudgetServiceImpl implements BudgetService {
                             s.getTransactionTypeId(),
                             s.getCategoryId(),
                             startDate,
-                            endDate);
-
+                            endDate,
+                            jwt.getClaimAsString("sub"));
             TransactionTotal total = transactionService.getTransactionTotal(year, month, s.getTransactionTypeId(), budgetIds);
 
             return TransactionBudgetSummary.builder()
@@ -152,11 +155,9 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public List<BudgetSummary> getBudgetSummaries(ZonedDateTime startDate, ZonedDateTime endDate) {
+    public List<BudgetSummary> getBudgetSummaries(Jwt jwt, ZonedDateTime startDate, ZonedDateTime endDate) {
 
-        List<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(startDate, endDate);
-
-        return summaries;
+        return budgetRepository.getBudgetSummaries(startDate, endDate, jwt.getClaimAsString("sub"));
     }
 
     @Override
@@ -220,7 +221,7 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Budget updateBudget(BudgetDto budgetDto) {
+    public Budget updateBudget(Jwt jwt, BudgetDto budgetDto) {
 
         if (budgetDto == null) {
             throw new IllegalArgumentException("Budget must not be null.");
@@ -229,7 +230,7 @@ public class BudgetServiceImpl implements BudgetService {
             throw new IllegalArgumentException("Budget must have a valid id.");
         }
 
-        Budget budget = budgetRepository.findById(budgetDto.getId()).orElseThrow(
+        Budget budget = budgetRepository.findByIdAndTenantId(budgetDto.getId(), jwt.getClaimAsString("sub")).orElseThrow(
                 () -> new NoResultException("No budget with id <" + budgetDto.getId() + "> was found."));
 
         if (budgetDto.getFrequencyTypeId() != null) {

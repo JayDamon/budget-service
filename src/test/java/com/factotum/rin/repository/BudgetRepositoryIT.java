@@ -3,6 +3,7 @@ package com.factotum.rin.repository;
 import com.factotum.rin.dto.BudgetCategoryInUse;
 import com.factotum.rin.dto.BudgetSummary;
 import com.factotum.rin.model.BudgetCategoryType;
+import com.factotum.rin.util.SecurityTestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,13 +21,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 
 @DataJpaTest
 @ActiveProfiles({"test"})
 @TestPropertySource(properties = {
         "spring.jpa.hibernate.ddl-auto=create-drop"
 })
-@Sql({"classpath:test_data/initial_data.sql", "classpath:test_data/V1_2__add_test_budgets.sql"})
+@Sql({"classpath:test_data/initial_data.sql", "classpath:test_data/V1_2__add_test_budgets.sql", "classpath:test_data/V2_1__add_tenant_id.sql"})
 class BudgetRepositoryIT {
 
     @Autowired
@@ -49,13 +52,15 @@ class BudgetRepositoryIT {
     }
 
     @Test
-    void
-    getBudgetSummary_GivenBudgetsExist_TenReturnBudgetSummaries() {
+    void getBudgetSummary_GivenBudgetsExist_TenReturnBudgetSummaries() {
 
         ZonedDateTime startDate = ZonedDateTime.of(2017, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault());
         ZonedDateTime endDate = ZonedDateTime.of(2017, 1, 31, 0, 0, 0, 0, ZoneId.systemDefault());
 
-        List<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(startDate, endDate);
+        List<BudgetSummary> summaries = budgetRepository.getBudgetSummaries(
+                startDate,
+                endDate,
+                SecurityTestUtil.getTestJwt().getClaimAsString("sub"));
 
         assertThat(summaries, hasSize(5));
 

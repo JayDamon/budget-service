@@ -33,6 +33,7 @@ public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEve
             loadInitialStartData(dataSource);
             loadCompleteBudgets(dataSource);
             loadTestRecurringTransactionData(dataSource);
+            loadVersionTwoData(dataSource);
             dataLoaded = true;
 
         }
@@ -52,6 +53,10 @@ public class LoadTestDataTest implements ApplicationListener<ContextRefreshedEve
 
     public static void loadCompleteBudgets(DataSource dataSource) {
         loadSql(dataSource, "test_data/V1_2__add_test_budgets.sql");
+    }
+
+    public static void loadVersionTwoData(DataSource dataSource) {
+        loadSql(dataSource, "test_data/V2_1__add_tenant_id.sql");
     }
 
     private static void loadSql(DataSource dataSource, String s) {

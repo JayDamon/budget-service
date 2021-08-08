@@ -6,15 +6,14 @@ import com.factotum.rin.dto.BudgetSummary;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategory;
 import com.factotum.rin.model.BudgetItem;
+import com.factotum.rin.util.SecurityTestUtil;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -33,17 +32,14 @@ import static org.hamcrest.Matchers.nullValue;
 @Transactional
 @SpringBootTest
 @ActiveProfiles("test")
-@WithMockUser
 class BudgetServiceImplIT {
 
     @Autowired
     private BudgetService budgetService;
-    @Autowired
-    private DataSource dataSource;
 
     @Test
     void getAllActiveBudgets() {
-        Set<Budget> activeBudgets = budgetService.getAllActiveBudgets();
+        Set<Budget> activeBudgets = budgetService.getAllActiveBudgets(SecurityTestUtil.getTestJwt());
         assertThat(activeBudgets, is(not(nullValue())));
         assertThat(activeBudgets, hasSize(30));
         int found = 0;
@@ -61,7 +57,7 @@ class BudgetServiceImplIT {
         ZonedDateTime startDate = ZonedDateTime.of(2017, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault());
         ZonedDateTime endDate = startDate.withDayOfMonth(startDate.plusMonths(1).minusDays(1).getDayOfMonth());
 
-        List<BudgetSummary> summaries = budgetService.getBudgetSummaries(startDate, endDate);
+        List<BudgetSummary> summaries = budgetService.getBudgetSummaries(SecurityTestUtil.getTestJwt(), startDate, endDate);
 
         assertThat(summaries, IsCollectionWithSize.hasSize(5));
 

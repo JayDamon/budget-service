@@ -231,7 +231,7 @@ class BudgetUtilUT {
 
         return new Budget(
                 id, budgetCategory, name, startDate,
-                endDate, frequencyType, BigDecimal.valueOf(amount), inUse, 1);
+                endDate, frequencyType, BigDecimal.valueOf(amount), inUse, 1, null);
 
     }
 

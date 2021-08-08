@@ -7,6 +7,7 @@ import com.factotum.rin.dto.BudgetTypeDto;
 import com.factotum.rin.dto.TransactionBudgetSummary;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategory;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
@@ -15,9 +16,9 @@ import java.util.Set;
 
 public interface BudgetService {
 
-    Set<Budget> getAllActiveBudgets();
+    Set<Budget> getAllActiveBudgets(Jwt jwt);
 
-    Set<Budget> getAllBudgets();
+    Set<Budget> getAllBudgets(Jwt jwt);
 
     Set<Budget> getAllInactiveBudgets();
 
@@ -31,9 +32,9 @@ public interface BudgetService {
 
     void deleteUserDefinedBudget(Budget budgets);
 
-    List<TransactionBudgetSummary> getBudgetSummary(int years, int months);
+    List<TransactionBudgetSummary> getBudgetSummary(Jwt jwt, int years, int months);
 
-    List<BudgetSummary> getBudgetSummaries(ZonedDateTime startDate, ZonedDateTime endDate);
+    List<BudgetSummary> getBudgetSummaries(Jwt jwt, ZonedDateTime startDate, ZonedDateTime endDate);
 
     @Transactional
     List<BudgetCategory> getAllBudgetCategories();
@@ -59,10 +60,12 @@ public interface BudgetService {
     /**
      * Updates budget in the database with only the values provided. Null Values are ignored.
      *
+     *
+     * @param jwt User token
      * @param budgetDto Dto containing the values being changed.
      * @return The updated budget.
      */
-    Budget updateBudget(BudgetDto budgetDto);
+    Budget updateBudget(Jwt jwt, BudgetDto budgetDto);
 
     // TODO reset generic budget?
 

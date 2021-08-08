@@ -7,13 +7,18 @@ import com.factotum.rin.dto.TransactionTotal;
 import com.factotum.rin.http.TransactionService;
 import com.factotum.rin.model.BudgetCategory;
 import com.factotum.rin.repository.BudgetCategoryRepository;
+import com.factotum.rin.util.SecurityTestUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -32,6 +37,7 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,7 +46,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @IntegrationTest
-@WithMockUser
 class BudgetControllerIT {
 
     @Autowired
@@ -82,7 +87,8 @@ class BudgetControllerIT {
     void getActiveBudgets_GivenBudgetsExist_ThenReturnOkWithBudgetDto() throws Exception {
 
         mockMvc.perform(
-                get(URI))
+                get(URI)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").exists())
@@ -102,7 +108,8 @@ class BudgetControllerIT {
     void getBudgetById_GivenBudgetExists_ThenReturnBudget() throws Exception {
 
         mockMvc.perform(
-                get(URI + "/{id}", 1))
+                get(URI + "/{id}", 1)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
@@ -118,7 +125,8 @@ class BudgetControllerIT {
     @Test
     void getBudgetById_GivenBudgetDoesNotExist_ThenReturnNotFound() throws Exception {
         mockMvc.perform(
-                get(URI + "/{id}", 999))
+                get(URI + "/{id}", 999)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
@@ -129,7 +137,8 @@ class BudgetControllerIT {
         MvcResult mv = mockMvc.perform(
                 post(URI)
                         .content(objectMapper.writeValueAsString(basicBudgetDtos))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").exists())
@@ -150,7 +159,8 @@ class BudgetControllerIT {
     @Test
     void createNewBudgets_GivenNoBudgetProvided_ThenReturnBadRequest() throws Exception {
         mockMvc.perform(
-                post(URI))
+                post(URI)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -161,7 +171,8 @@ class BudgetControllerIT {
         mockMvc.perform(
                 patch(URI + "/{id}", "20")
                         .content(objectMapper.writeValueAsString(completeBudgetDto))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(equalTo(20))))
@@ -186,7 +197,8 @@ class BudgetControllerIT {
         mockMvc.perform(
                 patch(URI + "/{id}", "20")
                         .content(objectMapper.writeValueAsString(basicBudgetDto))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(equalTo(20))))
@@ -209,7 +221,8 @@ class BudgetControllerIT {
         mockMvc.perform(
                 patch(URI + "/{id}", "1")
                         .content(objectMapper.writeValueAsString(completeBudgetDto))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -222,7 +235,8 @@ class BudgetControllerIT {
         mockMvc.perform(
                 patch(URI + "/{id}", "1")
                         .content(objectMapper.writeValueAsString(completeBudgetDto))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -233,7 +247,8 @@ class BudgetControllerIT {
         mockMvc.perform(
                 patch(URI + "/{id}", "0")
                         .content(objectMapper.writeValueAsString(completeBudgetDto))
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
@@ -248,7 +263,8 @@ class BudgetControllerIT {
         mockMvc.perform(
                 get(URI + "/summary")
                         .param("year", "2017")
-                        .param("month", "1"))
+                        .param("month", "1")
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[*]", hasSize(expectedSize)))
@@ -268,7 +284,8 @@ class BudgetControllerIT {
         mockMvc.perform(
                 get(URI + "/summary")
                         .param("year", "2016")
-                        .param("month", "1"))
+                        .param("month", "1")
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[*]", hasSize(0)));
@@ -280,7 +297,8 @@ class BudgetControllerIT {
 
         mockMvc.perform(
                 get(URI + "/summary")
-                        .param("year", "2018"))
+                        .param("year", "2018")
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
 
@@ -291,7 +309,8 @@ class BudgetControllerIT {
 
         mockMvc.perform(
                 get(URI + "/summary")
-                        .param("month", "1"))
+                        .param("month", "1")
+                        .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
 
