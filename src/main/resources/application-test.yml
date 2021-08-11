@@ -4,8 +4,10 @@ spring:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     show-sql: true
+  datasource:
+    url: jdbc:h2:mem:DATABASE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
   cloud:
     kubernetes:
       enabled: false
@@ -13,3 +15,6 @@ spring:
         enabled: false
     discovery:
       enabled: false
+  flyway:
+    locations: 'classpath:db/migration,test_data'
+    baseline-on-migrate: true

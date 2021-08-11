@@ -7,6 +7,7 @@ import com.factotum.rin.util.SecurityTestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -24,12 +25,8 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 
-@DataJpaTest
+@SpringBootTest
 @ActiveProfiles({"test"})
-@TestPropertySource(properties = {
-        "spring.jpa.hibernate.ddl-auto=create-drop"
-})
-@Sql({"classpath:test_data/initial_data.sql", "classpath:test_data/V1_2__add_test_budgets.sql", "classpath:test_data/V2_1__add_tenant_id.sql"})
 class BudgetRepositoryIT {
 
     @Autowired
