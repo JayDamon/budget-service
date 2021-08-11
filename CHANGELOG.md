@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.1.1](https://github.com/JayDamon/rin-budget-service/compare/v1.1.0...v1.1.1) (2021-08-11)
+
+
+### Bug Fixes
+
+* **budget:** Use budget type over budget id ([be29197](https://github.com/JayDamon/rin-budget-service/commit/be29197ef44267e254c574b46d46e4b902cbd011))
+
 # [1.1.0](https://github.com/JayDamon/rin-budget-service/compare/v1.0.0...v1.1.0) (2021-08-08)
 
 
