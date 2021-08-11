@@ -51,7 +51,7 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
             "INNER JOIN b.frequencyType f " +
             "WHERE b.startDate <= :startDate AND (b.endDate IS NULL OR b.endDate >= :endDate) " +
             "AND b.tenantId = :tenantId " +
-            "GROUP BY bct.name, bc.budgetType " +
+            "GROUP BY bct.name, bct.id, bc.budgetType " +
             "ORDER BY bct.name ")
     List<BudgetSummary> getBudgetSummaries(
             @Param("startDate") ZonedDateTime startDate,
