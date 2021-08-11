@@ -7,6 +7,7 @@ import com.factotum.rin.dto.BudgetSummary;
 import com.factotum.rin.dto.BudgetTypeDto;
 import com.factotum.rin.dto.TransactionBudgetSummary;
 import com.factotum.rin.dto.TransactionTotal;
+import com.factotum.rin.enumeration.BudgetType;
 import com.factotum.rin.http.TransactionService;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategory;
@@ -58,10 +59,13 @@ class BudgetServiceImplUT {
 
     @Mock
     private BudgetCategoryRepository budgetCategoryRepository;
+
     @Mock
     private BudgetRepository budgetRepository;
+
     @Mock
     private FrequencyTypeRepository frequencyTypeRepository;
+
     @Mock
     private TransactionService transactionService;
 
@@ -337,7 +341,7 @@ class BudgetServiceImplUT {
 
         // Arrange
         TransactionBudgetSummary summary = new TransactionBudgetSummary(
-                "TestType", "TestCategory", 1, 2017, 50.02, BigDecimal.valueOf(40.30), true);
+                BudgetType.INCOME, "TestCategory", 1, 2017, 50.02, BigDecimal.valueOf(40.30), true);
 
         when(budgetRepository.getBudgetSummaries(any(), any(), anyString()))
                 .thenReturn(
@@ -345,14 +349,14 @@ class BudgetServiceImplUT {
                                 new BudgetSummary(
                                         "TestCategory",
                                         1,
-                                        1,
+                                        BudgetType.INCOME,
                                         50.02)));
 
-        when(budgetRepository.queryAllBudgetIdsForSummary(anyInt(), anyInt(), any(), any(), anyString()))
+        when(budgetRepository.queryAllBudgetIdsForSummary(any(), anyInt(), any(), any(), anyString()))
                 .thenReturn(new HashSet<>(Collections.singletonList(1L)));
 
         //noinspection unchecked
-        when(transactionService.getTransactionTotal(eq(2017), eq(1), eq(1), any(Set.class))).thenReturn(new TransactionTotal("TestType", BigDecimal.valueOf(40.30)));
+        when(transactionService.getTransactionTotal(eq(2017), eq(1), eq(BudgetType.INCOME), any(Set.class))).thenReturn(new TransactionTotal(BudgetType.INCOME, BigDecimal.valueOf(40.30)));
 
         // Act
         List<TransactionBudgetSummary> summaries = budgetService.getBudgetSummary(SecurityTestUtil.getTestJwt(), 2017, 1);

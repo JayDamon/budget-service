@@ -6,6 +6,7 @@ import com.factotum.rin.dto.BudgetSummary;
 import com.factotum.rin.dto.BudgetTypeDto;
 import com.factotum.rin.dto.TransactionBudgetSummary;
 import com.factotum.rin.dto.TransactionTotal;
+import com.factotum.rin.enumeration.BudgetType;
 import com.factotum.rin.http.TransactionService;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategory;
@@ -117,37 +118,37 @@ public class BudgetServiceImpl implements BudgetService {
 
             Set<Long> budgetIds = budgetRepository
                     .queryAllBudgetIdsForSummary(
-                            s.getTransactionTypeId(),
+                            s.getBudgetType(),
                             s.getCategoryId(),
                             startDate,
                             endDate,
                             jwt.getClaimAsString("sub"));
-            TransactionTotal total = transactionService.getTransactionTotal(year, month, s.getTransactionTypeId(), budgetIds);
+            TransactionTotal total = transactionService.getTransactionTotal(year, month, s.getBudgetType(), budgetIds);
 
             return TransactionBudgetSummary.builder()
-                    .transactionType(total.getTransactionType())
+                    .budgetType(s.getBudgetType())
                     .category(s.getCategory())
                     .month(month)
                     .monthText(LocalDateTime.now().withMonth(month).format(DateTimeFormatter.ofPattern("MMMM")))
                     .year(year)
                     .planned(s.getPlanned())
                     .actual(total.getTotal())
-                    .expected(totalIsExpected(total.getTransactionType(), total.getTotal(), s.getPlanned()))
+                    .expected(totalIsExpected(total.getBudgetType(), total.getTotal(), s.getPlanned()))
                     .build();
 
         }).collect(Collectors.toList());
 
     }
 
-    private boolean totalIsExpected(String transactionType, BigDecimal actual, BigDecimal expected) {
+    private boolean totalIsExpected(BudgetType budgetType, BigDecimal actual, BigDecimal expected) {
 
         if (actual == null) {
             return !(expected.doubleValue() > 0);
         }
 
-        if ("Income".equalsIgnoreCase(transactionType)) {
+        if (BudgetType.INCOME.equals(budgetType)) {
             return expected.compareTo(actual) > 0;
-        } else if ("Expense".equalsIgnoreCase(transactionType)) {
+        } else if (BudgetType.EXPENSE.equals(budgetType)) {
             return expected.compareTo(actual) < 0;
         }
 

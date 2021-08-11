@@ -1,5 +1,6 @@
 package com.factotum.rin.dto;
 
+import com.factotum.rin.enumeration.BudgetType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,8 @@ import java.time.format.DateTimeFormatter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TransactionBudgetSummary {
 
-    @JsonProperty("transactionType")
-    private String transactionType;
+    @JsonProperty("budgetType")
+    private BudgetType budgetType;
 
     @JsonProperty("category")
     private String category;
@@ -45,10 +46,15 @@ public class TransactionBudgetSummary {
     private boolean expected;
 
     public TransactionBudgetSummary(
-            String transactionType, String category, Integer month,
-            Integer year, Double planned, BigDecimal actual, boolean expected) {
+            BudgetType budgetType,
+            String category,
+            Integer month,
+            Integer year,
+            Double planned,
+            BigDecimal actual,
+            boolean expected) {
 
-        this.transactionType = transactionType;
+        this.budgetType = budgetType;
         this.category = category;
         this.month = month;
         this.monthText = LocalDateTime.now().withMonth(month).format(DateTimeFormatter.ofPattern("MMMM"));
