@@ -3,6 +3,7 @@ package com.factotum.rin.util;
 import com.factotum.rin.dto.BudgetCategoryDto;
 import com.factotum.rin.dto.BudgetDto;
 import com.factotum.rin.dto.BudgetItemDto;
+import com.factotum.rin.enumeration.BudgetType;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategory;
 import com.factotum.rin.model.BudgetCategoryName;
@@ -214,7 +215,7 @@ class BudgetUtilUT {
         BudgetCategoryName budgetCategoryName = new BudgetCategoryName(2, "TestBudgetCategoryName");
 
 
-        BudgetCategory budgetCategory = new BudgetCategory(1, budgetCategoryType, budgetCategoryName, new HashSet<>());
+        BudgetCategory budgetCategory = new BudgetCategory(1, BudgetType.INCOME, budgetCategoryType, budgetCategoryName, new HashSet<>());
 
         BudgetItem itemOne = new BudgetItem(6L, budgetCategory, "Item Name");
 

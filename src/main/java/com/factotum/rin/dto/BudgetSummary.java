@@ -1,5 +1,6 @@
 package com.factotum.rin.dto;
 
+import com.factotum.rin.enumeration.BudgetType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,14 +20,14 @@ public class BudgetSummary {
 
     private Integer categoryId;
 
-    private Integer transactionTypeId;
+    private BudgetType budgetType;
 
     private BigDecimal planned;
 
-    public BudgetSummary(String category, Integer categoryId, Integer transactionTypeId, Double planned) {
+    public BudgetSummary(String category, Integer categoryId, BudgetType budgetType, Double planned) {
         this.category = category;
         this.categoryId = categoryId;
-        this.transactionTypeId = transactionTypeId;
+        this.budgetType = budgetType;
         this.planned = BigDecimal.valueOf(planned);
     }
 }

@@ -4,6 +4,7 @@ import com.factotum.rin.IntegrationTest;
 import com.factotum.rin.dto.BudgetCategoryDto;
 import com.factotum.rin.dto.BudgetDto;
 import com.factotum.rin.dto.TransactionTotal;
+import com.factotum.rin.enumeration.BudgetType;
 import com.factotum.rin.http.TransactionService;
 import com.factotum.rin.model.BudgetCategory;
 import com.factotum.rin.repository.BudgetCategoryRepository;
@@ -258,7 +259,7 @@ class BudgetControllerIT {
 
         int expectedSize = 5;
 
-        when(transactionService.getTransactionTotal(anyInt(), anyInt(), anyInt(), any())).thenAnswer(i -> new TransactionTotal("TransactionType", BigDecimal.ONE));
+        when(transactionService.getTransactionTotal(anyInt(), anyInt(), any(), any())).thenAnswer(i -> new TransactionTotal(BudgetType.EXPENSE, BigDecimal.ONE));
 
         mockMvc.perform(
                 get(URI + "/summary")

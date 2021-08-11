@@ -2,6 +2,7 @@ package com.factotum.rin.repository;
 
 import com.factotum.rin.dto.BudgetCategoryInUse;
 import com.factotum.rin.dto.BudgetSummary;
+import com.factotum.rin.enumeration.BudgetType;
 import com.factotum.rin.model.Budget;
 import com.factotum.rin.model.BudgetCategoryType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -41,7 +42,7 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
             "new com.factotum.rin.dto.BudgetSummary(" +
             "   bct.name, " +
             "   bct.id, " +
-            "   b.transactionTypeId, " +
+            "   bc.budgetType, " +
             "   SUM(b.amount * f.monthFactor) " +
             ") " +
             "FROM Budget b " +
@@ -50,7 +51,7 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
             "INNER JOIN b.frequencyType f " +
             "WHERE b.startDate <= :startDate AND (b.endDate IS NULL OR b.endDate >= :endDate) " +
             "AND b.tenantId = :tenantId " +
-            "GROUP BY bct.name, b.transactionTypeId " +
+            "GROUP BY bct.name, bc.budgetType " +
             "ORDER BY bct.name ")
     List<BudgetSummary> getBudgetSummaries(
             @Param("startDate") ZonedDateTime startDate,
@@ -64,9 +65,9 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
                     "WHERE b.startDate <= :startDate " +
                     "AND (b.endDate IS NULL OR b.endDate >= :endDate) " +
                     "AND t.id = :budgetCategoryTypeId " +
-                    "AND b.transactionTypeId = :transactionTypeId " +
+                    "AND bc.budgetType = :budgetType " +
                     "AND b.tenantId = :tenantId")
     Set<Long> queryAllBudgetIdsForSummary(
-            int transactionTypeId, int budgetCategoryTypeId, ZonedDateTime startDate, ZonedDateTime endDate, String tenantId);
+            BudgetType budgetType, int budgetCategoryTypeId, ZonedDateTime startDate, ZonedDateTime endDate, String tenantId);
 
 }

@@ -1,5 +1,6 @@
 package com.factotum.rin.model;
 
+import com.factotum.rin.enumeration.BudgetType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,8 @@ import lombok.ToString;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +37,10 @@ public class BudgetCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "budget_category_id")
     private Integer id;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "budget_type")
+    private BudgetType budgetType;
 
     @EqualsAndHashCode.Exclude
     @OneToOne

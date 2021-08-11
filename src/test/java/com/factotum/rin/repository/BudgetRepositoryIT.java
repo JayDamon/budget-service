@@ -2,6 +2,7 @@ package com.factotum.rin.repository;
 
 import com.factotum.rin.dto.BudgetCategoryInUse;
 import com.factotum.rin.dto.BudgetSummary;
+import com.factotum.rin.enumeration.BudgetType;
 import com.factotum.rin.model.BudgetCategoryType;
 import com.factotum.rin.util.SecurityTestUtil;
 import org.junit.jupiter.api.Test;
@@ -65,20 +66,20 @@ class BudgetRepositoryIT {
 
         for (BudgetSummary summary : summaries) {
             int categoryId = summary.getCategoryId();
-            int transactionTypeId = summary.getTransactionTypeId();
-            if (categoryId == 3 && transactionTypeId == 2) {
+            BudgetType budgetType = summary.getBudgetType();
+            if (categoryId == 3 && BudgetType.EXPENSE.equals(budgetType)) {
                 assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(1674.99999967))));
                 summariesChecked++;
-            } else if (categoryId == 1 && transactionTypeId == 1) {
+            } else if (categoryId == 1 && BudgetType.INCOME.equals(budgetType)) {
                 assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(3000.0))));
                 summariesChecked++;
-            } else if (categoryId == 1 && transactionTypeId == 2) {
+            } else if (categoryId == 1 && BudgetType.EXPENSE.equals(budgetType)) {
                 assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(2127.5699999999997))));
                 summariesChecked++;
-            } else if (categoryId == 2 && transactionTypeId == 1) {
+            } else if (categoryId == 2 && BudgetType.INCOME.equals(budgetType)) {
                 assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(0.0))));
                 summariesChecked++;
-            } else if (categoryId == 2 && transactionTypeId == 2) {
+            } else if (categoryId == 2 && BudgetType.EXPENSE.equals(budgetType)) {
                 assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(350.0))));
                 summariesChecked++;
             }
