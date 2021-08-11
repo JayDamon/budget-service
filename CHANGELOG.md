@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.1.2](https://github.com/JayDamon/rin-budget-service/compare/v1.1.1...v1.1.2) (2021-08-11)
+
+
+### Bug Fixes
+
+* **budget:** Add missing group by ([0ca6577](https://github.com/JayDamon/rin-budget-service/commit/0ca657730597a56826540e3ca7bda129e602084e))
+
 ## [1.1.1](https://github.com/JayDamon/rin-budget-service/compare/v1.1.0...v1.1.1) (2021-08-11)
 
 
