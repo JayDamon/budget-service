@@ -1,10 +1,10 @@
 package com.factotum.rin.util;
 
-import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SecurityTestUtil {
@@ -18,10 +18,10 @@ public class SecurityTestUtil {
 
     public static Jwt getTestJwt(String userId) {
 
-        Map<String, Object> claims = new HashedMap<>();
+        Map<String, Object> claims = new HashMap<>();
         claims.put("sub", userId);
 
-        Map<String, Object> headers = new HashedMap<>();
+        Map<String, Object> headers = new HashMap<>();
         headers.put("typ", "JWT");
         headers.put("alg", "RS256");
 
