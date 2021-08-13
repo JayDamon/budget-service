@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.1.3](https://github.com/JayDamon/rin-budget-service/compare/v1.1.2...v1.1.3) (2021-08-13)
+
+
+### Bug Fixes
+
+* **kubernetes:** Use fabric8 client to avoid log error" ([4d52ef3](https://github.com/JayDamon/rin-budget-service/commit/4d52ef39118e24a8b8f5bdce8e5b1b95b5345f09))
+
 ## [1.1.2](https://github.com/JayDamon/rin-budget-service/compare/v1.1.1...v1.1.2) (2021-08-11)
 
 
