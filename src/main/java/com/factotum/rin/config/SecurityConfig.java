@@ -1,7 +1,6 @@
 package com.factotum.rin.config;
 
 import com.factotum.rin.component.Oauth2AuthenticationEntryPoint;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

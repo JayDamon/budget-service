@@ -65,47 +65,6 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Set<Budget> getAllBudgets(Jwt jwt) {
-
-        return new HashSet<>(budgetRepository.findAllByTenantId(jwt.getClaimAsString("sub")));
-    }
-
-    @Override
-    public Set<Budget> getAllInactiveBudgets() {
-        return new LinkedHashSet<>(budgetRepository.findBudgetsByInUseFalse());
-    }
-
-    @Override
-    public Budget saveBudget(Budget budget) {
-        return budgetRepository.save(budget);
-    }
-
-    @Override
-    public Set<Budget> saveBudgets(Set<Budget> budgets) {
-
-        return new HashSet<>(budgetRepository.saveAll(budgets));
-    }
-
-    @Override
-    public Set<Budget> deactivateBudgets(Set<Budget> budgets) {
-
-
-        budgets.forEach(budget -> budget.setInUse(false));
-
-        return new HashSet<>(budgetRepository.saveAll(budgets));
-    }
-
-    @Override
-    public void deleteUserDefinedBudgets(Set<Budget> budgets) {
-        budgetRepository.deleteAll(budgets);
-    }
-
-    @Override
-    public void deleteUserDefinedBudget(Budget budget) {
-        budgetRepository.delete(budget);
-    }
-
-    @Override
     @Transactional
     public List<TransactionBudgetSummary> getBudgetSummary(Jwt jwt, int year, int month) {
 

@@ -3,7 +3,6 @@ package com.factotum.rin.component;
 import com.factotum.rin.model.TenantEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;

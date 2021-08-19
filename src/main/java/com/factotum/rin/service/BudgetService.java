@@ -18,20 +18,6 @@ public interface BudgetService {
 
     Set<Budget> getAllActiveBudgets(Jwt jwt);
 
-    Set<Budget> getAllBudgets(Jwt jwt);
-
-    Set<Budget> getAllInactiveBudgets();
-
-    Budget saveBudget(Budget budget);
-
-    Set<Budget> saveBudgets(Set<Budget> budgets);
-
-    Set<Budget> deactivateBudgets(Set<Budget> budgets);
-
-    void deleteUserDefinedBudgets(Set<Budget> budgets);
-
-    void deleteUserDefinedBudget(Budget budgets);
-
     List<TransactionBudgetSummary> getBudgetSummary(Jwt jwt, int years, int months);
 
     List<BudgetSummary> getBudgetSummaries(Jwt jwt, ZonedDateTime startDate, ZonedDateTime endDate);
