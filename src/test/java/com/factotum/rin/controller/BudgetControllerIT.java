@@ -84,6 +84,7 @@ class BudgetControllerIT {
                 1, null, BigDecimal.valueOf(100), true);
     }
 
+    // getActiveBudgets
     @Test
     void getActiveBudgets_GivenBudgetsExist_ThenReturnOkWithBudgetDto() throws Exception {
 
@@ -105,6 +106,7 @@ class BudgetControllerIT {
 
     }
 
+    // getBudgetById
     @Test
     void getBudgetById_GivenBudgetExists_ThenReturnBudget() throws Exception {
 
@@ -132,6 +134,7 @@ class BudgetControllerIT {
                 .andExpect(status().isNotFound());
     }
 
+    // createNewBudgets
     @Test
     void createNewBudgets_GivenSimpleBudgetProvided_ThenCreateBudgetsAndReturnWithIds() throws Exception {
 
@@ -158,6 +161,36 @@ class BudgetControllerIT {
     }
 
     @Test
+    void createNewBudgets_GivenBudgetMissingCategory_ThenReturnBadRequest() throws Exception {
+
+        this.basicBudgetDto.setBudgetCategory(null);
+
+        mockMvc.perform(
+                        post(URI)
+                                .content(objectMapper.writeValueAsString(basicBudgetDtos))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    void createNewBudgets_GivenBudgetCategoryIsMissingId_ThenReturnBadRequest() throws Exception {
+
+        this.basicBudgetDto.setBudgetCategory(new BudgetCategoryDto());
+
+        mockMvc.perform(
+                        post(URI)
+                                .content(objectMapper.writeValueAsString(basicBudgetDtos))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .with(jwt().jwt(SecurityTestUtil.getTestJwt())))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
     void createNewBudgets_GivenNoBudgetProvided_ThenReturnBadRequest() throws Exception {
         mockMvc.perform(
                 post(URI)
@@ -166,6 +199,7 @@ class BudgetControllerIT {
                 .andExpect(status().isBadRequest());
     }
 
+    // updateBudget
     @Test
     void updateBudget_GivenValidBudgetProvided_ThenReturnUpdatedBudget() throws Exception {
 
@@ -254,6 +288,7 @@ class BudgetControllerIT {
                 .andExpect(status().isBadRequest());
     }
 
+    // getBudgetSummary
     @Test
     void getBudgetSummary_GivenBudgetsExist_ThenReturnBudgetSummary() throws Exception {
 

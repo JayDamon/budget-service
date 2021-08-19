@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Set;
@@ -56,7 +57,7 @@ public class BudgetController {
     }
 
     @PostMapping("")
-    public Set<BudgetDto> createNewBudgets(@RequestBody Set<BudgetDto> newBudgets) {
+    public Set<BudgetDto> createNewBudgets(@Valid @RequestBody Set<BudgetDto> newBudgets) {
         return budgetService.createNewBudgets(newBudgets);
     }
 
