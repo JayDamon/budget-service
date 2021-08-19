@@ -173,6 +173,12 @@ public class BudgetServiceImpl implements BudgetService {
             throw new IllegalArgumentException("Budget Dtos must not be null");
         }
 
+        for (BudgetDto b : newBudgets) {
+            if (b.getBudgetCategory().getId() == null) {
+                throw new IllegalArgumentException("All new budgets must hav a valid budget category");
+            }
+        }
+
         List<Budget> budgetList = new ArrayList<>(BudgetUtil.convertBudgetDtosToBudgetIncludeOnlyIdForChildEntity(newBudgets));
 
         budgetList = budgetRepository.saveAll(budgetList);
