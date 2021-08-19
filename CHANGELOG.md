@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.3.0](https://github.com/JayDamon/rin-budget-service/compare/v1.2.0...v1.3.0) (2021-08-19)
+
+
+### Features
+
+* **h2:** Add local config to allow for the h2 console ([0bacdb6](https://github.com/JayDamon/rin-budget-service/commit/0bacdb6b29d2dca59a9641036c0fe159781a8f9e))
+
 # [1.2.0](https://github.com/JayDamon/rin-budget-service/compare/v1.1.3...v1.2.0) (2021-08-19)
 
 
