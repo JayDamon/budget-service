@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.2.0](https://github.com/JayDamon/rin-budget-service/compare/v1.1.3...v1.2.0) (2021-08-19)
+
+
+### Features
+
+* **Budget:** require category id when creating new budget ([ec6e22f](https://github.com/JayDamon/rin-budget-service/commit/ec6e22f73a2f0f06e5a1a35b386f6fef428f9459))
+
 ## [1.1.3](https://github.com/JayDamon/rin-budget-service/compare/v1.1.2...v1.1.3) (2021-08-13)
 
 
