@@ -15,7 +15,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Configuration
-    @Profile({"!test"})
+    @Profile({"!test & !local"})
     public static class StandardSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
@@ -31,6 +31,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .oauth2ResourceServer().jwt();
         }
+    }
+
+    @Configuration
+    @Profile({"local"})
+    public static class LocalSecurityConfig extends WebSecurityConfigurerAdapter {
+
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers("/actuator/**", "/h2-console/*")
+                    .permitAll()
+                    .and()
+                    .authorizeRequests()
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .headers().frameOptions().disable()
+                    .and()
+                    .oauth2ResourceServer().jwt();
+        }
+
     }
 
     @Configuration
