@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -21,10 +22,8 @@ public class BudgetTypeController {
     }
 
     @RequestMapping("")
-    public ResponseEntity<?> getAllBudgetCategoriesByType() {
+    public List<BudgetTypeDto> getAllBudgetCategoriesByType() {
 
-        Set<BudgetTypeDto> budgetTypeDtos = budgetService.getAllBudgetCategoriesByType();
-
-        return ok(budgetTypeDtos);
+        return budgetService.getAllBudgetCategoriesByType();
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +41,7 @@ class BudgetServiceImplIT {
 
     @Test
     void getAllActiveBudgets() {
-        Set<Budget> activeBudgets = budgetService.getAllActiveBudgets(SecurityTestUtil.getTestJwt());
+        List<Budget> activeBudgets = budgetService.getAllActiveBudgets(SecurityTestUtil.getTestJwt());
         assertThat(activeBudgets, is(not(nullValue())));
         assertThat(activeBudgets, hasSize(30));
         int found = 0;

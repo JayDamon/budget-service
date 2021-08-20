@@ -18,6 +18,7 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -45,7 +46,7 @@ class BudgetUtilUT {
                 22.22, true, 2L);
 
         // Act
-        Set<BudgetDto> budgetDtos = BudgetUtil.convertBudgetsToDto(Arrays.asList(budgetOne, budgetTwo));
+        List<BudgetDto> budgetDtos = BudgetUtil.convertBudgetsToDto(Arrays.asList(budgetOne, budgetTwo));
 
         // Assert
         assertThat(budgetDtos, hasSize(2));
@@ -66,7 +67,7 @@ class BudgetUtilUT {
             assertThat(cat.getTypeName(), is(equalTo("TestBudgetCategoryType")));
             assertThat(cat.getName(), is(equalTo("TestBudgetCategoryName")));
 
-            Set<BudgetItemDto> items = cat.getBudgetItems();
+            List<BudgetItemDto> items = cat.getBudgetItems();
             assertThat(items, hasSize(2));
             int itemsChecked = 0;
             for (BudgetItemDto itemDto : items) {
@@ -110,7 +111,7 @@ class BudgetUtilUT {
         assertThat(cat.getTypeName(), is(equalTo("TestBudgetCategoryType")));
         assertThat(cat.getName(), is(equalTo("TestBudgetCategoryName")));
 
-        Set<BudgetItemDto> items = cat.getBudgetItems();
+        List<BudgetItemDto> items = cat.getBudgetItems();
         assertThat(items, hasSize(2));
         int itemsChecked = 0;
         for (BudgetItemDto itemDto : items) {
@@ -210,9 +211,9 @@ class BudgetUtilUT {
     }
 
     private Budget createBudget(String name, ZonedDateTime startDate, ZonedDateTime endDate, double amount, boolean inUse, long id) {
-        BudgetCategoryType budgetCategoryType = new BudgetCategoryType(1, "TestBudgetCategoryType");
+        BudgetCategoryType budgetCategoryType = new BudgetCategoryType(1, "TestBudgetCategoryType", 1);
 
-        BudgetCategoryName budgetCategoryName = new BudgetCategoryName(2, "TestBudgetCategoryName");
+        BudgetCategoryName budgetCategoryName = new BudgetCategoryName(2, "TestBudgetCategoryName", 1);
 
 
         BudgetCategory budgetCategory = new BudgetCategory(1, BudgetType.INCOME, budgetCategoryType, budgetCategoryName, new HashSet<>());

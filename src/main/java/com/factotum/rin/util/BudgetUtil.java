@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class BudgetUtil {
@@ -15,9 +17,9 @@ public class BudgetUtil {
     private BudgetUtil() {
     }
 
-    public static Set<BudgetDto> convertBudgetsToDto(Collection<Budget> budgets) {
+    public static List<BudgetDto> convertBudgetsToDto(Collection<Budget> budgets) {
 
-        Set<BudgetDto> dtos = new LinkedHashSet<>();
+        List<BudgetDto> dtos = new LinkedList<>();
 
         for (Budget b : budgets) {
             dtos.add(modelMapper.map(b, BudgetDto.class));

@@ -83,7 +83,7 @@ class BudgetServiceImplUT {
     void getAllBudgetCategories_GivenValidReturn_ThenCategoriesComplete() {
 
         // Arrange
-        when(budgetCategoryRepository.findAll()).thenReturn(createBudgetCategories());
+        when(budgetCategoryRepository.findAllByOrderByTypeOrderAndNameOrder()).thenReturn(createBudgetCategories());
 
         // Act
         List<BudgetCategory> budgetCategories = budgetService.getAllBudgetCategories();
@@ -115,7 +115,7 @@ class BudgetServiceImplUT {
     void getAllBudgetCategoryDtos_GivenValidReturn_ThenCategoriesComplete() {
 
         // Arrange
-        when(budgetCategoryRepository.findAll()).thenReturn(createBudgetCategories());
+        when(budgetCategoryRepository.findAllByOrderByTypeOrderAndNameOrder()).thenReturn(createBudgetCategories());
 
         // Act
         Set<BudgetCategoryDto> budgetCategories = budgetService.getAllBudgetCategoryDtos();
@@ -160,10 +160,10 @@ class BudgetServiceImplUT {
         budgetCategories.add(getBudgetCategory("Type1", 1));
         budgetCategories.add(getBudgetCategory("Type2", 2));
         budgetCategories.add(getBudgetCategory("Type3", 3));
-        when(budgetCategoryRepository.findAll()).thenReturn(budgetCategories);
+        when(budgetCategoryRepository.findAllByOrderByTypeOrderAndNameOrder()).thenReturn(budgetCategories);
 
         // Act
-        Set<BudgetTypeDto> budgetTypes = budgetService.getAllBudgetCategoriesByType();
+        List<BudgetTypeDto> budgetTypes = budgetService.getAllBudgetCategoriesByType();
 
         // Assert
         assertThat(budgetTypes, is(not(nullValue())));
@@ -188,10 +188,10 @@ class BudgetServiceImplUT {
     @Test
     void getAllBudgetCategoriesByType_GivenNoDataReturned_ThenReturnEmptySet() {
         // Arrange
-        when(budgetCategoryRepository.findAll()).thenReturn(Collections.emptyList());
+        when(budgetCategoryRepository.findAllByOrderByTypeOrderAndNameOrder()).thenReturn(Collections.emptyList());
 
         // Act
-        Set<BudgetTypeDto> budgetTypes = budgetService.getAllBudgetCategoriesByType();
+        List<BudgetTypeDto> budgetTypes = budgetService.getAllBudgetCategoriesByType();
 
         // Assert
         assertThat(budgetTypes, is(not(nullValue())));
@@ -217,7 +217,7 @@ class BudgetServiceImplUT {
         });
 
         // Act
-        Set<BudgetDto> budgetDtos = budgetService.createNewBudgets(new HashSet<>(Collections.singletonList(budgetDto)));
+        List<BudgetDto> budgetDtos = budgetService.createNewBudgets(new HashSet<>(Collections.singletonList(budgetDto)));
 
         int i = 0;
         for (BudgetDto dto : budgetDtos) {
@@ -388,9 +388,9 @@ class BudgetServiceImplUT {
     }
 
     private BudgetCategory createBudgetCategory(String testType, int typeId, String testCatName, int nameId, int categoryId) {
-        BudgetCategoryType budgetCategoryType = new BudgetCategoryType(typeId, testType);
+        BudgetCategoryType budgetCategoryType = new BudgetCategoryType(typeId, testType, 1);
 
-        BudgetCategoryName budgetCategoryName = new BudgetCategoryName(nameId, testCatName);
+        BudgetCategoryName budgetCategoryName = new BudgetCategoryName(nameId, testCatName, 1);
 
         BudgetCategory budgetCategory = new BudgetCategory();
         budgetCategory.setType(budgetCategoryType);

@@ -45,7 +45,7 @@ public class BudgetCategory {
     @EqualsAndHashCode.Exclude
     @OneToOne
     @JoinColumn(name = "budget_category_type_id")
-    private BudgetCategoryType type; // TODO not having this is invalid
+    private BudgetCategoryType type;
 
     @EqualsAndHashCode.Exclude
     @OneToOne

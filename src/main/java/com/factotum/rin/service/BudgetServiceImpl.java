@@ -30,7 +30,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,8 +61,8 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Set<Budget> getAllActiveBudgets(Jwt jwt) {
-        return new LinkedHashSet<>(budgetRepository.findBudgetsByInUseTrueAndTenantId(jwt.getClaimAsString("sub")));
+    public List<Budget> getAllActiveBudgets(Jwt jwt) {
+        return budgetRepository.findBudgetsByInUseTrueAndTenantId(jwt.getClaimAsString("sub"));
     }
 
     @Override
@@ -122,7 +123,7 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     public List<BudgetCategory> getAllBudgetCategories() {
-        return budgetCategoryRepository.findAll();
+        return budgetCategoryRepository.findAllByOrderByTypeOrderAndNameOrder();
     }
 
     @Override
@@ -136,9 +137,9 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public Set<BudgetTypeDto> getAllBudgetCategoriesByType() {
+    public List<BudgetTypeDto> getAllBudgetCategoriesByType() {
 
-        Map<Integer, BudgetTypeDto> budgetTypeMap = new HashMap<>();
+        Map<Integer, BudgetTypeDto> budgetTypeMap = new LinkedHashMap<>();
         for (BudgetCategory budgetCategory : getAllBudgetCategories()) {
 
             BudgetTypeDto budgetTypeDto;
@@ -163,11 +164,11 @@ public class BudgetServiceImpl implements BudgetService {
             budgetTypeMap.put(type.getId(), budgetTypeDto);
         }
 
-        return new HashSet<>(budgetTypeMap.values());
+        return new LinkedList<>(budgetTypeMap.values());
     }
 
     @Override
-    public Set<BudgetDto> createNewBudgets(Set<BudgetDto> newBudgets) {
+    public List<BudgetDto> createNewBudgets(Set<BudgetDto> newBudgets) {
 
         if (newBudgets == null) {
             throw new IllegalArgumentException("Budget Dtos must not be null");
