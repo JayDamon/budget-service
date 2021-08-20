@@ -30,4 +30,7 @@ public class BudgetCategoryType {
     @Column(name = "budget_category_type")
     private String name;
 
+    @Column(name = "display_order")
+    private Integer order;
+
 }

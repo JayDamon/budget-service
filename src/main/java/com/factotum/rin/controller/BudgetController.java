@@ -39,7 +39,7 @@ public class BudgetController {
     }
 
     @GetMapping("")
-    public Set<BudgetDto> getActiveBudgets(JwtAuthenticationToken jwt) {
+    public List<BudgetDto> getActiveBudgets(JwtAuthenticationToken jwt) {
         return BudgetUtil.convertBudgetsToDto(
                 budgetService.getAllActiveBudgets(jwt.getToken())
         );
@@ -57,7 +57,7 @@ public class BudgetController {
     }
 
     @PostMapping("")
-    public Set<BudgetDto> createNewBudgets(@Valid @RequestBody Set<BudgetDto> newBudgets) {
+    public List<BudgetDto> createNewBudgets(@Valid @RequestBody Set<BudgetDto> newBudgets) {
         return budgetService.createNewBudgets(newBudgets);
     }
 

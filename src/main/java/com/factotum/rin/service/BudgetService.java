@@ -11,12 +11,13 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 public interface BudgetService {
 
-    Set<Budget> getAllActiveBudgets(Jwt jwt);
+    List<Budget> getAllActiveBudgets(Jwt jwt);
 
     List<TransactionBudgetSummary> getBudgetSummary(Jwt jwt, int years, int months);
 
@@ -33,7 +34,7 @@ public interface BudgetService {
      *
      * @return Set of Budget Type Dto
      */
-    Set<BudgetTypeDto> getAllBudgetCategoriesByType();
+    List<BudgetTypeDto> getAllBudgetCategoriesByType();
 
     /**
      * Create new budgets from dtos and add newly created ids.
@@ -41,7 +42,7 @@ public interface BudgetService {
      * @param newBudgets List of budgets to be created.
      * @return Set of BudgetDtos with ids added.
      */
-    Set<BudgetDto> createNewBudgets(Set<BudgetDto> newBudgets);
+    List<BudgetDto> createNewBudgets(Set<BudgetDto> newBudgets);
 
     /**
      * Updates budget in the database with only the values provided. Null Values are ignored.

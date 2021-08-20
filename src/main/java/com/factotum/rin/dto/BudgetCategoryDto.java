@@ -2,10 +2,20 @@ package com.factotum.rin.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BudgetCategoryDto {
 
@@ -20,10 +30,7 @@ public class BudgetCategoryDto {
     private String name;
 
     @JsonProperty("budgetItems")
-    private Set<BudgetItemDto> budgetItems;
-
-    public BudgetCategoryDto() {
-    }
+    private List<BudgetItemDto> budgetItems = new LinkedList<>();
 
     public BudgetCategoryDto(Integer id, String typeName, String name) {
         this.id = id;
@@ -31,35 +38,4 @@ public class BudgetCategoryDto {
         this.name = name;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<BudgetItemDto> getBudgetItems() {
-        return budgetItems;
-    }
-
-    public void setBudgetItems(Set<BudgetItemDto> budgetItems) {
-        this.budgetItems = budgetItems;
-    }
 }

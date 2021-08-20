@@ -2,10 +2,20 @@ package com.factotum.rin.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BudgetTypeDto {
 
@@ -16,33 +26,6 @@ public class BudgetTypeDto {
     private String type;
 
     @JsonProperty("budgetCategories")
-    private Set<BudgetCategoryDto> budgetCategories = new HashSet<>();
-
-    public BudgetTypeDto() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Set<BudgetCategoryDto> getBudgetCategories() {
-        return budgetCategories;
-    }
-
-    public void setBudgetCategories(Set<BudgetCategoryDto> budgetCategories) {
-        this.budgetCategories = budgetCategories;
-    }
+    private List<BudgetCategoryDto> budgetCategories = new LinkedList<>();
 
 }
