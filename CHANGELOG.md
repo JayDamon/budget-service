@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.4.0](https://github.com/JayDamon/rin-budget-service/compare/v1.3.0...v1.4.0) (2021-08-26)
+
+
+### Features
+
+* **rabbit:** Add rabbit mq messaging queue for async communication ([d0e602e](https://github.com/JayDamon/rin-budget-service/commit/d0e602efa16bf828d58f4106823cfc5c7cb98698))
+
 # [1.3.0](https://github.com/JayDamon/rin-budget-service/compare/v1.2.0...v1.3.0) (2021-08-19)
 
 
