@@ -27,7 +27,7 @@ spring:
           rin-budget-service:
             provider: keycloak
             client-id: rin-budget-service
-            client-secret: 3eeef679-dac3-4092-ab78-6059244adcbf
+            client-secret: 4fe1721d-26a9-4d89-b7a4-04236f796726
             authorization-grant-type: client_credentials
         provider:
           keycloak:
