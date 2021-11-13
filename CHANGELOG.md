@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.5.0](https://github.com/JayDamon/rin-budget-service/compare/v1.4.0...v1.5.0) (2021-11-13)
+
+
+### Features
+
+* **jdk:** Java 17 upgrade ([d857910](https://github.com/JayDamon/rin-budget-service/commit/d857910bc48b4cfa64567061b11bf623ffff90be))
+
 # [1.4.0](https://github.com/JayDamon/rin-budget-service/compare/v1.3.0...v1.4.0) (2021-08-26)
 
 
