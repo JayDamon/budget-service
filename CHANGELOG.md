@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.6.0](https://github.com/JayDamon/rin-budget-service/compare/v1.5.0...v1.6.0) (2021-11-22)
+
+
+### Features
+
+* **ci:** Update ci with new build script ([14e8d3c](https://github.com/JayDamon/rin-budget-service/commit/14e8d3c189bea1e9a4e81131ac0728f22397e3d4))
+
 # [1.5.0](https://github.com/JayDamon/rin-budget-service/compare/v1.4.0...v1.5.0) (2021-11-13)
 
 
