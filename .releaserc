@@ -1,6 +1,6 @@
 {
   "branches": ["main"],
-  "repositoryUrl":"https://github.com/JayDamon/rin-budget-service.git",
+  "repositoryUrl":"https://github.com/JayDamon/budget-service.git",
   "debug": "true",
   "plugins": [
     "@semantic-release/commit-analyzer",

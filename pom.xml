@@ -12,12 +12,10 @@
     </parent>
 
     <groupId>com.factotum</groupId>
-    <artifactId>rin-budget-service</artifactId>
+    <artifactId>budget-service</artifactId>
     <version>1.6.0</version>
-    <name>rin-budget-service</name>
-    <description>Oaka XIII is a traveling merchant who sells items and equipment to the player. He
-        is Yunas devout supporter.
-    </description>
+    <name>budget-service</name>
+    <description>Budget service for the moneymaker application</description>
 
     <properties>
         <java.version>17</java.version>
