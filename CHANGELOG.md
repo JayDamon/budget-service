@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.6.1](https://github.com/JayDamon/budget-service/compare/v1.6.0...v1.6.1) (2022-01-16)
+
+
+### Bug Fixes
+
+* **build:** Update docker java version ([b2bc6dc](https://github.com/JayDamon/budget-service/commit/b2bc6dcab3d12abd93dbab8aff51935f49912f33))
+
 # [1.6.0](https://github.com/JayDamon/rin-budget-service/compare/v1.5.0...v1.6.0) (2021-11-22)
 
 
