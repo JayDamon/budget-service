@@ -2,13 +2,13 @@ spring:
   cloud:
     discovery:
       enabled: true
-  jpa:
-    hibernate:
-      ddl-auto: validate
   datasource:
     url: jdbc:mysql://localhost:3306/budget
     username: keycloak
     password: password
+  jpa:
+    hibernate:
+      ddl-auto: validate
   flyway:
     baseline-on-migrate: true
 server:
@@ -32,3 +32,10 @@ spring:
         provider:
           keycloak:
             token-uri: http://localhost:8081/auth/realms/moneymaker/protocol/openid-connect/token
+
+---
+
+spring:
+  rabbitmq:
+    username: test
+    password: test
