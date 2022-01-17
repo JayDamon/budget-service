@@ -4,13 +4,11 @@ import com.factotum.budgetservice.dto.TransactionTotal;
 import com.factotum.budgetservice.enumeration.BudgetType;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Set;
 
-@FeignClient(name = "moneymaker-transaction-service")
-@RequestMapping("/v1/transactions")
+@FeignClient(name = "moneymaker-transaction-service", path = "/v1/transactions")
 public interface TransactionService {
 
     @GetMapping("/total")
