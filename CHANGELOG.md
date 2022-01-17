@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.7.0](https://github.com/JayDamon/budget-service/compare/v1.6.1...v1.7.0) (2022-01-17)
+
+
+### Features
+
+* **spring:** update spring boot and spring cloud version ([ca7810e](https://github.com/JayDamon/budget-service/commit/ca7810e86d333d0c11ed6b5a12d4ec0e7098ade5))
+
 ## [1.6.1](https://github.com/JayDamon/budget-service/compare/v1.6.0...v1.6.1) (2022-01-16)
 
 
