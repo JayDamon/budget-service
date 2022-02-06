@@ -1,4 +1,4 @@
-update budget SET tenant_id = '684996db-6cf8-4976-8336-6e664386dcda';
+update budget SET tenant_id = '5809b48e-b705-4b3e-be9f-16ce0380cb45';
 
 INSERT INTO budget (budget_category_id, budget_item_name, start_date, end_date,
                     frequency_type_id, amount, in_use, transaction_type_id, tenant_id)
