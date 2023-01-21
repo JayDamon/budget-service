@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface BudgetCategoryRepository extends JpaRepository<BudgetCategory, Integer> {
+public interface BudgetCategoryRepository extends JpaRepository<BudgetCategory, UUID> {
 
     @Query("SELECT bc FROM BudgetCategory bc " +
             "INNER JOIN bc.type t " +

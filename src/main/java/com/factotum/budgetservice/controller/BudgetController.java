@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Slf4j
 @Validated
@@ -40,7 +40,7 @@ public class BudgetController {
     }
 
     @GetMapping("/{id}")
-    public BudgetDto getBudgetById(JwtAuthenticationToken jwt, @PathVariable(name = "id") long id) {
+    public BudgetDto getBudgetById(JwtAuthenticationToken jwt, @PathVariable(name = "id") UUID id) {
 
         Budget budget = budgetRepository
                 .findByIdAndTenantId(id, jwt.getToken().getClaimAsString("sub"))
@@ -57,13 +57,13 @@ public class BudgetController {
     @PatchMapping("/{id}")
     public BudgetDto updateBudget(
             JwtAuthenticationToken jwtAuthenticationToken,
-            @PathVariable(name = "id") @Min(1) long id,
+            @PathVariable(name = "id") UUID id,
             @RequestBody BudgetDto budgetDto) {
 
         if (budgetDto.getId() == null) {
             throw new IllegalArgumentException("Budget id must be provided in the body.");
         }
-        if (id != budgetDto.getId()) {
+        if (!id.equals(budgetDto.getId())) {
             throw new IllegalArgumentException("Path id and body id were not equal.");
         }
 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FrequencyServiceImpl implements FrequencyService {
@@ -22,7 +23,7 @@ public class FrequencyServiceImpl implements FrequencyService {
     }
 
     @Override
-    public FrequencyType getFrequencyTypeById(int id) {
+    public FrequencyType getFrequencyTypeById(UUID id) {
 
         return frequencyTypeRepository.findById(id).orElseThrow(
                 () -> new NoResultException("No frequency type with id <" + id + "> was found."));

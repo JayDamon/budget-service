@@ -10,6 +10,7 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @Data
 @ToString
@@ -19,7 +20,7 @@ import java.time.ZonedDateTime;
 public class BudgetDto {
 
     @JsonProperty("id")
-    private Long id;
+    private UUID id;
 
     @JsonProperty("name")
     private String name;
@@ -35,7 +36,7 @@ public class BudgetDto {
     private ZonedDateTime endDate;
 
     @JsonProperty("frequencyTypeId")
-    private Integer frequencyTypeId;
+    private UUID frequencyTypeId;
 
     @JsonProperty("frequencyType")
     private String frequencyTypeName;

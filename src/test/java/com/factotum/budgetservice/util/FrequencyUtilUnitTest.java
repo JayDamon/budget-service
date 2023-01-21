@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,12 +21,15 @@ class FrequencyUtilUnitTest {
     void convertFrequencyTypesToDto_GivenValidCollectionProvided_ThenReturnSetOfDtos() {
 
         // Arrange
+        UUID frequencyTypeIdOne = UUID.fromString("daf7d54a-1cea-4e1d-818a-bfde558870d7");
+        UUID frequencyTypeIdTwo = UUID.fromString("f5b475fe-3de6-4df1-8eaa-dba249450b58");
+
         FrequencyType frequencyType = new FrequencyType();
-        frequencyType.setId(1);
+        frequencyType.setId(frequencyTypeIdOne);
         frequencyType.setFrequencyTypeName("Name");
 
         FrequencyType frequencyTypeTwo = new FrequencyType();
-        frequencyTypeTwo.setId(2);
+        frequencyTypeTwo.setId(frequencyTypeIdTwo);
         frequencyTypeTwo.setFrequencyTypeName("NameTwo");
 
         Set<FrequencyType> frequencyTypes = new HashSet<>();
@@ -39,7 +43,7 @@ class FrequencyUtilUnitTest {
         assertThat(frequencyTypeDtos, hasSize(2));
 
         for (FrequencyTypeDto dto : frequencyTypeDtos) {
-            assertThat(dto.getId(), is(oneOf(1, 2)));
+            assertThat(dto.getId(), is(oneOf(frequencyTypeIdOne, frequencyTypeIdTwo)));
             assertThat(dto.getName(), is(oneOf("Name", "NameTwo")));
         }
 

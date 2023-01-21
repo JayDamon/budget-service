@@ -1,21 +1,34 @@
 spring:
   cloud:
     discovery:
-      enabled: true
+      enabled: false
   datasource:
-    url: jdbc:h2:mem:DATABASE
-    driver-class-name: 'org.h2.Driver'
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://budget-service-db:5432/budgets
+    username: postgres
+    password: password
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: false
   flyway:
-    locations: 'classpath:db/migration,test_data'
+    locations: 'classpath:db/migration'
     baseline-on-migrate: true
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://mm-eureka:8761/eureka/
+#debug: false
+
+---
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/auth/realms/moneymaker
+      client:
+        registration:
+          budget-service:
+            provider: keycloak
+            client-id: budget-service
+            client-secret: qu1hrthelftPL9KRtA66IUZxzGKL33lp
+            authorization-grant-type: client_credentials
+        provider:
+          keycloak:
+            token-uri: http://keycloak:8080/auth/realms/moneymaker/protocol/openid-connect/token

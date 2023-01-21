@@ -10,6 +10,7 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @ToString
@@ -20,7 +21,7 @@ public class BudgetCategoryDto {
 
     @NotNull
     @JsonProperty("id")
-    private Integer id;
+    private UUID id;
 
     @JsonProperty("type")
     private String typeName;
@@ -31,7 +32,7 @@ public class BudgetCategoryDto {
     @JsonProperty("budgetItems")
     private List<BudgetItemDto> budgetItems = new LinkedList<>();
 
-    public BudgetCategoryDto(Integer id, String typeName, String name) {
+    public BudgetCategoryDto(UUID id, String typeName, String name) {
         this.id = id;
         this.typeName = typeName;
         this.name = name;

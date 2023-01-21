@@ -64,7 +64,7 @@ public class BudgetServiceImpl implements BudgetService {
 
         return summaries.stream().map(s -> {
 
-            Set<Long> budgetIds = budgetRepository
+            Set<UUID> budgetIds = budgetRepository
                     .queryAllBudgetIdsForSummary(
                             s.getBudgetType(),
                             s.getCategoryId(),
@@ -127,7 +127,7 @@ public class BudgetServiceImpl implements BudgetService {
     @Override
     public List<BudgetTypeDto> getAllBudgetCategoriesByType() {
 
-        Map<Integer, BudgetTypeDto> budgetTypeMap = new LinkedHashMap<>();
+        Map<UUID, BudgetTypeDto> budgetTypeMap = new LinkedHashMap<>();
         for (BudgetCategory budgetCategory : getAllBudgetCategories()) {
 
             BudgetTypeDto budgetTypeDto;
