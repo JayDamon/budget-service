@@ -33,3 +33,20 @@ spring:
         provider:
           keycloak:
             token-uri: http://localhost:8081/auth/realms/moneymaker/protocol/openid-connect/token
+---
+
+spring:
+  rabbitmq:
+    username: test
+    password: test
+    host: localhost
+    port: 5672
+
+---
+
+spring:
+  boot:
+    admin:
+      client:
+        enabled: true
+        url: http://localhost:8079

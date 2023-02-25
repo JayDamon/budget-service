@@ -1,7 +1,7 @@
 spring:
   cloud:
     discovery:
-      enabled: false
+      enabled: true
   datasource:
     url: jdbc:postgresql://budget-service-db:5432/budgets
     username: postgres
@@ -13,6 +13,11 @@ spring:
     locations: 'classpath:db/migration'
     baseline-on-migrate: true
 #debug: false
+eureka:
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
 
 ---
 
@@ -21,7 +26,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:8080/auth/realms/moneymaker
+          issuer-uri: http://keycloak:8081/auth/realms/moneymaker
       client:
         registration:
           budget-service:
@@ -31,4 +36,4 @@ spring:
             authorization-grant-type: client_credentials
         provider:
           keycloak:
-            token-uri: http://keycloak:8080/auth/realms/moneymaker/protocol/openid-connect/token
+            token-uri: http://keycloak:8081/auth/realms/moneymaker/protocol/openid-connect/token

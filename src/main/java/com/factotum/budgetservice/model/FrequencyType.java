@@ -1,9 +1,16 @@
 package com.factotum.budgetservice.model;
 
-import lombok.*;
-import org.hibernate.annotations.Type;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -23,8 +30,6 @@ public class FrequencyType implements Serializable {
 
     @Id
     @Column(name = "frequency_type_id", columnDefinition = "uuid DEFAULT uuid_generate_v4()")
-    @Type(type = "pg-uuid")
-    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(name = "frequency_type")

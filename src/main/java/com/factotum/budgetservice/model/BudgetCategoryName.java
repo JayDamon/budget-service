@@ -1,10 +1,17 @@
 package com.factotum.budgetservice.model;
 
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -20,8 +27,6 @@ public class BudgetCategoryName {
 
     @Id
     @Column(name = "budget_category_name_id", columnDefinition = "uuid DEFAULT uuid_generate_v4()")
-    @Type(type = "pg-uuid")
-    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(name = "category_name")

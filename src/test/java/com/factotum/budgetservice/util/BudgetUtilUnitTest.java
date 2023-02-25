@@ -4,16 +4,30 @@ import com.factotum.budgetservice.dto.BudgetCategoryDto;
 import com.factotum.budgetservice.dto.BudgetDto;
 import com.factotum.budgetservice.dto.BudgetItemDto;
 import com.factotum.budgetservice.enumeration.BudgetType;
-import com.factotum.budgetservice.model.*;
+import com.factotum.budgetservice.model.Budget;
+import com.factotum.budgetservice.model.BudgetCategory;
+import com.factotum.budgetservice.model.BudgetCategoryName;
+import com.factotum.budgetservice.model.BudgetCategoryType;
+import com.factotum.budgetservice.model.BudgetItem;
+import com.factotum.budgetservice.model.FrequencyType;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.oneOf;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

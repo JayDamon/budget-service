@@ -2,9 +2,9 @@ package com.factotum.budgetservice.service;
 
 import com.factotum.budgetservice.model.FrequencyType;
 import com.factotum.budgetservice.repository.FrequencyTypeRepository;
+import jakarta.persistence.NoResultException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.UUID;
 

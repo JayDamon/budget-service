@@ -4,86 +4,94 @@ import com.factotum.budgetservice.component.Oauth2AuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     @Configuration
     @Profile({"!test & !local"})
-    public static class StandardSecurityConfig extends WebSecurityConfigurerAdapter {
+    public static class StandardSecurityConfig {
 
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http
-                    .authorizeRequests()
-                    .antMatchers("/actuator/**")
-                    .permitAll()
-                    .and()
-                    .authorizeRequests()
-                    .anyRequest()
-                    .authenticated()
-                    .and()
+                    .authorizeHttpRequests((authz) -> authz
+                            .anyRequest()
+                            .authenticated())
                     .oauth2ResourceServer().jwt();
+
+            return http.build();
         }
+
+        @Bean
+        public WebSecurityCustomizer webSecurityCustomizer() {
+            return (web) -> web.ignoring().requestMatchers("/actuator/**");
+        }
+
+
     }
 
     @Configuration
     @Profile({"local"})
-    public static class LocalSecurityConfig extends WebSecurityConfigurerAdapter {
+    public static class LocalSecurityConfig {
 
-        protected void configure(HttpSecurity http) throws Exception {
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http
-                    .csrf().disable()
-                    .authorizeRequests()
-                    .antMatchers("/actuator/**", "/h2-console/*")
-                    .permitAll()
-                    .and()
-                    .authorizeRequests()
-                    .anyRequest()
-                    .authenticated()
-                    .and()
-                    .headers().frameOptions().disable()
-                    .and()
+                    .authorizeHttpRequests((authz) -> authz
+                            .anyRequest()
+                            .authenticated())
                     .oauth2ResourceServer().jwt();
+
+            return http.build();
+        }
+
+        @Bean
+        public WebSecurityCustomizer webSecurityCustomizer() {
+            return (web) -> web.ignoring().requestMatchers("/actuator/**", "/h2-console/*");
         }
 
     }
 
     @Configuration
     @Profile({"test"})
-    public static class TestSecurityConfig extends WebSecurityConfigurerAdapter {
+    public static class TestSecurityConfig {
 
         @Autowired
         private Oauth2AuthenticationEntryPoint oauth2AuthenticationEntryPoint;
 
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http
                     .csrf().disable()
                     .exceptionHandling()
-                    .authenticationEntryPoint(oauth2AuthenticationEntryPoint)
                     .and()
-                    .authorizeRequests()
-                    .anyRequest()
-                    .permitAll();
-        }
+                    .authorizeHttpRequests((authz) -> authz
+                            .anyRequest()
+                            .permitAll());
 
-        @Override
-        public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-            authenticationManagerBuilder.inMemoryAuthentication();
+            return http.build();
         }
 
         @Bean
-        @Primary
-        public UserDetailsService userDetailsService() {
+        public WebSecurityCustomizer webSecurityCustomizer() {
+            return (web) -> web.ignoring().requestMatchers("/actuator/**", "/h2-console/*");
+        }
 
-            return new InMemoryUserDetailsManager();
+        @Bean
+        public InMemoryUserDetailsManager userDetailsService() {
+            UserDetails user = User.withDefaultPasswordEncoder()
+                    .username("user")
+                    .password("password")
+                    .roles("USER")
+                    .build();
+            return new InMemoryUserDetailsManager(user);
         }
 
     }

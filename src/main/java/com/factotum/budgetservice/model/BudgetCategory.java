@@ -1,11 +1,26 @@
 package com.factotum.budgetservice.model;
 
 import com.factotum.budgetservice.enumeration.BudgetType;
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,8 +38,6 @@ public class BudgetCategory {
 
     @Id
     @Column(name = "budget_category_id", columnDefinition = "uuid DEFAULT uuid_generate_v4()")
-    @Type(type = "pg-uuid")
-    @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Enumerated(value = EnumType.STRING)
