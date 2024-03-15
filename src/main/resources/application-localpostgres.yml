@@ -1,18 +1,19 @@
 spring:
   cloud:
     discovery:
-      enabled: true
+      enabled: false
   datasource:
-    url: jdbc:mysql://localhost:3306/budget
-    username: keycloak
+    url: jdbc:postgresql://localhost:5435/budgets
+    username: postgres
     password: password
   jpa:
     hibernate:
       ddl-auto: validate
   flyway:
+    locations: 'classpath:db/migration'
     baseline-on-migrate: true
 server:
-  port: 8084
+  port: 8092
 
 ---
 
@@ -27,15 +28,25 @@ spring:
           budget-service:
             provider: keycloak
             client-id: budget-service
-            client-secret: 4fe1721d-26a9-4d89-b7a4-04236f796726
+            client-secret: qu1hrthelftPL9KRtA66IUZxzGKL33lp
             authorization-grant-type: client_credentials
         provider:
           keycloak:
             token-uri: http://localhost:8081/auth/realms/moneymaker/protocol/openid-connect/token
-
 ---
 
 spring:
   rabbitmq:
     username: test
     password: test
+    host: localhost
+    port: 5672
+
+---
+
+spring:
+  boot:
+    admin:
+      client:
+        enabled: true
+        url: http://localhost:8079

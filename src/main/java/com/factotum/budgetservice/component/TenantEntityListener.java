@@ -1,12 +1,11 @@
 package com.factotum.budgetservice.component;
 
 import com.factotum.budgetservice.model.TenantEntity;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreRemove;
+import jakarta.persistence.PreUpdate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
-
-import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
-import javax.persistence.PreUpdate;
 
 public class TenantEntityListener {
 

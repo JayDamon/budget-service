@@ -15,11 +15,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Repository
-public interface BudgetRepository extends JpaRepository<Budget, Long> {
+public interface BudgetRepository extends JpaRepository<Budget, UUID> {
 
-    Optional<Budget> findByIdAndTenantId(long id, String tenantId);
+    Optional<Budget> findByIdAndTenantId(UUID id, String tenantId);
 
     @Query("SELECT b FROM Budget b " +
             "INNER JOIN b.budgetCategory bc " +
@@ -42,21 +43,24 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
             "INNER JOIN bc.type t")
     Set<BudgetCategoryType> getAllBudgetCategoryTypesInUse();
 
-    @Query(value = "SELECT " +
-            "new com.factotum.budgetservice.dto.BudgetSummary(" +
-            "   bct.name, " +
-            "   bct.id, " +
-            "   bc.budgetType, " +
-            "   SUM(b.amount * f.monthFactor) " +
-            ") " +
-            "FROM Budget b " +
-            "INNER JOIN b.budgetCategory bc " +
-            "INNER JOIN bc.type as bct " +
-            "INNER JOIN b.frequencyType f " +
-            "WHERE b.startDate <= :startDate AND (b.endDate IS NULL OR b.endDate >= :endDate) " +
-            "AND b.tenantId = :tenantId " +
-            "GROUP BY bct.name, bct.id, bc.budgetType " +
-            "ORDER BY bct.name ")
+    @Query(value = """
+            SELECT 
+            new com.factotum.budgetservice.dto.BudgetSummary(
+               bct.name, 
+               bct.id, 
+               bc.budgetType, 
+               SUM(b.amount * f.monthFactor)
+            ) 
+            FROM Budget b 
+            INNER JOIN b.budgetCategory bc 
+            INNER JOIN bc.type as bct 
+            INNER JOIN b.frequencyType f 
+            WHERE b.startDate <= :startDate AND (b.endDate IS NULL OR b.endDate >= :endDate) 
+            AND b.tenantId = :tenantId 
+            GROUP BY bct.name, bct.id, bc.budgetType 
+            ORDER BY bct.name 
+            """
+    )
     List<BudgetSummary> getBudgetSummaries(
             @Param("startDate") ZonedDateTime startDate,
             @Param("endDate") ZonedDateTime endDate,
@@ -71,7 +75,7 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
                     "AND t.id = :budgetCategoryTypeId " +
                     "AND bc.budgetType = :budgetType " +
                     "AND b.tenantId = :tenantId")
-    Set<Long> queryAllBudgetIdsForSummary(
-            BudgetType budgetType, int budgetCategoryTypeId, ZonedDateTime startDate, ZonedDateTime endDate, String tenantId);
+    Set<UUID> queryAllBudgetIdsForSummary(
+            BudgetType budgetType, UUID budgetCategoryTypeId, ZonedDateTime startDate, ZonedDateTime endDate, String tenantId);
 
 }

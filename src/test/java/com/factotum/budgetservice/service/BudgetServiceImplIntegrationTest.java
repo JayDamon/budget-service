@@ -8,6 +8,7 @@ import com.factotum.budgetservice.model.Budget;
 import com.factotum.budgetservice.model.BudgetCategory;
 import com.factotum.budgetservice.model.BudgetItem;
 import com.factotum.budgetservice.util.SecurityTestUtil;
+import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.emptyIterable;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 
 @Transactional
 @SpringBootTest
+@AutoConfigureEmbeddedDatabase
 @ActiveProfiles("test")
 class BudgetServiceImplIntegrationTest {
 
@@ -58,24 +67,28 @@ class BudgetServiceImplIntegrationTest {
 
         int summariesChecked = 0;
 
+        UUID budgetCategoryIdOne = UUID.fromString("0121056f-a732-4d9d-a554-06223969f0cc");
+        UUID budgetCategoryIdTwo = UUID.fromString("b3c16c07-8c73-427b-94d3-b6aa2ec56c65");
+        UUID budgetCategoryIdThree = UUID.fromString("06aa4213-b898-4dae-8c5b-da5b07a47363");
+
         System.out.println(summaries);
         for (BudgetSummary summary : summaries) {
-            int categoryId = summary.getCategoryId();
+            UUID categoryId = summary.getCategoryId();
             BudgetType budgetType = summary.getBudgetType();
-            if (categoryId == 3 && BudgetType.EXPENSE.equals(budgetType)) {
-                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(1674.99999967))));
+            if (categoryId.equals(budgetCategoryIdThree) && BudgetType.EXPENSE.equals(budgetType)) {
+                assertThat(summary.getPlanned().doubleValue(), is(closeTo(1674.9999996700, 6)));
                 summariesChecked++;
-            } else if (categoryId == 1 && BudgetType.INCOME.equals(budgetType)) {
-                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(3000.0))));
+            } else if (categoryId.equals(budgetCategoryIdOne) && BudgetType.INCOME.equals(budgetType)) {
+                assertThat(summary.getPlanned().doubleValue(), is(closeTo(3000.0, 6)));
                 summariesChecked++;
-            } else if (categoryId == 1 && BudgetType.EXPENSE.equals(budgetType)) {
-                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(2127.5699999999997))));
+            } else if (categoryId.equals(budgetCategoryIdOne) && BudgetType.EXPENSE.equals(budgetType)) {
+                assertThat(summary.getPlanned().doubleValue(), is(closeTo(2127.5699999999997, 6)));
                 summariesChecked++;
-            } else if (categoryId == 2 && BudgetType.INCOME.equals(budgetType)) {
-                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(0.0))));
+            } else if (categoryId.equals(budgetCategoryIdTwo) && BudgetType.INCOME.equals(budgetType)) {
+                assertThat(summary.getPlanned().doubleValue(), is(closeTo(0.0, 6)));
                 summariesChecked++;
-            } else if (categoryId == 2 && BudgetType.EXPENSE.equals(budgetType)) {
-                assertThat(summary.getPlanned(), is(equalTo(BigDecimal.valueOf(350.0))));
+            } else if (categoryId.equals(budgetCategoryIdTwo) && BudgetType.EXPENSE.equals(budgetType)) {
+                assertThat(summary.getPlanned().doubleValue(), is(closeTo(350.0, 6)));
                 summariesChecked++;
             }
         }
@@ -92,14 +105,14 @@ class BudgetServiceImplIntegrationTest {
         int budgetCategoriesChecked = 0;
         int budgetItemsChecked = 0;
         for (BudgetCategory budgetCategory : budgetCategories) {
-            assertThat(budgetCategory.getId(), is(greaterThan(0)));
-            assertThat(budgetCategory.getType().getId(), is(greaterThan(0)));
+            assertThat(budgetCategory.getId(), is(notNullValue()));
+            assertThat(budgetCategory.getType().getId(), is(notNullValue()));
             assertThat(budgetCategory.getType().getName(), is(not(nullValue())));
-            assertThat(budgetCategory.getName().getId(), is(greaterThan(0)));
+            assertThat(budgetCategory.getName().getId(), is(notNullValue()));
             assertThat(budgetCategory.getName().getName(), is(not(nullValue())));
             assertThat(budgetCategory.getBudgetItems(), is(not(emptyIterable())));
             for (BudgetItem item : budgetCategory.getBudgetItems()) {
-                assertThat(item.getId(), is(greaterThan(0L)));
+                assertThat(item.getId(), is(notNullValue()));
                 assertThat(item.getName(), is(not(nullValue())));
                 assertThat(item.getBudgetCategory(), is(not(nullValue())));
                 budgetItemsChecked++;
@@ -119,12 +132,12 @@ class BudgetServiceImplIntegrationTest {
         int budgetCategoriesChecked = 0;
         int budgetItemsChecked = 0;
         for (BudgetCategoryDto budgetCategory : budgetCategories) {
-            assertThat(budgetCategory.getId(), is(greaterThan(0)));
+            assertThat(budgetCategory.getId(), is(notNullValue()));
             assertThat(budgetCategory.getTypeName(), is(not(nullValue())));
             assertThat(budgetCategory.getName(), is(not(nullValue())));
             assertThat(budgetCategory.getBudgetItems(), is(not(emptyIterable())));
             for (BudgetItemDto budgetItem : budgetCategory.getBudgetItems()) {
-                assertThat(budgetItem.getId(), is(greaterThan(0)));
+                assertThat(budgetItem.getId(), is(notNullValue()));
                 assertThat(budgetItem.getCategoryName(), is(not(nullValue())));
                 assertThat(budgetItem.getName(), is(not(nullValue())));
                 budgetItemsChecked++;

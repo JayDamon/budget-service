@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @ToString
@@ -18,7 +19,7 @@ import java.util.List;
 public class BudgetTypeDto {
 
     @JsonProperty("id")
-    private Integer id;
+    private UUID id;
 
     @JsonProperty("type")
     private String type;

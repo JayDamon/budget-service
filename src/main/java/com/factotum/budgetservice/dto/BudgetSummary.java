@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Data
 @ToString
@@ -18,17 +19,10 @@ public class BudgetSummary {
 
     private String category;
 
-    private Integer categoryId;
+    private UUID categoryId;
 
     private BudgetType budgetType;
 
     private BigDecimal planned;
-
-    public BudgetSummary(String category, Integer categoryId, BudgetType budgetType, Double planned) {
-        this.category = category;
-        this.categoryId = categoryId;
-        this.budgetType = budgetType;
-        this.planned = BigDecimal.valueOf(planned);
-    }
 }
 

@@ -1,6 +1,11 @@
 package com.factotum.budgetservice.service;
 
-import com.factotum.budgetservice.dto.*;
+import com.factotum.budgetservice.dto.BudgetCategoryDto;
+import com.factotum.budgetservice.dto.BudgetDto;
+import com.factotum.budgetservice.dto.BudgetSummary;
+import com.factotum.budgetservice.dto.BudgetTypeDto;
+import com.factotum.budgetservice.dto.TransactionBudgetSummary;
+import com.factotum.budgetservice.dto.TransactionTotal;
 import com.factotum.budgetservice.enumeration.BudgetType;
 import com.factotum.budgetservice.http.TransactionService;
 import com.factotum.budgetservice.model.Budget;
@@ -10,19 +15,26 @@ import com.factotum.budgetservice.model.FrequencyType;
 import com.factotum.budgetservice.repository.BudgetCategoryRepository;
 import com.factotum.budgetservice.repository.BudgetRepository;
 import com.factotum.budgetservice.util.BudgetUtil;
+import jakarta.persistence.NoResultException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -64,7 +76,7 @@ public class BudgetServiceImpl implements BudgetService {
 
         return summaries.stream().map(s -> {
 
-            Set<Long> budgetIds = budgetRepository
+            Set<UUID> budgetIds = budgetRepository
                     .queryAllBudgetIdsForSummary(
                             s.getBudgetType(),
                             s.getCategoryId(),
@@ -127,7 +139,7 @@ public class BudgetServiceImpl implements BudgetService {
     @Override
     public List<BudgetTypeDto> getAllBudgetCategoriesByType() {
 
-        Map<Integer, BudgetTypeDto> budgetTypeMap = new LinkedHashMap<>();
+        Map<UUID, BudgetTypeDto> budgetTypeMap = new LinkedHashMap<>();
         for (BudgetCategory budgetCategory : getAllBudgetCategories()) {
 
             BudgetTypeDto budgetTypeDto;

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Set;
+import java.util.UUID;
 
 @FeignClient(name = "moneymaker-transaction-service", path = "/v1/transactions")
 public interface TransactionService {
@@ -16,6 +17,6 @@ public interface TransactionService {
             @RequestParam(name = "year") int year,
             @RequestParam(name = "month") int month,
             @RequestParam(name = "budgetType") BudgetType budgetType,
-            @RequestParam(name = "budgetIds") Set<Long> budgetIds);
+            @RequestParam(name = "budgetIds") Set<UUID> budgetIds);
 
 }

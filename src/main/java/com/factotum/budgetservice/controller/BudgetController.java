@@ -6,16 +6,23 @@ import com.factotum.budgetservice.model.Budget;
 import com.factotum.budgetservice.repository.BudgetRepository;
 import com.factotum.budgetservice.service.BudgetService;
 import com.factotum.budgetservice.util.BudgetUtil;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Slf4j
 @Validated
@@ -40,7 +47,7 @@ public class BudgetController {
     }
 
     @GetMapping("/{id}")
-    public BudgetDto getBudgetById(JwtAuthenticationToken jwt, @PathVariable(name = "id") long id) {
+    public BudgetDto getBudgetById(JwtAuthenticationToken jwt, @PathVariable(name = "id") UUID id) {
 
         Budget budget = budgetRepository
                 .findByIdAndTenantId(id, jwt.getToken().getClaimAsString("sub"))
@@ -57,13 +64,13 @@ public class BudgetController {
     @PatchMapping("/{id}")
     public BudgetDto updateBudget(
             JwtAuthenticationToken jwtAuthenticationToken,
-            @PathVariable(name = "id") @Min(1) long id,
+            @PathVariable(name = "id") UUID id,
             @RequestBody BudgetDto budgetDto) {
 
         if (budgetDto.getId() == null) {
             throw new IllegalArgumentException("Budget id must be provided in the body.");
         }
-        if (id != budgetDto.getId()) {
+        if (!id.equals(budgetDto.getId())) {
             throw new IllegalArgumentException("Path id and body id were not equal.");
         }
 
