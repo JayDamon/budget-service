@@ -1,5 +1,21 @@
 # Semantic Versioning Changelog
 
+# [2.0.0](https://github.com/JayDamon/budget-service/compare/v1.7.0...v2.0.0) (2024-09-23)
+
+
+* Update local docker and upgrade spring ([#18](https://github.com/JayDamon/budget-service/issues/18)) ([a5a5b7f](https://github.com/JayDamon/budget-service/commit/a5a5b7f9c6b52d03598a916f250ade25f3930797))
+
+
+### Bug Fixes
+
+* add github login for semantic release ([fcef42d](https://github.com/JayDamon/budget-service/commit/fcef42dc50f584eb79243fab80fd909a86a79a98))
+* Run ci ([#19](https://github.com/JayDamon/budget-service/issues/19)) ([b661395](https://github.com/JayDamon/budget-service/commit/b66139597347a8070ba44ff50b341fc82e2d5fcb))
+
+
+### BREAKING CHANGES
+
+* Upgrade to spring boot 3.0 and spring cloud 2022
+
 # [1.7.0](https://github.com/JayDamon/budget-service/compare/v1.6.1...v1.7.0) (2022-01-17)
 
 
