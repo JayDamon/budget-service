@@ -1,5 +1,5 @@
 {
-  "branches": ["main", "restore-k8s"],
+  "branches": ["main"],
   "repositoryUrl":"https://github.com/JayDamon/budget-service.git",
   "debug": "true",
   "plugins": [
